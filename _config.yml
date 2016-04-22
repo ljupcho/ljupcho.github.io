@@ -3,7 +3,7 @@
 markdown:         kramdown
 kramdown:
   extensions:     [strikethrough,smart,with_toc_data,tables]
-highlighter:      pygments
+highlighter:      rouge
 
 
 # Permalinks
