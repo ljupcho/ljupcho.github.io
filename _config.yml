@@ -1,0 +1,46 @@
+# Dependencies
+# markdown:         redcarpet
+markdown:         kramdown
+kramdown:
+  extensions:     [strikethrough,smart,with_toc_data,tables]
+highlighter:      pygments
+
+
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:        /posts/:title/
+
+# Setup
+title:               Ljupcho Apostolov
+tagline:             'on technology and random thoughts'
+description:         "Health, contentment and trust Are your greatest possessions, And freedom your greatest joy. Look within. Be still."
+url:                 http://localhost:4000/
+baseurl:             ''
+paginate:            5
+gems:
+- jekyll-mentions
+- jemoji
+- jekyll-redirect-from
+- jekyll-sitemap
+- jekyll-paginate
+- jekyll-gist
+paginate_path: "page:num"
+
+# About/contact
+author:
+  name:              Ljucpho Apostolov
+  url:               https://twitter.com/ljupcho3a
+  email:             ljupcho.apostolov@gmail.com
+
+# Github
+github:
+  repo:           https://github.com/ljupcho
+
+# Social Integration
+social:
+  twitter:        ljupcho3a
+  disqus:         disqus_3NBsKK8nT3
+# Custom vars
+version:             1.0.0
+

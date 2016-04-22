@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Ljupcho Apostolov</title>
+ <link href="http://localhost:4000//atom.xml" rel="self"/>
+ <link href="http://localhost:4000//"/>
+ <updated>2016-04-22T23:06:11+02:00</updated>
+ <id>http://localhost:4000/</id>
+ <author>
+   <name>Ljucpho Apostolov</name>
+   <email>ljupcho.apostolov@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Scaling developers’ work</title>
+   <link href="http://localhost:4000//posts/Scalling-devs-work/"/>
+   <updated>2016-04-04T21:18:10+02:00</updated>
+   <id>http://localhost:4000//posts/Scalling-devs-work</id>
+   <content type="html">&lt;p&gt;There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.&lt;/p&gt;
+
+&lt;p&gt;What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+svn log -v --xml | grep &#39;&amp;lt;author.*/author&amp;gt;&#39; | sort $* | uniq -c | sort -rn 
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If this outputs doesn’t give you equal distribution between developers I think we haven’t divided the work properly. Sure that some developers might commit more often than others but at the end of the day the code needs to be written.
+So, here’s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;two people can talk and contribute and be more creative from discussions&lt;/li&gt;
+  &lt;li&gt;they will be more familiar with the various functionalities instead of only one which they’ll be responsible for&lt;/li&gt;
+  &lt;li&gt;code style to be close enough, the whole code shouldn’t have much discrepancies&lt;/li&gt;
+  &lt;li&gt;faster development&lt;/li&gt;
+  &lt;li&gt;not relying only on one person for specific thing, developers also have lifes and need vacations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
