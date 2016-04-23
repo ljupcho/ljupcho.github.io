@@ -15,7 +15,7 @@ permalink:        /posts/:title/
 title:               Ljupcho Apostolov
 tagline:             'on technology and random thoughts'
 description:         "Health, contentment and trust Are your greatest possessions, And freedom your greatest joy. Look within. Be still."
-url:                 http://localhost:4000/
+url:                 http://ljupcho.github.io/
 baseurl:             ''
 paginate:            5
 gems:
