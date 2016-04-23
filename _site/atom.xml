@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Ljupcho Apostolov</title>
- <link href="http://localhost:4000//atom.xml" rel="self"/>
- <link href="http://localhost:4000//"/>
- <updated>2016-04-23T15:17:47+02:00</updated>
- <id>http://localhost:4000/</id>
+ <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
+ <link href="http://ljupcho.github.io//"/>
+ <updated>2016-04-23T17:29:16+02:00</updated>
+ <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
    <email>ljupcho.apostolov@gmail.com</email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Scaling developers’ work</title>
-   <link href="http://localhost:4000//posts/Scalling-devs-work/"/>
+   <link href="http://ljupcho.github.io//posts/Scalling-devs-work/"/>
    <updated>2016-04-11T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/Scalling-devs-work</id>
+   <id>http://ljupcho.github.io//posts/Scalling-devs-work</id>
    <content type="html">&lt;p&gt;There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.&lt;/p&gt;
 
 &lt;p&gt;What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.&lt;/p&gt;
@@ -42,9 +42,9 @@ So, here’s where I stand regarding this little dispute of mine. Why not all th
  
  <entry>
    <title>JavaScript vs PHP on new 20,000 inputs</title>
-   <link href="http://localhost:4000//posts/JavaScript-vs-PHP-20000-inputs/"/>
+   <link href="http://ljupcho.github.io//posts/JavaScript-vs-PHP-20000-inputs/"/>
    <updated>2015-07-08T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/JavaScript-vs-PHP-20000-inputs</id>
+   <id>http://ljupcho.github.io//posts/JavaScript-vs-PHP-20000-inputs</id>
    <content type="html">&lt;p&gt;Basically I have couple of ways to build a form with a lot of inputs, maybe that won’t be the best practical solution but let’s just see where I am going with this. 
 In one tr I have at least 20 inputs, it maybe be more and I want to multiply that by 1000. Solutions based on JavaScript are done using jQuery. These are the scenarios I have tried:&lt;/p&gt;
 
@@ -101,9 +101,9 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
  
  <entry>
    <title>PHP Design Patterns</title>
-   <link href="http://localhost:4000//posts/PHP-Design-Patterns/"/>
+   <link href="http://ljupcho.github.io//posts/PHP-Design-Patterns/"/>
    <updated>2015-05-01T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/PHP-Design-Patterns</id>
+   <id>http://ljupcho.github.io//posts/PHP-Design-Patterns</id>
    <content type="html">&lt;p&gt;This is an abstract from the book PHP Design Patterns by Aaron Saray. I found it very useful, explanations are clear and simple and it has code examples which is always nice. I consider knowing this of a great importance, because as the business logic grows no matter of your framework you have to code your own framework. There are many frameworks out there today, but they can be nothing more than a good basic to start of your application, otherwise we’re stuck with large and unmaintainable code. Below is copy/paste of the main headers from the book so I can read it from time to time.&lt;/p&gt;
 
 &lt;ol&gt;
@@ -164,9 +164,9 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
  
  <entry>
    <title>Books I Read</title>
-   <link href="http://localhost:4000//posts/Books-I-Read/"/>
+   <link href="http://ljupcho.github.io//posts/Books-I-Read/"/>
    <updated>2015-05-01T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/Books-I-Read</id>
+   <id>http://ljupcho.github.io//posts/Books-I-Read</id>
    <content type="html">&lt;p&gt;This is a list of books I’ve recently read or I am still reading. The “problem” I’m having is that I start reading more books at once instead of one by one, since I perform very badly in multitasking, but if something interests me I start it immediately.&lt;/p&gt;
 
 &lt;p&gt;Programming:&lt;/p&gt;
@@ -195,9 +195,9 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
  
  <entry>
    <title>Apache vs nginx web server comparison</title>
-   <link href="http://localhost:4000//posts/Apache-vs-Nginx/"/>
+   <link href="http://ljupcho.github.io//posts/Apache-vs-Nginx/"/>
    <updated>2014-04-04T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/Apache-vs-Nginx</id>
+   <id>http://ljupcho.github.io//posts/Apache-vs-Nginx</id>
    <content type="html">&lt;p&gt;Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I’ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx’s is 1.4.7.&lt;/p&gt;
 
 &lt;p&gt;if you want to use apache 2.4 with the standard, let’s say old mod_php, you’d need to switch to mod_mpm_prefork (as well install the modules/libphp5.so and include the php5_module.conf file), whereas using it with php-fpm is allowed with the new mod_mpm_event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info.&lt;/p&gt;
@@ -212,12 +212,12 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
 	ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;amp;action=DetailView&amp;amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000//public/images/apachevsnginxwithphp-fpm.png&quot; alt=&quot;Apache vs Nginx with php-fpm&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/apachevsnginxwithphp-fpm.png&quot; alt=&quot;Apache vs Nginx with php-fpm&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Lowers means better or less time for processing per request. The results show that using apache is better then using ngnix with php-fpm for SugarCRM. 
 Also, here’s how it is with apache only using different mode, once with standard mod_php and with php-fpm.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000//public/images/mod_phpvsphp-fpm.png&quot; alt=&quot;mod_php vs php-fpm&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mod_phpvsphp-fpm.png&quot; alt=&quot;mod_php vs php-fpm&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of ‘c’ and only if all request tested are sent in parallel.&lt;/p&gt;
 </content>
@@ -225,9 +225,9 @@ Also, here’s how it is with apache only using different mode, once with standa
  
  <entry>
    <title>Nginx + HHVM for SugarCRM</title>
-   <link href="http://localhost:4000//posts/Nginx+HHVM-for-SugarCRM/"/>
+   <link href="http://ljupcho.github.io//posts/Nginx+HHVM-for-SugarCRM/"/>
    <updated>2014-04-01T21:18:10+02:00</updated>
-   <id>http://localhost:4000//posts/Nginx+HHVM-for-SugarCRM</id>
+   <id>http://ljupcho.github.io//posts/Nginx+HHVM-for-SugarCRM</id>
    <content type="html">&lt;p&gt;After installing nginx web server I managed to make it work with hhvm. Further more SugarCRM works just fine in this configuration except for some errors on some pages. I wasn’t able to run it under apache, my app server is Arch Linux since apache 2.4.7 gives HipHop notice of file not found. It was able under ubuntu as in one of my previous posts but the app wasn’t working properly. So now with nginx I got my luck to try some results for SugarCRM.&lt;/p&gt;
 
 &lt;p&gt;My environment settings are, using arch both as app server and db server, because I am using mysql in this case, couldn’t make hhvm work for oracle yet. But this setup gives me the chance to get some results. When running the hiphop virutal machine and you go to php info you will only get HipHop instead of all the info. Also, I am using php-fpm as better than mod_php in comparison to hhvm.&lt;/p&gt;
@@ -238,7 +238,7 @@ Also, here’s how it is with apache only using different mode, once with standa
 ab -n 200 -c 60 http://127.0.0.1/sugarcrm/index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DActivities
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000//public/images/hhvmvsphp-fpmnginx.png&quot; alt=&quot;Nginx vs phpfpm&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/hhvmvsphp-fpmnginx.png&quot; alt=&quot;Nginx vs phpfpm&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;We can see how big of a gap it is between hhvm and php-fpm. HHVM knocks down the php. These incomparable differences in favor of hhvm show why it is or will be a huge success. HHVM needs on average 2 ms pre request and php-fpm needs on average 25ms pre second and mod_php on average around 300ms (previous post). I try testing it with changing the concurrency and getting the same results.&lt;/p&gt;
 
