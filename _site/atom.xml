@@ -4,7 +4,7 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://localhost:4000//atom.xml" rel="self"/>
  <link href="http://localhost:4000//"/>
- <updated>2016-04-23T00:13:59+02:00</updated>
+ <updated>2016-04-23T14:54:15+02:00</updated>
  <id>http://localhost:4000/</id>
  <author>
    <name>Ljucpho Apostolov</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Scaling developers’ work</title>
    <link href="http://localhost:4000//posts/Scalling-devs-work/"/>
-   <updated>2016-04-04T21:18:10+02:00</updated>
+   <updated>2016-04-11T21:18:10+02:00</updated>
    <id>http://localhost:4000//posts/Scalling-devs-work</id>
    <content type="html">&lt;p&gt;There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.&lt;/p&gt;
 
@@ -37,6 +37,159 @@ So, here’s where I stand regarding this little dispute of mine. Why not all th
 &lt;/ul&gt;
 
 &lt;p&gt;But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>JavaScript vs PHP on new 20,000 inputs</title>
+   <link href="http://localhost:4000//posts/JavaScript-vs-PHP-20000-inputs/"/>
+   <updated>2015-07-08T21:18:10+02:00</updated>
+   <id>http://localhost:4000//posts/JavaScript-vs-PHP-20000-inputs</id>
+   <content type="html">&lt;p&gt;Basically I have couple of ways to build a form with a lot of inputs, maybe that won’t be the best practical solution but let’s just see where I am going with this. 
+In one tr I have at least 20 inputs, it maybe be more and I want to multiply that by 1000. Solutions based on JavaScript are done using jQuery. These are the scenarios I have tried:&lt;/p&gt;
+
+&lt;p&gt;1). JavaScript (cloning): Render/load the page first with basic inputs or it should have at-least one row(tr).
+- Copy the last row, or maybe better have a template of that tr and make a clone.
+- Find the last tr of that table and attach the newly clones tr. You may use append or next from jQuery functions.
+- Find the last tr again, the cloned tr and switch the ids and name attributes of each input, select fields that you find in that tr. The switching means incrementing the counter or the tr which will be part of the unique id of each element and the nested array you’re trying to build in the name attribute. Also null the onclick/onchange and other functions (calendars and such) on each input and bind its new functions with incremented id.&lt;/p&gt;
+
+&lt;p&gt;This might be a bit more work to it but works just find and it’s fast comparing to making an ajax call to server side.&lt;/p&gt;
+
+&lt;p&gt;2). PHP (file): Upload functionally allowing the user to upload an excel/csv file that will be parsed on server side. In the excel I would have all the rows I need to make inputs from and the logic is building the table and its rows in php. Nothing more to it.&lt;/p&gt;
+
+&lt;p&gt;3). JavaScript (builder html): Instead of cloning and switching ids on client side I am trying to build the rows with building the html itself in JavaScript. In order to have better solution I would have the inputs configurations/ fields definitions json_econded into browser’s memory. I could then access that array and loop through the fields’ types to render appropriate input. As I go from one to another I am incrementing the id, acctually the same thing as in php. The difference here from the first approch is that I don’t attach each of the row/tr after creating it, but build all the htlm and than find the table id (once) and attach the whole html.&lt;/p&gt;
+
+&lt;p&gt;4). PHP (ajax): The standard way, making an ajax call to server side, use the field definitions array, loop and build html. Then return it to client side and attach the html. 
+Each of the 2, 3, and 4 approach would require binding the functions on document ready.&lt;/p&gt;
+
+&lt;p&gt;The results (Response time in miliseconds):&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Num. of rows&lt;/th&gt;
+      &lt;th&gt;JS (cloning)&lt;/th&gt;
+      &lt;th&gt;PHP (file)&lt;/th&gt;
+      &lt;th&gt;JS (builder)&lt;/th&gt;
+      &lt;th&gt;PHP (ajax)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;83501&lt;/td&gt;
+      &lt;td&gt;30861&lt;/td&gt;
+      &lt;td&gt;1721&lt;/td&gt;
+      &lt;td&gt;5268&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;270085&lt;/td&gt;
+      &lt;td&gt;56231&lt;/td&gt;
+      &lt;td&gt;3297&lt;/td&gt;
+      &lt;td&gt;9648&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This shows that cloning the rows and attaching them is slowest way to do. As the DOM becomes larger it takes more and more time to find the last, find the inputs and switch the ids. 
+The fastest way to do it is to build the html on JavaScript side and attach it all at once. Doing it the same way using ajax is 3 times slower due to making the server call even though it might be faster depending on the server configurations, this is just my case.&lt;/p&gt;
+
+&lt;p&gt;Going with the JavaScript approach has also one major advantage besides the performance aspect. If making the save on this form with php you will have to increase the max_input_vars in php.ini and that parameter can’t be set only for that script specified but globally. Instead, this would be another JS approach besides the building of the html, the save can be perform having all the inputs as array in json format and using json_decode on php to make the needed request structure.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>PHP Design Patterns</title>
+   <link href="http://localhost:4000//posts/PHP-Design-Patterns/"/>
+   <updated>2015-05-01T21:18:10+02:00</updated>
+   <id>http://localhost:4000//posts/PHP-Design-Patterns</id>
+   <content type="html">&lt;p&gt;This is an abstract from the book PHP Design Patterns by Aaron Saray. I found it very useful, explanations are clear and simple and it has code examples which is always nice. I consider knowing this of a great importance, because as the business logic grows no matter of your framework you have to code your own framework. There are many frameworks out there today, but they can be nothing more than a good basic to start of your application, otherwise we’re stuck with large and unmaintainable code. Below is copy/paste of the main headers from the book so I can read it from time to time.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Adapter Design Pattern simply adapts one object’s interfaces to what another object expects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Builder Design Pattern defines the design of an object that handles the complex building of another object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Data Access Object Design Pattern describes the creation of an object that provides trans-parent access to any data source.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Decorator Design Pattern is best suited for altering or decorating portions of an existing object’s content or functionality without modifying the structure of the original object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Delegate Design Pattern removes decisions and complex functionality from the core object by distributing or delegating them to other objects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Façade Design Pattern hides complexity from a calling object by creating a simple façade interface in front of the collection of required logic and methods.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Factory Design Pattern provides a simple interface to acquire a new instance of an object, while sheltering the calling code from the steps to determine which base class is actually instantiated.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Interpreter Design Pattern analyzes an entity for key elements and provides its own interpretation or action corresponding to each key.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Iterator Design Pattern helps construct objects that can provide a single standard inter-face to loop or iterate through any type of countable data.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Mediator Design Pattern is used to develop an object that communicates or mediates changes to a collection of similar objects without them interacting with each other directly.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Observer Design Pattern facilitates the creation of objects that watch the state of a target object and provides state targeted functionality that is uncoupled from the core object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Prototype Design Pattern creates objects in such a way that an initial object or prototype can be copied and cloned more efficiently than creating a new instance.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Proxy Design Pattern builds an object that is positioned transparently within two other objects in order to intercept or proxy the communication or access.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Singleton Design Pattern is used to restrict the number of times a specific object can be created to a single time by providing access to a shared instance of itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Strategy Design Pattern helps architect an object that can make use of algorithms in other objects on demand in lieu of containing the logic itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Template Design Pattern creates an abstract object that enforces a set of methods and functionality that will be used in common by child classes as a template for their own design.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Visitor Design Pattern constructs distinct objects containing an algorithm that, when consumed by a parent object in a standard way, apply that algorithm to the parent object.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Books I Read</title>
+   <link href="http://localhost:4000//posts/Books-I-Read/"/>
+   <updated>2015-05-01T21:18:10+02:00</updated>
+   <id>http://localhost:4000//posts/Books-I-Read</id>
+   <content type="html">&lt;p&gt;This is a list of books I’ve recently read or I am still reading. The “problem” I’m having is that I start reading more books at once instead of one by one, since I perform very badly in multitasking, but if something interests me I start it immediately.&lt;/p&gt;
+
+&lt;p&gt;Programming:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Professional PHP Design Patterns - Aaron Saray&lt;/li&gt;
+  &lt;li&gt;Build APIs You Won’t Hate - Phil Sturgeon&lt;/li&gt;
+  &lt;li&gt;Practical Design Patterns in PHP - Brandon Savage&lt;/li&gt;
+  &lt;li&gt;The Book for Symfony 2.5&lt;/li&gt;
+  &lt;li&gt;Scaling PHP Applications - Steve Corona&lt;/li&gt;
+  &lt;li&gt;Securing PHP Web Applications - Tricia Ballad &amp;amp; William Ballad&lt;/li&gt;
+  &lt;li&gt;MongoDB The Definitive Guide - Kristina Chodorow &amp;amp; Michael Dirolf&lt;/li&gt;
+  &lt;li&gt;MySQL High Availability - Charles Bell, Mats Kindahl &amp;amp; Lars Thalmann&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Non-programming:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The War of Art - Steven Pressfield&lt;/li&gt;
+  &lt;li&gt;Team Geek A Software Developer’s Guide to Working Well with Others&lt;/li&gt;
+  &lt;li&gt;Freedom From The Know – Krishnamurti&lt;/li&gt;
+  &lt;li&gt;A Tree in A Forest – A Collection of Ajahn Chan’s Similes&lt;/li&gt;
+&lt;/ul&gt;
 </content>
  </entry>
  

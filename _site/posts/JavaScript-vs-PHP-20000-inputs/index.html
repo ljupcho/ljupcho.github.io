@@ -11,7 +11,7 @@
 
   <title>
     
-      Scaling developers’ work &middot; Ljupcho Apostolov
+      JavaScript vs PHP on new 20,000 inputs &middot; Ljupcho Apostolov
     
   </title>
 
@@ -91,28 +91,59 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Scaling developers’ work</h1>
-  <span class="post-date">11 Apr 2016</span>
-  <p>There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.</p>
+  <h1 class="post-title">JavaScript vs PHP on new 20,000 inputs</h1>
+  <span class="post-date">08 Jul 2015</span>
+  <p>Basically I have couple of ways to build a form with a lot of inputs, maybe that won’t be the best practical solution but let’s just see where I am going with this. 
+In one tr I have at least 20 inputs, it maybe be more and I want to multiply that by 1000. Solutions based on JavaScript are done using jQuery. These are the scenarios I have tried:</p>
 
-<p>What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.</p>
+<p>1). JavaScript (cloning): Render/load the page first with basic inputs or it should have at-least one row(tr).
+- Copy the last row, or maybe better have a template of that tr and make a clone.
+- Find the last tr of that table and attach the newly clones tr. You may use append or next from jQuery functions.
+- Find the last tr again, the cloned tr and switch the ids and name attributes of each input, select fields that you find in that tr. The switching means incrementing the counter or the tr which will be part of the unique id of each element and the nested array you’re trying to build in the name attribute. Also null the onclick/onchange and other functions (calendars and such) on each input and bind its new functions with incremented id.</p>
 
-<p><code>
-svn log -v --xml | grep '&lt;author.*/author&gt;' | sort $* | uniq -c | sort -rn 
-</code></p>
+<p>This might be a bit more work to it but works just find and it’s fast comparing to making an ajax call to server side.</p>
 
-<p>If this outputs doesn’t give you equal distribution between developers I think we haven’t divided the work properly. Sure that some developers might commit more often than others but at the end of the day the code needs to be written.
-So, here’s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits:</p>
+<p>2). PHP (file): Upload functionally allowing the user to upload an excel/csv file that will be parsed on server side. In the excel I would have all the rows I need to make inputs from and the logic is building the table and its rows in php. Nothing more to it.</p>
 
-<ul>
-  <li>two people can talk and contribute and be more creative from discussions</li>
-  <li>they will be more familiar with the various functionalities instead of only one which they’ll be responsible for</li>
-  <li>code style to be close enough, the whole code shouldn’t have much discrepancies</li>
-  <li>faster development</li>
-  <li>not relying only on one person for specific thing, developers also have lifes and need vacations</li>
-</ul>
+<p>3). JavaScript (builder html): Instead of cloning and switching ids on client side I am trying to build the rows with building the html itself in JavaScript. In order to have better solution I would have the inputs configurations/ fields definitions json_econded into browser’s memory. I could then access that array and loop through the fields’ types to render appropriate input. As I go from one to another I am incrementing the id, acctually the same thing as in php. The difference here from the first approch is that I don’t attach each of the row/tr after creating it, but build all the htlm and than find the table id (once) and attach the whole html.</p>
 
-<p>But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.</p>
+<p>4). PHP (ajax): The standard way, making an ajax call to server side, use the field definitions array, loop and build html. Then return it to client side and attach the html. 
+Each of the 2, 3, and 4 approach would require binding the functions on document ready.</p>
+
+<p>The results (Response time in miliseconds):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Num. of rows</th>
+      <th>JS (cloning)</th>
+      <th>PHP (file)</th>
+      <th>JS (builder)</th>
+      <th>PHP (ajax)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>500</td>
+      <td>83501</td>
+      <td>30861</td>
+      <td>1721</td>
+      <td>5268</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>270085</td>
+      <td>56231</td>
+      <td>3297</td>
+      <td>9648</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This shows that cloning the rows and attaching them is slowest way to do. As the DOM becomes larger it takes more and more time to find the last, find the inputs and switch the ids. 
+The fastest way to do it is to build the html on JavaScript side and attach it all at once. Doing it the same way using ajax is 3 times slower due to making the server call even though it might be faster depending on the server configurations, this is just my case.</p>
+
+<p>Going with the JavaScript approach has also one major advantage besides the performance aspect. If making the save on this form with php you will have to increase the max_input_vars in php.ini and that parameter can’t be set only for that script specified but globally. Instead, this would be another JS approach besides the building of the html, the save can be perform having all the inputs as array in json format and using json_decode on php to make the needed request structure.</p>
 
 </div>
 
@@ -149,9 +180,9 @@ So, here’s where I stand regarding this little dispute of mine. Why not all th
     
       <li>
         <h3>
-          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
-            JavaScript vs PHP on new 20,000 inputs
-            <small>08 Jul 2015</small>
+          <a href="/posts/Scalling-devs-work/">
+            Scaling developers’ work
+            <small>11 Apr 2016</small>
           </a>
         </h3>
       </li>
