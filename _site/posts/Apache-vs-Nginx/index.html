@@ -11,7 +11,7 @@
 
   <title>
     
-      Scaling developers’ work &middot; Ljupcho Apostolov
+      Apache vs nginx web server comparison &middot; Ljupcho Apostolov
     
   </title>
 
@@ -95,28 +95,30 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Scaling developers’ work</h1>
-  <span class="post-date">11 Apr 2016</span>
-  <p>There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.</p>
+  <h1 class="post-title">Apache vs nginx web server comparison</h1>
+  <span class="post-date">04 Apr 2014</span>
+  <p>Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I’ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx’s is 1.4.7.</p>
 
-<p>What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.</p>
+<p>if you want to use apache 2.4 with the standard, let’s say old mod_php, you’d need to switch to mod_mpm_prefork (as well install the modules/libphp5.so and include the php5_module.conf file), whereas using it with php-fpm is allowed with the new mod_mpm_event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info.</p>
 
-<p><code>
-svn log -v --xml | grep '&lt;author.*/author&gt;' | sort $* | uniq -c | sort -rn 
+<p>Nginx is event driven and apache is process driven, the first doesn’t create new process for every request, apache does. Nginx also should be consuming less memory and should be faster serving static pages.</p>
+
+<p>Environment is set using Arch Linux as application server and CentOS with database server with oracle12c. Arch is the host and CentOS is the VM.</p>
+
+<p>So, I’ve tested both of them using the php-fpm module and SugarCRM and this is what I got:</p>
+
+<p><code>	
+	ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;action=DetailView&amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
 </code></p>
 
-<p>If this outputs doesn’t give you equal distribution between developers I think we haven’t divided the work properly. Sure that some developers might commit more often than others but at the end of the day the code needs to be written.
-So, here’s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits:</p>
+<p><img src="http://localhost:4000//public/images/apachevsnginxwithphp-fpm.png" alt="Apache vs Nginx with php-fpm" /></p>
 
-<ul>
-  <li>two people can talk and contribute and be more creative from discussions</li>
-  <li>they will be more familiar with the various functionalities instead of only one which they’ll be responsible for</li>
-  <li>code style to be close enough, the whole code shouldn’t have much discrepancies</li>
-  <li>faster development</li>
-  <li>not relying only on one person for specific thing, developers also have lifes and need vacations</li>
-</ul>
+<p>Lowers means better or less time for processing per request. The results show that using apache is better then using ngnix with php-fpm for SugarCRM. 
+Also, here’s how it is with apache only using different mode, once with standard mod_php and with php-fpm.</p>
 
-<p>But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.</p>
+<p><img src="http://localhost:4000//public/images/mod_phpvsphp-fpm.png" alt="mod_php vs php-fpm" /></p>
+
+<p>It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of ‘c’ and only if all request tested are sent in parallel.</p>
 
 </div>
 
@@ -153,6 +155,15 @@ So, here’s where I stand regarding this little dispute of mine. Why not all th
     
       <li>
         <h3>
+          <a href="/posts/Scalling-devs-work/">
+            Scaling developers’ work
+            <small>11 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
             JavaScript vs PHP on new 20,000 inputs
             <small>08 Jul 2015</small>
@@ -164,15 +175,6 @@ So, here’s where I stand regarding this little dispute of mine. Why not all th
         <h3>
           <a href="/posts/PHP-Design-Patterns/">
             PHP Design Patterns
-            <small>01 May 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/Books-I-Read/">
-            Books I Read
             <small>01 May 2015</small>
           </a>
         </h3>
