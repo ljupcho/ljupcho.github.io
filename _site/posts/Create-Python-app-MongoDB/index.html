@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Create application in python2.7 with django-nonrel and mongodb on openshift &middot; Ljupcho Apostolov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Something more</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tags/">Tags</a>
+        
+      
+    
+
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Ljupcho Apostolov</a>
+            <small>on technology and random thoughts</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Create application in python2.7 with django-nonrel and mongodb on openshift</h1>
+  <span class="post-date">12 Aug 2013</span>
+  Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I've being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx's is 1.4.7. 
+
+if you want to use apache 2.4 with the standard, let's say old mod_php, you'd need to switch to mod_mpm_prefork (as well install the modules/libphp5.so and include the php5_module.conf file), whereas using it with php-fpm is allowed with the new mod_mpm_event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info. 
+
+
+
+This is from a time when i had the blog over to openshift, redhead cloud:
+ok let's give it a try right
+
+
+1. Create an account on openshift 
+2. Create app by choosing python2.7. You need not to choose any git repository or set other settings just choose “create application”. After that's done, you can switch to your localhost and create a folder with your app_name and execute those commands that you get upon creation of the app. That will let you make modification locally and just “git push” your changes to the cloud.
+
+
+</div>
+
+<span class="post-date">Share this blog: </span>
+<script type="text/javascript">
+  var addthis_config = {
+              pubid: "ra-571a96a3a515f05b",
+              data_use_cookies: false,
+              data_use_flash: false
+        }
+</script>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+<div class="addthis_sharing_toolbox"></div>
+
+
+
+<script type="text/javascript">
+  var addthis_share = addthis_share || {}
+  addthis_share = {
+    passthrough : {
+      twitter: {
+      via: "ljupcho3a"
+      }
+    }
+  }
+</script>
+
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/posts/Scalling-devs-work/">
+            Scaling developers’ work
+            <small>11 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
+            JavaScript vs PHP on new 20,000 inputs
+            <small>08 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/PHP-Design-Patterns/">
+            PHP Design Patterns
+            <small>01 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+  <!-- Add Disqus comments. -->
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'ljupchogithubio';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script id="dsq-count-scr" src="//ljupchogithubio.disqus.com/count.js" async></script>
+  </body>
+</html>
