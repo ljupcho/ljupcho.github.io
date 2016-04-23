@@ -57,7 +57,7 @@ Document path of http request is something like /index.php?q=30, where I change 
 	ab -n 100 -c 10 http://192.168.1.107/index.php?q=30
 </code>
 
-![phpvshhvm]({{ site.url }}/public/images/phpvshhvm.png.png)
+![phpvshhvm]({{ site.url }}/public/images/phpvshhvm.png)
 
 
 after q=30 the difference is really starting to show and on q=35 is impressive. mod_php processes q=35 in 12.5sec whereas hhvm in 0.5 sec. 
