@@ -4,7 +4,7 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
  <link href="http://ljupcho.github.io//"/>
- <updated>2016-04-23T19:11:43+02:00</updated>
+ <updated>2016-04-23T19:24:41+02:00</updated>
  <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
@@ -257,7 +257,7 @@ ab -n 200 -c 60 http://127.0.0.1/sugarcrm/index.php?action=ajaxui#ajaxUILoc=inde
  <entry>
    <title>Install HHVM & benchmarks</title>
    <link href="http://ljupcho.github.io//posts/HHVM-Benchmarks/"/>
-   <updated>2013-02-23T20:18:10+01:00</updated>
+   <updated>2014-02-23T20:18:10+01:00</updated>
    <id>http://ljupcho.github.io//posts/HHVM-Benchmarks</id>
    <content type="html">&lt;p&gt;HHVM, facebook hiphop virtual machine gets a lot of popularity recently due to good performance results. There are some benchmarks made by people showing how good hhvm is as a result of non-blocking I/O and better caching. It is also result of hiphop bytecode, the caching mahanism that is implement that translates eventually everything to c++ but in this case hhvm goes one step further instead of just keeping the php scripts in memory as apc does.&lt;/p&gt;
 
@@ -310,7 +310,7 @@ Document path of http request is something like /index.php?q=30, where I change 
 	ab -n 100 -c 10 http://192.168.1.107/index.php?q=30
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/phpvshhvm.png.png&quot; alt=&quot;phpvshhvm&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/phpvshhvm.png&quot; alt=&quot;phpvshhvm&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;after q=30 the difference is really starting to show and on q=35 is impressive. mod_php processes q=35 in 12.5sec whereas hhvm in 0.5 sec. 
 Since the plan was to do benchmarks for SugarCRM, after I run it under hhvm I got lots of errors, javascript mainly and I haven’t fix those yet or haven’t looked into those, maybe it’s just some configuration for hhvm, but I will definitely try to work that out. Meanwhile I did for mod_php with and without opcache. Further I might update these graphs with other technologies.
@@ -323,6 +323,59 @@ The test here are performed using the following command, changing the c paramete
 &lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/sugarcrmopcache.png&quot; alt=&quot;sugarcrmopcache&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As of php 5.5. APC no longer is supported or apc doesn’t not support php 5.5. so we switch to opCache , which as apc previously is giving better results than using without.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Binding parameters for oracle12c</title>
+   <link href="http://ljupcho.github.io//posts/Binding-parameters-for-oracle12c/"/>
+   <updated>2013-11-27T20:18:10+01:00</updated>
+   <id>http://ljupcho.github.io//posts/Binding-parameters-for-oracle12c</id>
+   <content type="html">&lt;p&gt;Tests are performed on CentOS VM with 4GB RAM. I am running 10 queries from application w/o binding parameters in the sql statements in order to verify if i would get less time for bind rather than without. It turns out i am not getting much performance gain using the sql example and data set below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/binding12c.png&quot; alt=&quot;binding12c&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Testing with two data sets, first with 20000 records, and second (the bigger bars) with 170000 records.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;created_by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_owner&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Users&#39;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_mod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assigned_user_id&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;JOIN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assigned_user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;%&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;UNION&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ALL&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;created_by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_owner&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Users&#39;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_mod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assigned_user_id&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;JOIN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assigned_user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;%&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;order&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Using bind variables doesn’t necessarily improve performance. The sql might use the execution plan and save time deciding on it, but still has to fetch different data set depending on the new value. Also, it means that in same cases it might be worse if that execution plan is not the ideal one, because not using bind parameters enables the optimizer to always opt for the best execution plan. So, i would use binding only for those sqls i am sure the execution plan is the best one.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>MongoDB vs Mysql with PHP Yii Framework</title>
+   <link href="http://ljupcho.github.io//posts/Mongo-vs-Mysql-with-PHP-Yii-Framework/"/>
+   <updated>2013-11-27T20:18:10+01:00</updated>
+   <id>http://ljupcho.github.io//posts/Mongo-vs-Mysql-with-PHP-Yii-Framework</id>
+   <content type="html">&lt;p&gt;Graphics show the results I got from measuring response time using mysql and mongo with php yii framework. First I took Yii so I could get an environment up and running quickly and concentrate on the results. I inserted 110000 records in both databases and did simple selects to print data out. I print out 6 sqls with measuring time for each of them with incrementing the total.&lt;/p&gt;
+
+&lt;p&gt;The script I use is &lt;a href=&quot;https://github.com/ljupcho/php/tree/master/mognoClient&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Using the MongoYii extension from http://sammaye.github.io/MongoYii/ , this require setting in the main.php of the config folder in yii.&lt;/li&gt;
+  &lt;li&gt;I use MongoClient from php&lt;/li&gt;
+  &lt;li&gt;I use yii to set mysql driver in config folder 
+The results show that I increase the number of Records, also I show the size of it, and the time of the response.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql0.png&quot; alt=&quot;mongovsmysql0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This picture shows that using mongoYii extension didn’t give the results I was expecting and it won’t justify the mongo hype. It shows that it will process the nearly 60,000 records for 8.5 seconds which is by far a lot more than acceptable. 
+If I turn off the extension and use native MongoClient that comes with php, I get this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql1.png&quot; alt=&quot;mongovsmysql1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we see that mongo shows better results than mysql and it is even lower than a second for the 60K records. That’s more like it.&lt;/p&gt;
 </content>
  </entry>
  

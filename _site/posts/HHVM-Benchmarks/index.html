@@ -108,7 +108,7 @@
       <div class="container content">
         <div class="post">
   <h1 class="post-title">Install HHVM & benchmarks</h1>
-  <span class="post-date">23 Feb 2013</span>
+  <span class="post-date">23 Feb 2014</span>
   <p>HHVM, facebook hiphop virtual machine gets a lot of popularity recently due to good performance results. There are some benchmarks made by people showing how good hhvm is as a result of non-blocking I/O and better caching. It is also result of hiphop bytecode, the caching mahanism that is implement that translates eventually everything to c++ but in this case hhvm goes one step further instead of just keeping the php scripts in memory as apc does.</p>
 
 <p>Here, I will try to do the same, but on different machines and in different scenarios. My idea was to see if I can make hhvm work with SugarCRM, since I beleave it can help us a great deal in cutting down the page load, the response.</p>
@@ -160,7 +160,7 @@ Document path of http request is something like /index.php?q=30, where I change 
 	ab -n 100 -c 10 http://192.168.1.107/index.php?q=30
 </code></p>
 
-<p><img src="http://ljupcho.github.io//public/images/phpvshhvm.png.png" alt="phpvshhvm" /></p>
+<p><img src="http://ljupcho.github.io//public/images/phpvshhvm.png" alt="phpvshhvm" /></p>
 
 <p>after q=30 the difference is really starting to show and on q=35 is impressive. mod_php processes q=35 in 12.5sec whereas hhvm in 0.5 sec. 
 Since the plan was to do benchmarks for SugarCRM, after I run it under hhvm I got lots of errors, javascript mainly and I haven’t fix those yet or haven’t looked into those, maybe it’s just some configuration for hhvm, but I will definitely try to work that out. Meanwhile I did for mod_php with and without opcache. Further I might update these graphs with other technologies.
