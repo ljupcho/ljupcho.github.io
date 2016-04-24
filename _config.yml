@@ -13,7 +13,7 @@ permalink:        /posts/:title/
 
 # Setup
 title:               Ljupcho Apostolov
-tagline:             'on technology and random thoughts'
+tagline:             '/data/devs/'
 description:         "Health, contentment and trust Are your greatest possessions, And freedom your greatest joy. Look within. Be still."
 url:                 http://ljupcho.github.io/
 baseurl:             ''
