@@ -112,7 +112,7 @@
       <div class="container content">
         <div class="post">
   <h1 class="post-title">Multiple queries per page load with NodeJS and MongoDB</h1>
-  <span class="post-date">21 Aug 2013</span>
+  <span class="post-date">21 Apr 2013</span>
   <p>So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">exports</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">){</span>

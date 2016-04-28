@@ -4,7 +4,7 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
  <link href="http://ljupcho.github.io//"/>
- <updated>2016-04-28T22:08:45+02:00</updated>
+ <updated>2016-04-28T22:10:23+02:00</updated>
  <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
@@ -492,7 +492,7 @@ If I turn off the extension and use native MongoClient that comes with php, I ge
  <entry>
    <title>Multiple queries per page load with NodeJS and MongoDB</title>
    <link href="http://ljupcho.github.io//posts/NodeJSMongoDB/"/>
-   <updated>2013-08-21T21:18:10+02:00</updated>
+   <updated>2013-04-21T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/NodeJSMongoDB</id>
    <content type="html">&lt;p&gt;So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:&lt;/p&gt;
 
