@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Multiple queries per page load with NodeJS and MongoDB &middot; Ljupcho Apostolov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Something more</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tags/">Tags</a>
+        
+      
+    
+
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Ljupcho Apostolov</a>
+            <small>/data/devs/</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Multiple queries per page load with NodeJS and MongoDB</h1>
+  <span class="post-date">21 Aug 2013</span>
+  <p>So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">exports</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">){</span>
+	<span class="kd">var</span> <span class="nx">all_results</span><span class="o">=</span><span class="p">[];</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s1">'where'</span><span class="p">:</span><span class="s1">'below 3000'</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s1">'number'</span><span class="p">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+		<span class="nx">accumulateData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+	<span class="p">});</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s1">'where'</span><span class="p">:</span><span class="s1">'above 6000'</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s1">'number'</span><span class="p">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data1</span><span class="p">){</span>
+		<span class="nx">accumulateData</span><span class="p">(</span><span class="nx">data1</span><span class="p">);</span>
+		<span class="nx">render</span><span class="p">(</span><span class="nx">all_results</span><span class="p">);</span>
+		<span class="c1">//console.log(all_results);</span>
+	<span class="p">});</span>
+
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">all_results</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">render</span> <span class="o">=</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">'index'</span><span class="p">,</span> <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="s1">'Title'</span><span class="p">,</span><span class="na">users</span><span class="p">:</span> <span class="nx">data</span><span class="p">});</span>
+	<span class="p">}</span>
+   
+	<span class="kd">var</span>  <span class="nx">accumulateData</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">all_results</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Here, I am trying with two queries, the first one should give me 3000 rows and the second one 4000 rows, by the total I’ve inserted. The thing here is that the console.log (the uncommented one) will print out total of 0 of the array length. It is like that because the script doesn’t wait for the results from the database, furthermore it doesn’t sync the results per query. If I use the commented console.log it will give the the total number of rows. To finalize my point I use the following example, for the first query I would use this:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s1">'where'</span><span class="p">:</span><span class="s1">'above 100000'</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s1">'number'</span><span class="p">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+	<span class="nx">accumulateData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>First, I have inserted 100000 new records, because I wanted to know what nodejs would do if the first query has more db work or more rows to fetch. In this case the console.log, the one the print out the total length would give me 4000, only the number of the second query! This means that it doesn’t wait for the results of the first query, even though it is fired first, but because it required more processing time, they are not in the total. 
+So, I would move the render function in this query and this time it will give the results from both queries, I had to put the print out function in the most consuming query to get all the rows from all the queries. And if I have a lot queries to process per page load, how would I find the “heaviest” query and call the render function there? To make sure that all will be in total and I wouldn’t guess which query makes the most cpu usage I do this:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s1">'where'</span><span class="p">:</span><span class="s1">'above 100000'</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s1">'number'</span><span class="p">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+	<span class="nx">accumulateData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s1">'where'</span><span class="p">:</span><span class="s1">'above 6000'</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s1">'number'</span><span class="p">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data1</span><span class="p">){</span>
+		<span class="nx">accumulateData</span><span class="p">(</span><span class="nx">data1</span><span class="p">);</span>
+		<span class="nx">render</span><span class="p">(</span><span class="nx">all_results</span><span class="p">);</span>
+		<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">all_results</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>This way I am forcing the second query to run after I get the data from the first and merge the results together, which is basically running one after another. What’s the point, don’t quite get the benefit of non-blocking IO in this case.</p>
+
+</div>
+
+<span class="post-date">Share this blog: </span>
+<script type="text/javascript">
+  var addthis_config = {
+              pubid: "ra-571a96a3a515f05b",
+              data_use_cookies: false,
+              data_use_flash: false
+        }
+</script>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+<div class="addthis_sharing_toolbox"></div>
+
+
+
+<script type="text/javascript">
+  var addthis_share = addthis_share || {}
+  addthis_share = {
+    passthrough : {
+      twitter: {
+      via: "ljupcho3a"
+      }
+    }
+  }
+</script>
+
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/posts/Scalling-devs-work/">
+            Scaling developers’ work
+            <small>11 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
+            JavaScript vs PHP on new 20,000 inputs
+            <small>08 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/PHP-Design-Patterns/">
+            PHP Design Patterns
+            <small>01 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+  <!-- Add Disqus comments. -->
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'ljupchogithubio';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script id="dsq-count-scr" src="//ljupchogithubio.disqus.com/count.js" async></script>
+  </body>
+</html>

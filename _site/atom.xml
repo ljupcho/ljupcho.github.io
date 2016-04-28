@@ -4,7 +4,7 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
  <link href="http://ljupcho.github.io//"/>
- <updated>2016-04-28T21:58:44+02:00</updated>
+ <updated>2016-04-28T22:08:45+02:00</updated>
  <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
@@ -17,26 +17,26 @@
    <link href="http://ljupcho.github.io//posts/Scalling-devs-work/"/>
    <updated>2016-04-11T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/Scalling-devs-work</id>
-   <content type="html">&lt;p&gt;There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with. &lt;/p&gt;
+   <content type="html">&lt;p&gt;There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.&lt;/p&gt;
 
-&lt;p&gt;What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user. &lt;/p&gt;
+&lt;p&gt;What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-svn log -v --xml | grep &amp;#39;&lt;author.*/author&gt;&amp;#39; | sort $* | uniq -c | sort -rn 
+svn log -v --xml | grep &#39;&amp;lt;author.*/author&amp;gt;&#39; | sort $* | uniq -c | sort -rn 
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;If this outputs doesn’t give you equal distribution between developers I think we haven’t divided the work properly. Sure that some developers might commit more often than others but at the end of the day the code needs to be written.
-So, here&amp;#39;s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits: &lt;/p&gt;
+So, here’s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;two people can talk and contribute and be more creative from discussions&lt;/li&gt;
-&lt;li&gt;they will be more familiar with the various functionalities instead of only one which they&amp;#39;ll be responsible for&lt;/li&gt;
-&lt;li&gt;code style to be close enough, the whole code shouldn&amp;#39;t have much discrepancies &lt;/li&gt;
-&lt;li&gt;faster development&lt;/li&gt;
-&lt;li&gt;not relying only on one person for specific thing, developers also have lifes and need vacations&lt;/li&gt;
+  &lt;li&gt;two people can talk and contribute and be more creative from discussions&lt;/li&gt;
+  &lt;li&gt;they will be more familiar with the various functionalities instead of only one which they’ll be responsible for&lt;/li&gt;
+  &lt;li&gt;code style to be close enough, the whole code shouldn’t have much discrepancies&lt;/li&gt;
+  &lt;li&gt;faster development&lt;/li&gt;
+  &lt;li&gt;not relying only on one person for specific thing, developers also have lifes and need vacations&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;But, what does this mean practically? It means that the functionality shouldn&amp;#39;t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.&lt;/p&gt;
+&lt;p&gt;But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.&lt;/p&gt;
 </content>
  </entry>
  
@@ -45,24 +45,24 @@ So, here&amp;#39;s where I stand regarding this little dispute of mine. Why not 
    <link href="http://ljupcho.github.io//posts/JavaScript-vs-PHP-20000-inputs/"/>
    <updated>2015-07-08T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/JavaScript-vs-PHP-20000-inputs</id>
-   <content type="html">&lt;p&gt;Basically I have couple of ways to build a form with a lot of inputs, maybe that won&amp;#39;t be the best practical solution but let&amp;#39;s just see where I am going with this. 
-In one tr I have at least 20 inputs, it maybe be more and I want to multiply that by 1000. Solutions based on JavaScript are done using jQuery. These are the scenarios I have tried: &lt;/p&gt;
+   <content type="html">&lt;p&gt;Basically I have couple of ways to build a form with a lot of inputs, maybe that won’t be the best practical solution but let’s just see where I am going with this. 
+In one tr I have at least 20 inputs, it maybe be more and I want to multiply that by 1000. Solutions based on JavaScript are done using jQuery. These are the scenarios I have tried:&lt;/p&gt;
 
 &lt;p&gt;1). JavaScript (cloning): Render/load the page first with basic inputs or it should have at-least one row(tr).
 - Copy the last row, or maybe better have a template of that tr and make a clone.
 - Find the last tr of that table and attach the newly clones tr. You may use append or next from jQuery functions.
-- Find the last tr again, the cloned tr and switch the ids and name attributes of each input, select fields that you find in that tr. The switching means incrementing the counter or the tr which will be part of the unique id of each element and the nested array you&amp;#39;re trying to build in the name attribute. Also null the onclick/onchange and other functions (calendars and such) on each input and bind its new functions with incremented id.&lt;/p&gt;
+- Find the last tr again, the cloned tr and switch the ids and name attributes of each input, select fields that you find in that tr. The switching means incrementing the counter or the tr which will be part of the unique id of each element and the nested array you’re trying to build in the name attribute. Also null the onclick/onchange and other functions (calendars and such) on each input and bind its new functions with incremented id.&lt;/p&gt;
 
-&lt;p&gt;This might be a bit more work to it but works just find and it&amp;#39;s fast comparing to making an ajax call to server side. &lt;/p&gt;
+&lt;p&gt;This might be a bit more work to it but works just find and it’s fast comparing to making an ajax call to server side.&lt;/p&gt;
 
-&lt;p&gt;2). PHP (file): Upload functionally allowing the user to upload an excel/csv file that will be parsed on server side. In the excel I would have all the rows I need to make inputs from and the logic is building the table and its rows in php. Nothing more to it. &lt;/p&gt;
+&lt;p&gt;2). PHP (file): Upload functionally allowing the user to upload an excel/csv file that will be parsed on server side. In the excel I would have all the rows I need to make inputs from and the logic is building the table and its rows in php. Nothing more to it.&lt;/p&gt;
 
-&lt;p&gt;3). JavaScript (builder html): Instead of cloning and switching ids on client side I am trying to build the rows with building the html itself in JavaScript. In order to have better solution I would have the inputs configurations/ fields definitions json_econded into browser&amp;#39;s memory. I could then access that array and loop through the fields&amp;#39; types to render appropriate input. As I go from one to another I am incrementing the id, acctually the same thing as in php. The difference here from the first approch is that I don&amp;#39;t attach each of the row/tr after creating it, but build all the htlm and than find the table id (once) and attach the whole html. &lt;/p&gt;
+&lt;p&gt;3). JavaScript (builder html): Instead of cloning and switching ids on client side I am trying to build the rows with building the html itself in JavaScript. In order to have better solution I would have the inputs configurations/ fields definitions json_econded into browser’s memory. I could then access that array and loop through the fields’ types to render appropriate input. As I go from one to another I am incrementing the id, acctually the same thing as in php. The difference here from the first approch is that I don’t attach each of the row/tr after creating it, but build all the htlm and than find the table id (once) and attach the whole html.&lt;/p&gt;
 
 &lt;p&gt;4). PHP (ajax): The standard way, making an ajax call to server side, use the field definitions array, loop and build html. Then return it to client side and attach the html. 
-Each of the 2, 3, and 4 approach would require binding the functions on document ready. &lt;/p&gt;
+Each of the 2, 3, and 4 approach would require binding the functions on document ready.&lt;/p&gt;
 
-&lt;p&gt;The results (Response time in miliseconds): &lt;/p&gt;
+&lt;p&gt;The results (Response time in miliseconds):&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -91,12 +91,11 @@ Each of the 2, 3, and 4 approach would require binding the functions on document
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-    
 
 &lt;p&gt;This shows that cloning the rows and attaching them is slowest way to do. As the DOM becomes larger it takes more and more time to find the last, find the inputs and switch the ids. 
-The fastest way to do it is to build the html on JavaScript side and attach it all at once. Doing it the same way using ajax is 3 times slower due to making the server call even though it might be faster depending on the server configurations, this is just my case. &lt;/p&gt;
+The fastest way to do it is to build the html on JavaScript side and attach it all at once. Doing it the same way using ajax is 3 times slower due to making the server call even though it might be faster depending on the server configurations, this is just my case.&lt;/p&gt;
 
-&lt;p&gt;Going with the JavaScript approach has also one major advantage besides the performance aspect. If making the save on this form with php you will have to increase the max&lt;em&gt;input&lt;/em&gt;vars in php.ini and that parameter can&amp;#39;t be set only for that script specified but globally. Instead, this would be another JS approach besides the building of the html, the save can be perform having all the inputs as array in json format and using json_decode on php to make the needed request structure.&lt;/p&gt;
+&lt;p&gt;Going with the JavaScript approach has also one major advantage besides the performance aspect. If making the save on this form with php you will have to increase the max_input_vars in php.ini and that parameter can’t be set only for that script specified but globally. Instead, this would be another JS approach besides the building of the html, the save can be perform having all the inputs as array in json format and using json_decode on php to make the needed request structure.&lt;/p&gt;
 </content>
  </entry>
  
@@ -105,26 +104,60 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
    <link href="http://ljupcho.github.io//posts/PHP-Design-Patterns/"/>
    <updated>2015-05-01T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/PHP-Design-Patterns</id>
-   <content type="html">&lt;p&gt;This is an abstract from the book PHP Design Patterns by Aaron Saray. I found it very useful, explanations are clear and simple and it has code examples which is always nice. I consider knowing this of a great importance, because as the business logic grows no matter of your framework you have to code your own framework. There are many frameworks out there today, but they can be nothing more than a good basic to start of your application, otherwise we&amp;#39;re stuck with large and unmaintainable code. Below is copy/paste of the main headers from the book so I can read it from time to time. &lt;/p&gt;
+   <content type="html">&lt;p&gt;This is an abstract from the book PHP Design Patterns by Aaron Saray. I found it very useful, explanations are clear and simple and it has code examples which is always nice. I consider knowing this of a great importance, because as the business logic grows no matter of your framework you have to code your own framework. There are many frameworks out there today, but they can be nothing more than a good basic to start of your application, otherwise we’re stuck with large and unmaintainable code. Below is copy/paste of the main headers from the book so I can read it from time to time.&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;The Adapter Design Pattern simply adapts one object’s interfaces to what another object expects. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Builder Design Pattern defines the design of an object that handles the complex building of another object. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Data Access Object Design Pattern describes the creation of an object that provides trans-parent access to any data source. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Decorator Design Pattern is best suited for altering or decorating portions of an existing object’s content or functionality without modifying the structure of the original object. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Delegate Design Pattern removes decisions and complex functionality from the core object by distributing or delegating them to other objects. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Façade Design Pattern hides complexity from a calling object by creating a simple façade interface in front of the collection of required logic and methods. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Factory Design Pattern provides a simple interface to acquire a new instance of an object, while sheltering the calling code from the steps to determine which base class is actually instantiated. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Interpreter Design Pattern analyzes an entity for key elements and provides its own interpretation or action corresponding to each key. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Iterator Design Pattern helps construct objects that can provide a single standard inter-face to loop or iterate through any type of countable data. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Mediator Design Pattern is used to develop an object that communicates or mediates changes to a collection of similar objects without them interacting with each other directly. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Observer Design Pattern facilitates the creation of objects that watch the state of a target object and provides state targeted functionality that is uncoupled from the core object. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Prototype Design Pattern creates objects in such a way that an initial object or prototype can be copied and cloned more efficiently than creating a new instance. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Proxy Design Pattern builds an object that is positioned transparently within two other objects in order to intercept or proxy the communication or access. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Singleton Design Pattern is used to restrict the number of times a specific object can be created to a single time by providing access to a shared instance of itself. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Strategy Design Pattern helps architect an object that can make use of algorithms in other objects on demand in lieu of containing the logic itself. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Template Design Pattern creates an abstract object that enforces a set of methods and functionality that will be used in common by child classes as a template for their own design. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The Visitor Design Pattern constructs distinct objects containing an algorithm that, when consumed by a parent object in a standard way, apply that algorithm to the parent object.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Adapter Design Pattern simply adapts one object’s interfaces to what another object expects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Builder Design Pattern defines the design of an object that handles the complex building of another object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Data Access Object Design Pattern describes the creation of an object that provides trans-parent access to any data source.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Decorator Design Pattern is best suited for altering or decorating portions of an existing object’s content or functionality without modifying the structure of the original object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Delegate Design Pattern removes decisions and complex functionality from the core object by distributing or delegating them to other objects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Façade Design Pattern hides complexity from a calling object by creating a simple façade interface in front of the collection of required logic and methods.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Factory Design Pattern provides a simple interface to acquire a new instance of an object, while sheltering the calling code from the steps to determine which base class is actually instantiated.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Interpreter Design Pattern analyzes an entity for key elements and provides its own interpretation or action corresponding to each key.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Iterator Design Pattern helps construct objects that can provide a single standard inter-face to loop or iterate through any type of countable data.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Mediator Design Pattern is used to develop an object that communicates or mediates changes to a collection of similar objects without them interacting with each other directly.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Observer Design Pattern facilitates the creation of objects that watch the state of a target object and provides state targeted functionality that is uncoupled from the core object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Prototype Design Pattern creates objects in such a way that an initial object or prototype can be copied and cloned more efficiently than creating a new instance.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Proxy Design Pattern builds an object that is positioned transparently within two other objects in order to intercept or proxy the communication or access.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Singleton Design Pattern is used to restrict the number of times a specific object can be created to a single time by providing access to a shared instance of itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Strategy Design Pattern helps architect an object that can make use of algorithms in other objects on demand in lieu of containing the logic itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Template Design Pattern creates an abstract object that enforces a set of methods and functionality that will be used in common by child classes as a template for their own design.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The Visitor Design Pattern constructs distinct objects containing an algorithm that, when consumed by a parent object in a standard way, apply that algorithm to the parent object.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 </content>
  </entry>
@@ -134,28 +167,28 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
    <link href="http://ljupcho.github.io//posts/Books-I-Read/"/>
    <updated>2015-05-01T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/Books-I-Read</id>
-   <content type="html">&lt;p&gt;This is a list of books I&amp;#39;ve recently read or I am still reading. The “problem” I&amp;#39;m having is that I start reading more books at once instead of one by one, since I perform very badly in multitasking, but if something interests me I start it immediately. &lt;/p&gt;
+   <content type="html">&lt;p&gt;This is a list of books I’ve recently read or I am still reading. The “problem” I’m having is that I start reading more books at once instead of one by one, since I perform very badly in multitasking, but if something interests me I start it immediately.&lt;/p&gt;
 
-&lt;p&gt;Programming: &lt;/p&gt;
+&lt;p&gt;Programming:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Professional PHP Design Patterns - Aaron Saray&lt;/li&gt;
-&lt;li&gt;Build APIs You Won&amp;#39;t Hate - Phil Sturgeon&lt;/li&gt;
-&lt;li&gt;Practical Design Patterns in PHP - Brandon Savage&lt;/li&gt;
-&lt;li&gt;The Book for Symfony 2.5&lt;/li&gt;
-&lt;li&gt;Scaling PHP Applications - Steve Corona&lt;/li&gt;
-&lt;li&gt;Securing PHP Web Applications - Tricia Ballad &amp;amp; William Ballad&lt;/li&gt;
-&lt;li&gt;MongoDB The Definitive Guide - Kristina Chodorow &amp;amp; Michael Dirolf&lt;/li&gt;
-&lt;li&gt;MySQL High Availability - Charles Bell, Mats Kindahl &amp;amp; Lars Thalmann&lt;/li&gt;
+  &lt;li&gt;Professional PHP Design Patterns - Aaron Saray&lt;/li&gt;
+  &lt;li&gt;Build APIs You Won’t Hate - Phil Sturgeon&lt;/li&gt;
+  &lt;li&gt;Practical Design Patterns in PHP - Brandon Savage&lt;/li&gt;
+  &lt;li&gt;The Book for Symfony 2.5&lt;/li&gt;
+  &lt;li&gt;Scaling PHP Applications - Steve Corona&lt;/li&gt;
+  &lt;li&gt;Securing PHP Web Applications - Tricia Ballad &amp;amp; William Ballad&lt;/li&gt;
+  &lt;li&gt;MongoDB The Definitive Guide - Kristina Chodorow &amp;amp; Michael Dirolf&lt;/li&gt;
+  &lt;li&gt;MySQL High Availability - Charles Bell, Mats Kindahl &amp;amp; Lars Thalmann&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Non-programming: &lt;/p&gt;
+&lt;p&gt;Non-programming:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;The War of Art - Steven Pressfield&lt;/li&gt;
-&lt;li&gt;Team Geek A Software Developer&amp;#39;s Guide to Working Well with Others&lt;/li&gt;
-&lt;li&gt;Freedom From The Know – Krishnamurti&lt;/li&gt;
-&lt;li&gt;A Tree in A Forest – A Collection of Ajahn Chan&amp;#39;s Similes&lt;/li&gt;
+  &lt;li&gt;The War of Art - Steven Pressfield&lt;/li&gt;
+  &lt;li&gt;Team Geek A Software Developer’s Guide to Working Well with Others&lt;/li&gt;
+  &lt;li&gt;Freedom From The Know – Krishnamurti&lt;/li&gt;
+  &lt;li&gt;A Tree in A Forest – A Collection of Ajahn Chan’s Similes&lt;/li&gt;
 &lt;/ul&gt;
 </content>
  </entry>
@@ -165,28 +198,28 @@ The fastest way to do it is to build the html on JavaScript side and attach it a
    <link href="http://ljupcho.github.io//posts/Apache-vs-Nginx/"/>
    <updated>2014-04-04T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/Apache-vs-Nginx</id>
-   <content type="html">&lt;p&gt;Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I&amp;#39;ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx&amp;#39;s is 1.4.7. &lt;/p&gt;
+   <content type="html">&lt;p&gt;Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I’ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx’s is 1.4.7.&lt;/p&gt;
 
-&lt;p&gt;if you want to use apache 2.4 with the standard, let&amp;#39;s say old mod&lt;em&gt;php, you&amp;#39;d need to switch to mod&lt;/em&gt;mpm&lt;em&gt;prefork (as well install the modules/libphp5.so and include the php5&lt;/em&gt;module.conf file), whereas using it with php-fpm is allowed with the new mod&lt;em&gt;mpm&lt;/em&gt;event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info. &lt;/p&gt;
+&lt;p&gt;if you want to use apache 2.4 with the standard, let’s say old mod_php, you’d need to switch to mod_mpm_prefork (as well install the modules/libphp5.so and include the php5_module.conf file), whereas using it with php-fpm is allowed with the new mod_mpm_event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info.&lt;/p&gt;
 
-&lt;p&gt;Nginx is event driven and apache is process driven, the first doesn&amp;#39;t create new process for every request, apache does. Nginx also should be consuming less memory and should be faster serving static pages. &lt;/p&gt;
+&lt;p&gt;Nginx is event driven and apache is process driven, the first doesn’t create new process for every request, apache does. Nginx also should be consuming less memory and should be faster serving static pages.&lt;/p&gt;
 
-&lt;p&gt;Environment is set using Arch Linux as application server and CentOS with database server with oracle12c. Arch is the host and CentOS is the VM. &lt;/p&gt;
+&lt;p&gt;Environment is set using Arch Linux as application server and CentOS with database server with oracle12c. Arch is the host and CentOS is the VM.&lt;/p&gt;
 
-&lt;p&gt;So, I&amp;#39;ve tested both of them using the php-fpm module and SugarCRM and this is what I got:&lt;/p&gt;
+&lt;p&gt;So, I’ve tested both of them using the php-fpm module and SugarCRM and this is what I got:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;&lt;br&gt;
-    ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;amp;action=DetailView&amp;amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
+&lt;p&gt;&lt;code&gt;	
+	ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;amp;action=DetailView&amp;amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/apachevsnginxwithphp-fpm.png&quot; alt=&quot;Apache vs Nginx with php-fpm&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/apachevsnginxwithphp-fpm.png&quot; alt=&quot;Apache vs Nginx with php-fpm&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Lowers means better or less time for processing per request. The results show that using apache is better then using ngnix with php-fpm for SugarCRM. 
-Also, here&amp;#39;s how it is with apache only using different mode, once with standard mod_php and with php-fpm. &lt;/p&gt;
+Also, here’s how it is with apache only using different mode, once with standard mod_php and with php-fpm.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mod_phpvsphp-fpm.png&quot; alt=&quot;mod_php vs php-fpm&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mod_phpvsphp-fpm.png&quot; alt=&quot;mod_php vs php-fpm&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of &amp;#39;c&amp;#39; and only if all request tested are sent in parallel.&lt;/p&gt;
+&lt;p&gt;It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of ‘c’ and only if all request tested are sent in parallel.&lt;/p&gt;
 </content>
  </entry>
  
@@ -195,9 +228,9 @@ Also, here&amp;#39;s how it is with apache only using different mode, once with 
    <link href="http://ljupcho.github.io//posts/Nginx+HHVM-for-SugarCRM/"/>
    <updated>2014-04-01T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/Nginx+HHVM-for-SugarCRM</id>
-   <content type="html">&lt;p&gt;After installing nginx web server I managed to make it work with hhvm. Further more SugarCRM works just fine in this configuration except for some errors on some pages. I wasn&amp;#39;t able to run it under apache, my app server is Arch Linux since apache 2.4.7 gives HipHop notice of file not found. It was able under ubuntu as in one of my previous posts but the app wasn&amp;#39;t working properly. So now with nginx I got my luck to try some results for SugarCRM. &lt;/p&gt;
+   <content type="html">&lt;p&gt;After installing nginx web server I managed to make it work with hhvm. Further more SugarCRM works just fine in this configuration except for some errors on some pages. I wasn’t able to run it under apache, my app server is Arch Linux since apache 2.4.7 gives HipHop notice of file not found. It was able under ubuntu as in one of my previous posts but the app wasn’t working properly. So now with nginx I got my luck to try some results for SugarCRM.&lt;/p&gt;
 
-&lt;p&gt;My environment settings are, using arch both as app server and db server, because I am using mysql in this case, couldn&amp;#39;t make hhvm work for oracle yet. But this setup gives me the chance to get some results. When running the hiphop virutal machine and you go to php info you will only get HipHop instead of all the info. Also, I am using php-fpm as better than mod_php in comparison to hhvm. &lt;/p&gt;
+&lt;p&gt;My environment settings are, using arch both as app server and db server, because I am using mysql in this case, couldn’t make hhvm work for oracle yet. But this setup gives me the chance to get some results. When running the hiphop virutal machine and you go to php info you will only get HipHop instead of all the info. Also, I am using php-fpm as better than mod_php in comparison to hhvm.&lt;/p&gt;
 
 &lt;p&gt;I am changing number of request with concurrency 60 (time per request is across all concurrent requests) and this is what I got:&lt;/p&gt;
 
@@ -205,18 +238,18 @@ Also, here&amp;#39;s how it is with apache only using different mode, once with 
 ab -n 200 -c 60 http://127.0.0.1/sugarcrm/index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DActivities
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/hhvmvsphp-fpmnginx.png&quot; alt=&quot;Nginx vs phpfpm&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/hhvmvsphp-fpmnginx.png&quot; alt=&quot;Nginx vs phpfpm&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We can see how big of a gap it is between hhvm and php-fpm. HHVM knocks down the php. These incomparable differences in favor of hhvm show why it is or will be a huge success. HHVM needs on average 2 ms pre request and php-fpm needs on average 25ms pre second and mod_php on average around 300ms (previous post). I try testing it with changing the concurrency and getting the same results. &lt;/p&gt;
+&lt;p&gt;We can see how big of a gap it is between hhvm and php-fpm. HHVM knocks down the php. These incomparable differences in favor of hhvm show why it is or will be a huge success. HHVM needs on average 2 ms pre request and php-fpm needs on average 25ms pre second and mod_php on average around 300ms (previous post). I try testing it with changing the concurrency and getting the same results.&lt;/p&gt;
 
 &lt;p&gt;Still, in this setup I must say that SugarCRM gives some errors, for example navigating to detail view of an account it will give errors:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    HipHop Fatal error: $this is null in /usr/share/nginx/html/sugarcrm/include/SubPanel/SubPanelTilesTabs.php on line 62&lt;br&gt;
+	HipHop Fatal error: $this is null in /usr/share/nginx/html/sugarcrm/include/SubPanel/SubPanelTilesTabs.php on line 62	
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    HipHop Notice: Use of undefined constant JSON&lt;em&gt;LOOSE&lt;/em&gt;TYPE - assumed &amp;#39;JSON&lt;em&gt;LOOSE&lt;/em&gt;TYPE&amp;#39; in /usr/share/nginx/html/sugarcrm/include/utils.php on line 3693
+	HipHop Notice: Use of undefined constant JSON_LOOSE_TYPE - assumed &#39;JSON_LOOSE_TYPE&#39; in /usr/share/nginx/html/sugarcrm/include/utils.php on line 3693
 &lt;/code&gt;&lt;/p&gt;
 </content>
  </entry>
@@ -233,63 +266,63 @@ ab -n 200 -c 60 http://127.0.0.1/sugarcrm/index.php?action=ajaxui#ajaxUILoc=inde
 &lt;p&gt;There are couple of scenarios to try out:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;using the usual mod_php that we normally go by default in lamp stack&lt;/li&gt;
-&lt;li&gt;cgi mode or php-fpm as a separate process outside from apache&lt;/li&gt;
-&lt;li&gt;using cache with apc or it&amp;#39;s replacement opcache&lt;/li&gt;
-&lt;li&gt;using hhvm with mod&lt;em&gt;proxy&lt;/em&gt;fcgi apache module&lt;/li&gt;
+  &lt;li&gt;using the usual mod_php that we normally go by default in lamp stack&lt;/li&gt;
+  &lt;li&gt;cgi mode or php-fpm as a separate process outside from apache&lt;/li&gt;
+  &lt;li&gt;using cache with apc or it’s replacement opcache&lt;/li&gt;
+  &lt;li&gt;using hhvm with mod_proxy_fcgi apache module&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Of course there are more scenarios if you combine from above. One of the differences between these caching types and hhvm is that apc/opcache will store the files in memory whereas hhvm has sqlite database on its own. hhvm won&amp;#39;t get best results in first run, it has so called warm-up period.
-Good articles about hhvm: &lt;/p&gt;
+&lt;p&gt;Of course there are more scenarios if you combine from above. One of the differences between these caching types and hhvm is that apc/opcache will store the files in memory whereas hhvm has sqlite database on its own. hhvm won’t get best results in first run, it has so called warm-up period.
+Good articles about hhvm:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.hhvm.com/blog/1817/fastercgi-with-hhvm&quot;&gt;http://www.hhvm.com/blog/1817/fastercgi-with-hhvm&lt;/a&gt;
 &lt;a href=&quot;https://github.com/facebook/hhvm/wiki/FastCGI&quot;&gt;https://github.com/facebook/hhvm/wiki/FastCGI&lt;/a&gt;
 &lt;a href=&quot;http://wiki.apache.org/httpd/PHP-FPM&quot;&gt;http://wiki.apache.org/httpd/PHP-FPM&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;In order to install hhvm, first you need to make sure you got the mod&lt;em&gt;proxy&lt;/em&gt;fcgi mode in your apache. To have that you need apache 2.4 version, in some distributions when you do an update of the system it gets to 2.2. Apache is also suppose to forward the request to hhvm as a separate server and hhvm will take care of the php code, as apache should just be just a proxy and you set it in the apache config file. As stated in the article above you should have something like this:&lt;/p&gt;
+&lt;p&gt;In order to install hhvm, first you need to make sure you got the mod_proxy_fcgi mode in your apache. To have that you need apache 2.4 version, in some distributions when you do an update of the system it gets to 2.2. Apache is also suppose to forward the request to hhvm as a separate server and hhvm will take care of the php code, as apache should just be just a proxy and you set it in the apache config file. As stated in the article above you should have something like this:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    ProxyPass / fcgi://127.0.0.1:9000/srv/http/
+	ProxyPass / fcgi://127.0.0.1:9000/srv/http/
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;, and run from document root:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    sudo hhvm --mode server -vServer.Type=fastcgi -vServer.Port=9000
+	sudo hhvm --mode server -vServer.Type=fastcgi -vServer.Port=9000
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;First, I tried instlling hhvm on ArchLinux. The apache version is 2.2 so I needed to install apache24 from AUR. The hhvm package I used is from AUR, got it from &lt;a href=&quot;https://github.com/mtorromeo/archlinux-packages/tree/master/hhvm&quot;&gt;here&lt;/a&gt; , since previous version got some errors, at-least this one will install. Installation took quite a while and it really heat up the machine, core temp reached 100 degrees! After installing apache24 and hhvm on arch linux, I wasn&amp;#39;t able to run both of them in bundle, I could run a php script from hhvm but not from http. My question on stackoverflow still unanswered, &lt;a href=&quot;http://stackoverflow.com/questions/21740532/configure-hhvm-and-apache-for-archlinux&quot;&gt;here&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;First, I tried instlling hhvm on ArchLinux. The apache version is 2.2 so I needed to install apache24 from AUR. The hhvm package I used is from AUR, got it from &lt;a href=&quot;https://github.com/mtorromeo/archlinux-packages/tree/master/hhvm&quot;&gt;here&lt;/a&gt; , since previous version got some errors, at-least this one will install. Installation took quite a while and it really heat up the machine, core temp reached 100 degrees! After installing apache24 and hhvm on arch linux, I wasn’t able to run both of them in bundle, I could run a php script from hhvm but not from http. My question on stackoverflow still unanswered, &lt;a href=&quot;http://stackoverflow.com/questions/21740532/configure-hhvm-and-apache-for-archlinux&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;So, Arch linux is out, moving on to CentOS 6.5. I had problems with centos because of resolving dependencies. There are couple of tutorials how to install hhvm under centOS, what I couldn&amp;#39;t work out was installing rpmdevtools, it says “Requires: pkgconfig &amp;gt;= 1:0.24”, and after upgrading the system the best I got for pkgconfig was .23 version. At this point I couldn&amp;#39;t waiste more time as switch to Ubuntu, as hhvm must work there as explained in their tutorial and it should be stable. And it was, good old ubuntu. &lt;/p&gt;
+&lt;p&gt;So, Arch linux is out, moving on to CentOS 6.5. I had problems with centos because of resolving dependencies. There are couple of tutorials how to install hhvm under centOS, what I couldn’t work out was installing rpmdevtools, it says “Requires: pkgconfig &amp;gt;= 1:0.24”, and after upgrading the system the best I got for pkgconfig was .23 version. At this point I couldn’t waiste more time as switch to Ubuntu, as hhvm must work there as explained in their tutorial and it should be stable. And it was, good old ubuntu.&lt;/p&gt;
 
 &lt;p&gt;Ubuntu 13.10 has apache 2.4 by installing lamp by default. Installing hhvm is also one command and runs with no problems. At this point I was able to run some tests. I did it with mod_php with and without opcache and hhvm. 
-I could verify if the system runs with hhvm on or off with checking &lt;/p&gt;
+I could verify if the system runs with hhvm on or off with checking&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    if (defined(&amp;#39;HHVM_VERSION&amp;#39;)) { echo &amp;quot;hip hop is on&amp;quot;; }
+	if (defined(&#39;HHVM_VERSION&#39;)) { echo &quot;hip hop is on&quot;; }
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;note: I need to uninstall hhvm to run the test without hhvm, stopping its service still runs the hhvm! 
-Here&amp;#39;s the results for fibinacii:
+Here’s the results for fibinacii:
 Document path of http request is something like /index.php?q=30, where I change “q”, running the test is done as usual with:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    ab -n 100 -c 10 http://192.168.1.107/index.php?q=30
+	ab -n 100 -c 10 http://192.168.1.107/index.php?q=30
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/phpvshhvm.png&quot; alt=&quot;phpvshhvm&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/phpvshhvm.png&quot; alt=&quot;phpvshhvm&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;after q=30 the difference is really starting to show and on q=35 is impressive. mod&lt;em&gt;php processes q=35 in 12.5sec whereas hhvm in 0.5 sec. 
-Since the plan was to do benchmarks for SugarCRM, after I run it under hhvm I got lots of errors, javascript mainly and I haven&amp;#39;t fix those yet or haven&amp;#39;t looked into those, maybe it&amp;#39;s just some configuration for hhvm, but I will definitely try to work that out. Meanwhile I did for mod&lt;/em&gt;php with and without opcache. Further I might update these graphs with other technologies.
+&lt;p&gt;after q=30 the difference is really starting to show and on q=35 is impressive. mod_php processes q=35 in 12.5sec whereas hhvm in 0.5 sec. 
+Since the plan was to do benchmarks for SugarCRM, after I run it under hhvm I got lots of errors, javascript mainly and I haven’t fix those yet or haven’t looked into those, maybe it’s just some configuration for hhvm, but I will definitely try to work that out. Meanwhile I did for mod_php with and without opcache. Further I might update these graphs with other technologies.
 The test here are performed using the following command, changing the c parameter or number of multiple request.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    ab -n 100 -c 10 http://192.168.1.107/sugarcrm/index.php?module=Accounts&amp;amp;action=DetailView&amp;amp;record=1506f08c-e553-b587-b084-5308cf4a58f2
+	ab -n 100 -c 10 http://192.168.1.107/sugarcrm/index.php?module=Accounts&amp;amp;action=DetailView&amp;amp;record=1506f08c-e553-b587-b084-5308cf4a58f2
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/sugarcrmopcache.png&quot; alt=&quot;sugarcrmopcache&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/sugarcrmopcache.png&quot; alt=&quot;sugarcrmopcache&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;As of php 5.5. APC no longer is supported or apc doesn&amp;#39;t not support php 5.5. so we switch to opCache , which as apc previously is giving better results than using without.&lt;/p&gt;
+&lt;p&gt;As of php 5.5. APC no longer is supported or apc doesn’t not support php 5.5. so we switch to opCache , which as apc previously is giving better results than using without.&lt;/p&gt;
 </content>
  </entry>
  
@@ -303,35 +336,35 @@ The test here are performed using the following command, changing the c paramete
 &lt;p&gt;Download from official site: VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
 from terminal:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;&lt;br&gt;
-chmod +x VMware-Workstation-Full-9.0.2-1031769.x86&lt;em&gt;64.bundle
-sudo ./VMware-Workstation-Full-9.0.2-1031769.x86&lt;/em&gt;64.bundle
+&lt;p&gt;&lt;code&gt;	
+chmod +x VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
+sudo ./VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;,then you install the patch from aur:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    yaourt vmware-patch
+	yaourt vmware-patch
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;,then you install the kernal_headers and run this if path is not correct when you try to install them with the vmware gui.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    ln -s /usr/src/linux-3.11.4-1-ARCH/include/generated/uapi/linux/version.h /usr/src/linux-3.11.4-1-ARCH/include/linux/version.h
+	ln -s /usr/src/linux-3.11.4-1-ARCH/include/generated/uapi/linux/version.h /usr/src/linux-3.11.4-1-ARCH/include/linux/version.h
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;This is because the version of your kernal_headers should match with linux kernal version, so you might want to update the kernal as well.
 , then run the&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    sudo vmware-modconfig --console --install-all
+	sudo vmware-modconfig --console --install-all
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;and all modules should be up and running without failure.
 ,then you need to add the license key with&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    sudo /usr/lib/vmware/bin/vmware-enter-serial
+	sudo /usr/lib/vmware/bin/vmware-enter-serial
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;h2&gt;Part II: Configure the bridge network for the centOS machine&lt;/h2&gt;
@@ -339,67 +372,67 @@ sudo ./VMware-Workstation-Full-9.0.2-1031769.x86&lt;/em&gt;64.bundle
 &lt;p&gt;For the bridge networking to be working you need to explicitly point out the wlan0 is the bridge internet adapter. you need to do this:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    sudo /usr/lib/vmware/bin/vmware-netcfg
+	sudo /usr/lib/vmware/bin/vmware-netcfg
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;in this popup set the vmnet0 (which is not shown in the ifconfig of the host) and set it to wlan0. Otherwise it is set to automatic and picks the eth0 instead of wlan0.
 After you power on the virtual machine you need to set the networking in the centos. go to:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    cd /etc/sysconfig/network-scripts/
+	cd /etc/sysconfig/network-scripts/
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;i had eth3 instead of eth0 (centos&amp;#39;s ifconfig), so i copy the the ifcfg-eth0 to 3 and change the network to (00:50:56:34:7C:AE, which you get if you clicked bridged and change the networking mac address, which i did), then the file should look like this, if you copy it:&lt;/p&gt;
+&lt;p&gt;i had eth3 instead of eth0 (centos’s ifconfig), so i copy the the ifcfg-eth0 to 3 and change the network to (00:50:56:34:7C:AE, which you get if you clicked bridged and change the networking mac address, which i did), then the file should look like this, if you copy it:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    scp ifcfg-eth3 192.168.1.100:/home/ljupcho/Downloads
+	scp ifcfg-eth3 192.168.1.100:/home/ljupcho/Downloads
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;file:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    DEVICE=eth3 
-    HWADDR=00:50:56:34:7C:AE 
-    TYPE=Ethernet
-    UUID=1f969148-80a4-4105-ab9e-dcff960fe8f8
-    ONBOOT=yes
-    NM_CONTROLLED=yes
-    BOOTPROTO=dhcp
-    GATEWAY=192.168.1.1
+	DEVICE=eth3 
+	HWADDR=00:50:56:34:7C:AE 
+	TYPE=Ethernet
+	UUID=1f969148-80a4-4105-ab9e-dcff960fe8f8
+	ONBOOT=yes
+	NM_CONTROLLED=yes
+	BOOTPROTO=dhcp
+	GATEWAY=192.168.1.1
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;restart networking&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;&lt;br&gt;
-    /etc/init.d/network restart; yum update
+&lt;p&gt;&lt;code&gt;	
+	/etc/init.d/network restart; yum update
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;h2&gt;Part III: Install Oracle 12c on CentOS 64bit&lt;/h2&gt;
 
-&lt;p&gt;These are the key points for the oracle install. You should give at least 20GB space for you VM so you won&amp;#39;t have to add more latter. 
+&lt;p&gt;These are the key points for the oracle install. You should give at least 20GB space for you VM so you won’t have to add more latter. 
 for this error: bash: xhost: command not found 
 this helped me:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    yum install xorg-x11-server-utils
+	yum install xorg-x11-server-utils
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;for this error: xhost unable to open display
 First I had to install:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    yum groupinstall “X Window System”; init 6
+	yum groupinstall “X Window System”; init 6
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;then this in terminal:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;
-    [root@centos ~]# export DISPLAY=&amp;quot;127.0.0.1:10.0&amp;quot;
-    [root@centos ~]# xhost +
-    access control disabled, clients can connect from any host xhost:  must be on local machine to enable or disable access control.
+	[root@centos ~]# export DISPLAY=&quot;127.0.0.1:10.0&quot;
+	[root@centos ~]# xhost +
+	access control disabled, clients can connect from any host xhost:  must be on local machine to enable or disable access control.
 &lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;, then you need to ssh to the centOS machine with the oracle user you&amp;#39;ve created, but you do it with: ssh -Y oracle@192.168.1.107 instead of ssh -X, then navigate to database folder of your oracle 12c archive and ./runInstaller. You would do a -Y because the input fields of the installer Oracle GUI won&amp;#39;t be editable, you won&amp;#39;t be able to type in. (this problem also might be because you have java 1.7 so if issue still exists downgrade to java 1.6) . Then follow the standard Oracle 12c installation tutorial with screen shots, you should be fine.&lt;/p&gt;
+&lt;p&gt;, then you need to ssh to the centOS machine with the oracle user you’ve created, but you do it with: ssh -Y oracle@192.168.1.107 instead of ssh -X, then navigate to database folder of your oracle 12c archive and ./runInstaller. You would do a -Y because the input fields of the installer Oracle GUI won’t be editable, you won’t be able to type in. (this problem also might be because you have java 1.7 so if issue still exists downgrade to java 1.6) . Then follow the standard Oracle 12c installation tutorial with screen shots, you should be fine.&lt;/p&gt;
 </content>
  </entry>
  
@@ -408,11 +441,11 @@ First I had to install:&lt;/p&gt;
    <link href="http://ljupcho.github.io//posts/Binding-parameters-for-oracle12c/"/>
    <updated>2013-11-27T20:18:10+01:00</updated>
    <id>http://ljupcho.github.io//posts/Binding-parameters-for-oracle12c</id>
-   <content type="html">&lt;p&gt;Tests are performed on CentOS VM with 4GB RAM. I am running 10 queries from application w/o binding parameters in the sql statements in order to verify if i would get less time for bind rather than without. It turns out i am not getting much performance gain using the sql example and data set below. &lt;/p&gt;
+   <content type="html">&lt;p&gt;Tests are performed on CentOS VM with 4GB RAM. I am running 10 queries from application w/o binding parameters in the sql statements in order to verify if i would get less time for bind rather than without. It turns out i am not getting much performance gain using the sql example and data set below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/binding12c.png&quot; alt=&quot;binding12c&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/binding12c.png&quot; alt=&quot;binding12c&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Testing with two data sets, first with 20000 records, and second (the bigger bars) with 170000 records. &lt;/p&gt;
+&lt;p&gt;Testing with two data sets, first with 20000 records, and second (the bigger bars) with 170000 records.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NVL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jt0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;created_by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_owner&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Users&#39;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assigned_user_name_mod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assigned_user_id&lt;/span&gt; 
 &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt; 
@@ -425,7 +458,7 @@ First I had to install:&lt;/p&gt;
 &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;%&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la_ljupcho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
 &lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;order&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Using bind variables doesn&amp;#39;t necessarily improve performance. The sql might use the execution plan and save time deciding on it, but still has to fetch different data set depending on the new value. Also, it means that in same cases it might be worse if that execution plan is not the ideal one, because not using bind parameters enables the optimizer to always opt for the best execution plan. So, i would use binding only for those sqls i am sure the execution plan is the best one.&lt;/p&gt;
+&lt;p&gt;Using bind variables doesn’t necessarily improve performance. The sql might use the execution plan and save time deciding on it, but still has to fetch different data set depending on the new value. Also, it means that in same cases it might be worse if that execution plan is not the ideal one, because not using bind parameters enables the optimizer to always opt for the best execution plan. So, i would use binding only for those sqls i am sure the execution plan is the best one.&lt;/p&gt;
 </content>
  </entry>
  
@@ -434,25 +467,77 @@ First I had to install:&lt;/p&gt;
    <link href="http://ljupcho.github.io//posts/Mongo-vs-Mysql-with-PHP-Yii-Framework/"/>
    <updated>2013-11-27T20:18:10+01:00</updated>
    <id>http://ljupcho.github.io//posts/Mongo-vs-Mysql-with-PHP-Yii-Framework</id>
-   <content type="html">&lt;p&gt;Graphics show the results I got from measuring response time using mysql and mongo with php yii framework. First I took Yii so I could get an environment up and running quickly and concentrate on the results. I inserted 110000 records in both databases and did simple selects to print data out. I print out 6 sqls with measuring time for each of them with incrementing the total. &lt;/p&gt;
+   <content type="html">&lt;p&gt;Graphics show the results I got from measuring response time using mysql and mongo with php yii framework. First I took Yii so I could get an environment up and running quickly and concentrate on the results. I inserted 110000 records in both databases and did simple selects to print data out. I print out 6 sqls with measuring time for each of them with incrementing the total.&lt;/p&gt;
 
 &lt;p&gt;The script I use is &lt;a href=&quot;https://github.com/ljupcho/php/tree/master/mognoClient&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Using the MongoYii extension from http://sammaye.github.io/MongoYii/ , this require setting in the main.php of the config folder in yii. &lt;/li&gt;
-&lt;li&gt;I use MongoClient from php &lt;/li&gt;
-&lt;li&gt;I use yii to set mysql driver in config folder 
-The results show that I increase the number of Records, also I show the size of it, and the time of the response. &lt;/li&gt;
+  &lt;li&gt;Using the MongoYii extension from http://sammaye.github.io/MongoYii/ , this require setting in the main.php of the config folder in yii.&lt;/li&gt;
+  &lt;li&gt;I use MongoClient from php&lt;/li&gt;
+  &lt;li&gt;I use yii to set mysql driver in config folder 
+The results show that I increase the number of Records, also I show the size of it, and the time of the response.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql0.png&quot; alt=&quot;mongovsmysql0&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql0.png&quot; alt=&quot;mongovsmysql0&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This picture shows that using mongoYii extension didn&amp;#39;t give the results I was expecting and it won&amp;#39;t justify the mongo hype. It shows that it will process the nearly 60,000 records for 8.5 seconds which is by far a lot more than acceptable. 
+&lt;p&gt;This picture shows that using mongoYii extension didn’t give the results I was expecting and it won’t justify the mongo hype. It shows that it will process the nearly 60,000 records for 8.5 seconds which is by far a lot more than acceptable. 
 If I turn off the extension and use native MongoClient that comes with php, I get this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql1.png&quot; alt=&quot;mongovsmysql1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ljupcho.github.io//public/images/mongovsmysql1.png&quot; alt=&quot;mongovsmysql1&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Here we see that mongo shows better results than mysql and it is even lower than a second for the 60K records. That&amp;#39;s more like it.&lt;/p&gt;
+&lt;p&gt;Here we see that mongo shows better results than mysql and it is even lower than a second for the 60K records. That’s more like it.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Multiple queries per page load with NodeJS and MongoDB</title>
+   <link href="http://ljupcho.github.io//posts/NodeJSMongoDB/"/>
+   <updated>2013-08-21T21:18:10+02:00</updated>
+   <id>http://ljupcho.github.io//posts/NodeJSMongoDB</id>
+   <content type="html">&lt;p&gt;So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;where&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;below 3000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;number&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;where&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;above 6000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;number&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;//console.log(all_results);&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;index&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Title&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+   
+	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Here, I am trying with two queries, the first one should give me 3000 rows and the second one 4000 rows, by the total I’ve inserted. The thing here is that the console.log (the uncommented one) will print out total of 0 of the array length. It is like that because the script doesn’t wait for the results from the database, furthermore it doesn’t sync the results per query. If I use the commented console.log it will give the the total number of rows. To finalize my point I use the following example, for the first query I would use this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;where&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;above 100000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;number&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;First, I have inserted 100000 new records, because I wanted to know what nodejs would do if the first query has more db work or more rows to fetch. In this case the console.log, the one the print out the total length would give me 4000, only the number of the second query! This means that it doesn’t wait for the results of the first query, even though it is fired first, but because it required more processing time, they are not in the total. 
+So, I would move the render function in this query and this time it will give the results from both queries, I had to put the print out function in the most consuming query to get all the rows from all the queries. And if I have a lot queries to process per page load, how would I find the “heaviest” query and call the render function there? To make sure that all will be in total and I wouldn’t guess which query makes the most cpu usage I do this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;where&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;above 100000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;number&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;where&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;above 6000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;number&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;accumulateData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This way I am forcing the second query to run after I get the data from the first and merge the results together, which is basically running one after another. What’s the point, don’t quite get the benefit of non-blocking IO in this case.&lt;/p&gt;
 </content>
  </entry>
  

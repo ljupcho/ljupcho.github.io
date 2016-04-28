@@ -77,6 +77,10 @@
     
       
         
+      
+    
+      
+        
           <a class="sidebar-nav-item" href="/tags/">Tags</a>
         
       
@@ -109,25 +113,25 @@
         <div class="post">
   <h1 class="post-title">MongoDB vs Mysql with PHP Yii Framework</h1>
   <span class="post-date">27 Nov 2013</span>
-  <p>Graphics show the results I got from measuring response time using mysql and mongo with php yii framework. First I took Yii so I could get an environment up and running quickly and concentrate on the results. I inserted 110000 records in both databases and did simple selects to print data out. I print out 6 sqls with measuring time for each of them with incrementing the total. </p>
+  <p>Graphics show the results I got from measuring response time using mysql and mongo with php yii framework. First I took Yii so I could get an environment up and running quickly and concentrate on the results. I inserted 110000 records in both databases and did simple selects to print data out. I print out 6 sqls with measuring time for each of them with incrementing the total.</p>
 
 <p>The script I use is <a href="https://github.com/ljupcho/php/tree/master/mognoClient">here</a></p>
 
 <ol>
-<li>Using the MongoYii extension from http://sammaye.github.io/MongoYii/ , this require setting in the main.php of the config folder in yii. </li>
-<li>I use MongoClient from php </li>
-<li>I use yii to set mysql driver in config folder 
-The results show that I increase the number of Records, also I show the size of it, and the time of the response. </li>
+  <li>Using the MongoYii extension from http://sammaye.github.io/MongoYii/ , this require setting in the main.php of the config folder in yii.</li>
+  <li>I use MongoClient from php</li>
+  <li>I use yii to set mysql driver in config folder 
+The results show that I increase the number of Records, also I show the size of it, and the time of the response.</li>
 </ol>
 
-<p><img src="http://ljupcho.github.io//public/images/mongovsmysql0.png" alt="mongovsmysql0"></p>
+<p><img src="http://ljupcho.github.io//public/images/mongovsmysql0.png" alt="mongovsmysql0" /></p>
 
-<p>This picture shows that using mongoYii extension didn&#39;t give the results I was expecting and it won&#39;t justify the mongo hype. It shows that it will process the nearly 60,000 records for 8.5 seconds which is by far a lot more than acceptable. 
+<p>This picture shows that using mongoYii extension didn’t give the results I was expecting and it won’t justify the mongo hype. It shows that it will process the nearly 60,000 records for 8.5 seconds which is by far a lot more than acceptable. 
 If I turn off the extension and use native MongoClient that comes with php, I get this:</p>
 
-<p><img src="http://ljupcho.github.io//public/images/mongovsmysql1.png" alt="mongovsmysql1"></p>
+<p><img src="http://ljupcho.github.io//public/images/mongovsmysql1.png" alt="mongovsmysql1" /></p>
 
-<p>Here we see that mongo shows better results than mysql and it is even lower than a second for the 60K records. That&#39;s more like it.</p>
+<p>Here we see that mongo shows better results than mysql and it is even lower than a second for the 60K records. That’s more like it.</p>
 
 </div>
 

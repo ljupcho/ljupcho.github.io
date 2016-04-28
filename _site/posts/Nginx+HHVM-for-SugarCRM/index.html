@@ -77,6 +77,10 @@
     
       
         
+      
+    
+      
+        
           <a class="sidebar-nav-item" href="/tags/">Tags</a>
         
       
@@ -109,9 +113,9 @@
         <div class="post">
   <h1 class="post-title">Nginx + HHVM for SugarCRM</h1>
   <span class="post-date">01 Apr 2014</span>
-  <p>After installing nginx web server I managed to make it work with hhvm. Further more SugarCRM works just fine in this configuration except for some errors on some pages. I wasn&#39;t able to run it under apache, my app server is Arch Linux since apache 2.4.7 gives HipHop notice of file not found. It was able under ubuntu as in one of my previous posts but the app wasn&#39;t working properly. So now with nginx I got my luck to try some results for SugarCRM. </p>
+  <p>After installing nginx web server I managed to make it work with hhvm. Further more SugarCRM works just fine in this configuration except for some errors on some pages. I wasn’t able to run it under apache, my app server is Arch Linux since apache 2.4.7 gives HipHop notice of file not found. It was able under ubuntu as in one of my previous posts but the app wasn’t working properly. So now with nginx I got my luck to try some results for SugarCRM.</p>
 
-<p>My environment settings are, using arch both as app server and db server, because I am using mysql in this case, couldn&#39;t make hhvm work for oracle yet. But this setup gives me the chance to get some results. When running the hiphop virutal machine and you go to php info you will only get HipHop instead of all the info. Also, I am using php-fpm as better than mod_php in comparison to hhvm. </p>
+<p>My environment settings are, using arch both as app server and db server, because I am using mysql in this case, couldn’t make hhvm work for oracle yet. But this setup gives me the chance to get some results. When running the hiphop virutal machine and you go to php info you will only get HipHop instead of all the info. Also, I am using php-fpm as better than mod_php in comparison to hhvm.</p>
 
 <p>I am changing number of request with concurrency 60 (time per request is across all concurrent requests) and this is what I got:</p>
 
@@ -119,18 +123,18 @@
 ab -n 200 -c 60 http://127.0.0.1/sugarcrm/index.php?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DActivities
 </code></p>
 
-<p><img src="http://ljupcho.github.io//public/images/hhvmvsphp-fpmnginx.png" alt="Nginx vs phpfpm"></p>
+<p><img src="http://ljupcho.github.io//public/images/hhvmvsphp-fpmnginx.png" alt="Nginx vs phpfpm" /></p>
 
-<p>We can see how big of a gap it is between hhvm and php-fpm. HHVM knocks down the php. These incomparable differences in favor of hhvm show why it is or will be a huge success. HHVM needs on average 2 ms pre request and php-fpm needs on average 25ms pre second and mod_php on average around 300ms (previous post). I try testing it with changing the concurrency and getting the same results. </p>
+<p>We can see how big of a gap it is between hhvm and php-fpm. HHVM knocks down the php. These incomparable differences in favor of hhvm show why it is or will be a huge success. HHVM needs on average 2 ms pre request and php-fpm needs on average 25ms pre second and mod_php on average around 300ms (previous post). I try testing it with changing the concurrency and getting the same results.</p>
 
 <p>Still, in this setup I must say that SugarCRM gives some errors, for example navigating to detail view of an account it will give errors:</p>
 
 <p><code>
-    HipHop Fatal error: $this is null in /usr/share/nginx/html/sugarcrm/include/SubPanel/SubPanelTilesTabs.php on line 62<br>
+	HipHop Fatal error: $this is null in /usr/share/nginx/html/sugarcrm/include/SubPanel/SubPanelTilesTabs.php on line 62	
 </code></p>
 
 <p><code>
-    HipHop Notice: Use of undefined constant JSON<em>LOOSE</em>TYPE - assumed &#39;JSON<em>LOOSE</em>TYPE&#39; in /usr/share/nginx/html/sugarcrm/include/utils.php on line 3693
+	HipHop Notice: Use of undefined constant JSON_LOOSE_TYPE - assumed 'JSON_LOOSE_TYPE' in /usr/share/nginx/html/sugarcrm/include/utils.php on line 3693
 </code></p>
 
 </div>

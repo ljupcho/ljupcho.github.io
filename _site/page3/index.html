@@ -11,7 +11,7 @@
 
   <title>
     
-      About · Ljupcho Apostolov
+      Ljupcho Apostolov &middot; /data/devs/
     
   </title>
 
@@ -59,7 +59,7 @@
     
       
         
-          <a class="sidebar-nav-item active" href="/about/">About</a>
+          <a class="sidebar-nav-item" href="/about/">About</a>
         
       
     
@@ -91,7 +91,7 @@
 
   <div class="sidebar-item">
     <p>
-      © 2016. All rights reserved.
+      &copy; 2016. All rights reserved.
     </p>
   </div>
 </div>
@@ -110,21 +110,43 @@
       </div>
 
       <div class="container content">
-        <div class="page">
-  <h1 class="page-title">About</h1>
-  <p>Hello!</p>
+        <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/posts/NodeJSMongoDB/">
+        Multiple queries per page load with NodeJS and MongoDB
+      </a>
+    </h1>
 
-<p>I am a Software Developer, coming from Skopje, Macedonia. Most of my time I spend coding in PHP with different frameworks, but I also like doing my own designs and small frameworks that can be case specific.</p>
+    <span class="post-date">21 Aug 2013</span>
 
-<p>The idea of the blog is to publish research work from measuring performances of different technologies, comparing them and draw up some conclusions and take it from there. Occasionally I will find the liberty to write an opinion or two about certain things that bother me, IT related stuff. The thing is that sometimes it takes a lot of time to master something and a bit more to compare it with something else.</p>
+    <div style="clear: both;"></div>​
+    <p>So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:</p>
 
-<p>I enjoy running, biking in nature and meditation.</p>
 
-<p>You can follow me on twitter <a href="https://twitter.com/ljupcho3a">@ljupcho3a</a> or <a href="mailto:ljupcho.apostolov@gmail.com">e-mail</a></p>
 
-<p>Thanks for reading!</p>
+    <br/>
 
+    <a href="/posts/NodeJSMongoDB/">
+        Continue reading...
+    </a>
+
+  </div>
+  
 </div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/page2">Newer</a>
+    
+  
+</div>
+
 
         
 
