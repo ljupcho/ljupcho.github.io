@@ -3,7 +3,7 @@ layout: post
 title:  "Scaling developers’ work"
 date:   2016-04-11 21:18:10 +0200
 categories: svn
-tags: svn scale
+tags: svn
 comments: true
 ---
 

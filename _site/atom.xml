@@ -4,7 +4,7 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
  <link href="http://ljupcho.github.io//"/>
- <updated>2016-04-28T22:10:23+02:00</updated>
+ <updated>2016-04-28T22:20:56+02:00</updated>
  <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
@@ -492,7 +492,7 @@ If I turn off the extension and use native MongoClient that comes with php, I ge
  <entry>
    <title>Multiple queries per page load with NodeJS and MongoDB</title>
    <link href="http://ljupcho.github.io//posts/NodeJSMongoDB/"/>
-   <updated>2013-04-21T21:18:10+02:00</updated>
+   <updated>2013-08-21T21:18:10+02:00</updated>
    <id>http://ljupcho.github.io//posts/NodeJSMongoDB</id>
    <content type="html">&lt;p&gt;So, I started using NodeJS with express framework, so I could first figure out how it does things and then make some performance tests to see if it is worth the hustle. I’ve combined it with mongodb and my plan was first to insert data in database and see the behaving as I increase the volume of it. I wanted to call multiple queries with one page call and the way nodejs handles them is like fire them sequentially, continue executing the script and after the db finishes with the queries it will print out the results. It means this:&lt;/p&gt;
 
@@ -538,6 +538,47 @@ So, I would move the render function in this query and this time it will give th
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;This way I am forcing the second query to run after I get the data from the first and merge the results together, which is basically running one after another. What’s the point, don’t quite get the benefit of non-blocking IO in this case.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Create application in python2.7 with django-nonrel and mongodb on openshift</title>
+   <link href="http://ljupcho.github.io//posts/Create-application-in-python/"/>
+   <updated>2013-08-21T21:18:10+02:00</updated>
+   <id>http://ljupcho.github.io//posts/Create-application-in-python</id>
+   <content type="html">&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create an account on openshift&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create app by choosing python2.7. You need not to choose any git repository or set other settings just choose “create application”. After that’s done, you can switch to your localhost and create a folder with your app_name and execute those commands that you get upon creation of the app. That will let you make modification locally and just “git push” your changes to the cloud.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add cartridge mongodb to your app and save those credentials.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Before going into the code you need to install some pre-requirements on the cloud. Login with ssh that you’re provided with for your app on openshift and ssh to it. Go to tmp folder with: cd $OPENSHIFT_TMP_DIR and install first pip and then do these:&lt;br /&gt;
+ &lt;code&gt;
+ # pip install https://bitbucket.org/wkornewald/django-nonrel/get/tip.tar.gz&lt;br /&gt;
+ # pip install https://bitbucket.org/wkornewald/djangotoolbox/get/tip.tar.gz&lt;br /&gt;
+ # pip install https://github.com/django-nonrel/mongodb-engine/tarball/master
+ &lt;/code&gt;&lt;br /&gt;
+You can install these with pip, but what I did was “wget” all of these then “tar xcvf” them, cd to each of the extracted folders and install them with “python setup.py install”. After installation you can verify by typing “python”, then in the shell “import django”, “django.get_version()”, and output should be “1.3”. At this point you have python and django-nonrel set up. Moving on.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;What you need to do now is modify the sample code generated from openshift and you have it locally after “git clone”, you can create yourself a py project in Eclipse and import it. Now, you can get this code (https://github.com/ljupcho/openshift_python2.7_django-nonrel_mongodb) and copy the folders and files, change the folder name ‘blog’ to whatever your app_name is and simple git push from terminal from your local app folder.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;That should actually do it, you should have the app now running, since the “git push” restart the application as well.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;You will also need to sync the database, so log in with ssh to application and do “cd ~/app-root/repo/blog” and execute: “python manage.py syncdb” With this you can add superuser that you can log in to admin django with.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can also buy yourself a domain and link it to the rhcloud app.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
 </content>
  </entry>
  
