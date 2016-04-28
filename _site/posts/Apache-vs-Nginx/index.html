@@ -109,28 +109,28 @@
         <div class="post">
   <h1 class="post-title">Apache vs nginx web server comparison</h1>
   <span class="post-date">04 Apr 2014</span>
-  <p>Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I’ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx’s is 1.4.7.</p>
+  <p>Using php-fpm seems to be a good idea so I wanted to check how thing stand regarding web server performance. Apache is standard and I&#39;ve being using it for lots of years, but read that nignx should be faster and more stable. Version of apache is 2.4.7 and nignx&#39;s is 1.4.7. </p>
 
-<p>if you want to use apache 2.4 with the standard, let’s say old mod_php, you’d need to switch to mod_mpm_prefork (as well install the modules/libphp5.so and include the php5_module.conf file), whereas using it with php-fpm is allowed with the new mod_mpm_event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info.</p>
+<p>if you want to use apache 2.4 with the standard, let&#39;s say old mod<em>php, you&#39;d need to switch to mod</em>mpm<em>prefork (as well install the modules/libphp5.so and include the php5</em>module.conf file), whereas using it with php-fpm is allowed with the new mod<em>mpm</em>event which stands for multi processing module. Installing the php-fpm and making it work with the web server should give “FPM/FastCGI” under Server API in php info. </p>
 
-<p>Nginx is event driven and apache is process driven, the first doesn’t create new process for every request, apache does. Nginx also should be consuming less memory and should be faster serving static pages.</p>
+<p>Nginx is event driven and apache is process driven, the first doesn&#39;t create new process for every request, apache does. Nginx also should be consuming less memory and should be faster serving static pages. </p>
 
-<p>Environment is set using Arch Linux as application server and CentOS with database server with oracle12c. Arch is the host and CentOS is the VM.</p>
+<p>Environment is set using Arch Linux as application server and CentOS with database server with oracle12c. Arch is the host and CentOS is the VM. </p>
 
-<p>So, I’ve tested both of them using the php-fpm module and SugarCRM and this is what I got:</p>
+<p>So, I&#39;ve tested both of them using the php-fpm module and SugarCRM and this is what I got:</p>
 
-<p><code>	
-	ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;action=DetailView&amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
+<p><code><br>
+    ab -n 100 -c 10 http://127.0.0.1/mkt/index.php?module=Accounts&amp;action=DetailView&amp;record=7c8b058e-edb7-afa2-e61e-533d6dc29960
 </code></p>
 
-<p><img src="http://ljupcho.github.io//public/images/apachevsnginxwithphp-fpm.png" alt="Apache vs Nginx with php-fpm" /></p>
+<p><img src="http://ljupcho.github.io//public/images/apachevsnginxwithphp-fpm.png" alt="Apache vs Nginx with php-fpm"></p>
 
 <p>Lowers means better or less time for processing per request. The results show that using apache is better then using ngnix with php-fpm for SugarCRM. 
-Also, here’s how it is with apache only using different mode, once with standard mod_php and with php-fpm.</p>
+Also, here&#39;s how it is with apache only using different mode, once with standard mod_php and with php-fpm. </p>
 
-<p><img src="http://ljupcho.github.io//public/images/mod_phpvsphp-fpm.png" alt="mod_php vs php-fpm" /></p>
+<p><img src="http://ljupcho.github.io//public/images/mod_phpvsphp-fpm.png" alt="mod_php vs php-fpm"></p>
 
-<p>It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of ‘c’ and only if all request tested are sent in parallel.</p>
+<p>It seems like php-fpm is a lot faster and mod_php is catching up only for bigger values of &#39;c&#39; and only if all request tested are sent in parallel.</p>
 
 </div>
 

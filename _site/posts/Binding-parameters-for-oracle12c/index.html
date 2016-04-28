@@ -109,11 +109,11 @@
         <div class="post">
   <h1 class="post-title">Binding parameters for oracle12c</h1>
   <span class="post-date">27 Nov 2013</span>
-  <p>Tests are performed on CentOS VM with 4GB RAM. I am running 10 queries from application w/o binding parameters in the sql statements in order to verify if i would get less time for bind rather than without. It turns out i am not getting much performance gain using the sql example and data set below.</p>
+  <p>Tests are performed on CentOS VM with 4GB RAM. I am running 10 queries from application w/o binding parameters in the sql statements in order to verify if i would get less time for bind rather than without. It turns out i am not getting much performance gain using the sql example and data set below. </p>
 
-<p><img src="http://ljupcho.github.io//public/images/binding12c.png" alt="binding12c" /></p>
+<p><img src="http://ljupcho.github.io//public/images/binding12c.png" alt="binding12c"></p>
 
-<p>Testing with two data sets, first with 20000 records, and second (the bigger bars) with 170000 records.</p>
+<p>Testing with two data sets, first with 20000 records, and second (the bigger bars) with 170000 records. </p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="k">from</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">la_ljupcho</span><span class="p">.</span><span class="n">id</span> <span class="p">,</span> <span class="n">la_ljupcho</span><span class="p">.</span><span class="n">name</span> <span class="p">,</span> <span class="p">(</span><span class="n">NVL</span><span class="p">(</span><span class="n">jt0</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span> <span class="o">||</span> <span class="s1">' '</span> <span class="o">||</span> <span class="n">NVL</span><span class="p">(</span><span class="n">jt0</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span><span class="s1">''</span><span class="p">))</span> <span class="n">assigned_user_name</span> <span class="p">,</span> <span class="n">jt0</span><span class="p">.</span><span class="n">created_by</span> <span class="n">assigned_user_name_owner</span> <span class="p">,</span> <span class="s1">'Users'</span> <span class="n">assigned_user_name_mod</span><span class="p">,</span> <span class="n">la_ljupcho</span><span class="p">.</span><span class="n">assigned_user_id</span> 
 <span class="k">FROM</span> <span class="n">la_ljupcho</span> 
@@ -126,7 +126,7 @@
 <span class="k">where</span> <span class="p">((</span><span class="n">la_ljupcho</span><span class="p">.</span><span class="n">name</span> <span class="k">like</span> <span class="s1">''</span><span class="o">||</span><span class="p">:</span><span class="n">name</span><span class="o">||</span><span class="s1">'%'</span><span class="p">))</span> <span class="k">AND</span> <span class="n">la_ljupcho</span><span class="p">.</span><span class="n">deleted</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="n">a</span> 
 <span class="k">group</span> <span class="k">by</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="k">order</span> <span class="k">by</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span></code></pre></figure>
 
-<p>Using bind variables doesn’t necessarily improve performance. The sql might use the execution plan and save time deciding on it, but still has to fetch different data set depending on the new value. Also, it means that in same cases it might be worse if that execution plan is not the ideal one, because not using bind parameters enables the optimizer to always opt for the best execution plan. So, i would use binding only for those sqls i am sure the execution plan is the best one.</p>
+<p>Using bind variables doesn&#39;t necessarily improve performance. The sql might use the execution plan and save time deciding on it, but still has to fetch different data set depending on the new value. Also, it means that in same cases it might be worse if that execution plan is not the ideal one, because not using bind parameters enables the optimizer to always opt for the best execution plan. So, i would use binding only for those sqls i am sure the execution plan is the best one.</p>
 
 </div>
 

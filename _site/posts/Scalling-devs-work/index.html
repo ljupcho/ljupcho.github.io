@@ -109,26 +109,26 @@
         <div class="post">
   <h1 class="post-title">Scaling developers’ work</h1>
   <span class="post-date">11 Apr 2016</span>
-  <p>There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with.</p>
+  <p>There are different ways developers, managers, people involved in the project divide the work between themselves in order to be more efficient, usually assigning tasks to what the person is most comfortable with. </p>
 
-<p>What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user.</p>
+<p>What happens if I run this command, presumably you have your project under svn and you want to see the number of commits per user. </p>
 
 <p><code>
-svn log -v --xml | grep '&lt;author.*/author&gt;' | sort $* | uniq -c | sort -rn 
+svn log -v --xml | grep &#39;<author.*/author>&#39; | sort $* | uniq -c | sort -rn 
 </code></p>
 
 <p>If this outputs doesn’t give you equal distribution between developers I think we haven’t divided the work properly. Sure that some developers might commit more often than others but at the end of the day the code needs to be written.
-So, here’s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits:</p>
+So, here&#39;s where I stand regarding this little dispute of mine. Why not all the developers work on all the tasks and be that a joined effort instead of having one developer doing the same thing over and over on different projects. Having in mind that problem first needs to be solved and only than the code to be written, we can have multiple people working on same functionality parsed into smaller little functionalities itself. The benefits: </p>
 
 <ul>
-  <li>two people can talk and contribute and be more creative from discussions</li>
-  <li>they will be more familiar with the various functionalities instead of only one which they’ll be responsible for</li>
-  <li>code style to be close enough, the whole code shouldn’t have much discrepancies</li>
-  <li>faster development</li>
-  <li>not relying only on one person for specific thing, developers also have lifes and need vacations</li>
+<li>two people can talk and contribute and be more creative from discussions</li>
+<li>they will be more familiar with the various functionalities instead of only one which they&#39;ll be responsible for</li>
+<li>code style to be close enough, the whole code shouldn&#39;t have much discrepancies </li>
+<li>faster development</li>
+<li>not relying only on one person for specific thing, developers also have lifes and need vacations</li>
 </ul>
 
-<p>But, what does this mean practically? It means that the functionality shouldn’t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.</p>
+<p>But, what does this mean practically? It means that the functionality shouldn&#39;t be one file or all your functions inside a controller or calling actions with Ajax, instead making up a design with common patterns that would break down into more classes and packages, components if you will. That will surly help deployment and code re-usability as well.</p>
 
 </div>
 
