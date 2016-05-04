@@ -11,7 +11,7 @@
 
   <title>
     
-      Install VMWare Workstation, create CentOS machine &amp; configure bridge network for wlan0 and install Oracle 12c on ArchLinux 64bit · Ljupcho Apostolov
+      On Functional Programming &middot; Ljupcho Apostolov
     
   </title>
 
@@ -91,7 +91,7 @@
 
   <div class="sidebar-item">
     <p>
-      © 2016. All rights reserved.
+      &copy; 2016. All rights reserved.
     </p>
   </div>
 </div>
@@ -111,110 +111,24 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Install VMWare Workstation, create CentOS machine &amp; configure bridge network for wlan0 and install Oracle 12c on ArchLinux 64bit</h1>
-  <span class="post-date">27 Nov 2013</span>
-  <h2>Part I: Installation of VMWare Workstation</h2>
+  <h1 class="post-title">On Functional Programming</h1>
+  <span class="post-date">04 May 2016</span>
+  <p>Where are we with functional programming and should that improve code quality. It sure is interesting. This is how I understand it. Functional programming is based on immutability and statelessness. The first means the function doesn’t change anything, it gets data and returns some other data (data in - data out) and statelessness which means it doesn’t depend on anything previous as if it is declared in separate file.</p>
 
-<p>Download from official site: VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
-from terminal:</p>
+<p>JQuery has been doing this for 20 years now, so most of the how-to I’ve read come from JavaScript but the logic is the same or maybe not quite the same.</p>
 
-<p><code>	
-chmod +x VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
-sudo ./VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
-</code></p>
+<p>In OOP the point is we have objects that communicate between each other, usually we inject one object into other object’s constructor (DI injection) and than use its methods in some way. So, we have objects commonly referred to like “nouns” and methods like “verbs”. If we need a method from some objects we have to create an instance of it and call that method even though that’s all we need, so we might want to declare and call that method static so we don’t have to create an object. Creating an object just for using something from it is not very good practice and it faces the problems known as “composition over inheritance” or better referred as the famous quote “you asked for the banana but you got the whole jungle”. It is a problem when we have huge chain of inheritance of many parent/child classes so the purpose of using something from some child class and create all in the background is not necessary and we don’t need it and we shouldn’t create it.</p>
 
-<p>,then you install the patch from aur:</p>
+<p>Moving these objects is some patterns is old news, moving the functions and not creating objects is also old news but somehow modern frameworks adopt it widely. They are known as closure, anonymous functions or functions that are injected into another functions as arguments. We have native functions like array map/filter/reduce that will do something for each of the elements of the passed data. So, instead of for/foreach loops we can use those. We move the “verbs” or the functions around and for that to be feasible we need to make them immutable and stateless. This doesn’t mean we go back to having functions in files and include those files and call functions.</p>
 
-<p><code>
-	yaourt vmware-patch
-</code></p>
+<p>If we have a objects that communicate in some way than for some function I might want to pass an array by reference and also return some other value and also calling that function recursively. Calling functions recursively is great way to make simple and re-usable code.</p>
 
-<p>,then you install the kernal_headers and run this if path is not correct when you try to install them with the vmware gui.</p>
+<p>I might want to force using some other functions in one function, for example if I have an abstract class and declare an abstract private method, so children classes must have that function but with creating an object they can’t assess that method from outside, because I want my main function to be called first so I can ensure that that object will have some logic done before calling a public method.</p>
 
-<p><code>
-	ln -s /usr/src/linux-3.11.4-1-ARCH/include/generated/uapi/linux/version.h /usr/src/linux-3.11.4-1-ARCH/include/linux/version.h
-</code></p>
+<p>It is just a common sense that we should break our functions into smaller pieces, each of them doing one thing (you have one job) because we will always need small piece of some functions someplace else.</p>
 
-<p>This is because the version of your kernal_headers should match with linux kernal version, so you might want to update the kernal as well.
-, then run the</p>
+<p>How do we inject one function into another, is that a function that we create it on the run or use it from a file or from another object or all of these we just know what the output from that function should be.</p>
 
-<p><code>
-	sudo vmware-modconfig --console --install-all
-</code></p>
-
-<p>and all modules should be up and running without failure.
-,then you need to add the license key with</p>
-
-<p><code>
-	sudo /usr/lib/vmware/bin/vmware-enter-serial
-</code></p>
-
-<h2>Part II: Configure the bridge network for the centOS machine</h2>
-
-<p>For the bridge networking to be working you need to explicitly point out the wlan0 is the bridge internet adapter. you need to do this:</p>
-
-<p><code>
-	sudo /usr/lib/vmware/bin/vmware-netcfg
-</code></p>
-
-<p>in this popup set the vmnet0 (which is not shown in the ifconfig of the host) and set it to wlan0. Otherwise it is set to automatic and picks the eth0 instead of wlan0.
-After you power on the virtual machine you need to set the networking in the centos. go to:</p>
-
-<p><code>
-	cd /etc/sysconfig/network-scripts/
-</code></p>
-
-<p>i had eth3 instead of eth0 (centos’s ifconfig), so i copy the the ifcfg-eth0 to 3 and change the network to (00:50:56:34:7C:AE, which you get if you clicked bridged and change the networking mac address, which i did), then the file should look like this, if you copy it:</p>
-
-<p><code>
-	scp ifcfg-eth3 192.168.1.100:/home/ljupcho/Downloads
-</code></p>
-
-<p>file:</p>
-
-<p><code>
-	DEVICE=eth3 
-	HWADDR=00:50:56:34:7C:AE 
-	TYPE=Ethernet
-	UUID=1f969148-80a4-4105-ab9e-dcff960fe8f8
-	ONBOOT=yes
-	NM_CONTROLLED=yes
-	BOOTPROTO=dhcp
-	GATEWAY=192.168.1.1
-</code></p>
-
-<p>restart networking</p>
-
-<p><code>	
-	/etc/init.d/network restart; yum update
-</code></p>
-
-<h2>Part III: Install Oracle 12c on CentOS 64bit</h2>
-
-<p>These are the key points for the oracle install. You should give at least 20GB space for you VM so you won’t have to add more latter. 
-for this error: bash: xhost: command not found 
-this helped me:</p>
-
-<p><code>
-	yum install xorg-x11-server-utils
-</code></p>
-
-<p>for this error: xhost unable to open display
-First I had to install:</p>
-
-<p><code>
-	yum groupinstall “X Window System”; init 6
-</code></p>
-
-<p>then this in terminal:</p>
-
-<p><code>
-	[root@centos ~]# export DISPLAY="127.0.0.1:10.0"
-	[root@centos ~]# xhost +
-	access control disabled, clients can connect from any host xhost:  must be on local machine to enable or disable access control.
-</code></p>
-
-<p>, then you need to ssh to the centOS machine with the oracle user you’ve created, but you do it with: ssh -Y oracle@192.168.1.107 instead of ssh -X, then navigate to database folder of your oracle 12c archive and ./runInstaller. You would do a -Y because the input fields of the installer Oracle GUI won’t be editable, you won’t be able to type in. (this problem also might be because you have java 1.7 so if issue still exists downgrade to java 1.6) . Then follow the standard Oracle 12c installation tutorial with screen shots, you should be fine.</p>
 
 </div>
 
@@ -251,15 +165,6 @@ First I had to install:</p>
     
       <li>
         <h3>
-          <a href="/posts/On-Functional-Programming/">
-            On Functional Programming
-            <small>04 May 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
           <a href="/posts/Scalling-devs-work/">
             Scaling developers’ work
             <small>11 Apr 2016</small>
@@ -272,6 +177,15 @@ First I had to install:</p>
           <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
             JavaScript vs PHP on new 20,000 inputs
             <small>08 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/PHP-Design-Patterns/">
+            PHP Design Patterns
+            <small>01 May 2015</small>
           </a>
         </h3>
       </li>
@@ -293,8 +207,7 @@ First I had to install:</p>
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-</noscript>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 

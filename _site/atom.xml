@@ -4,13 +4,37 @@
  <title>Ljupcho Apostolov</title>
  <link href="http://ljupcho.github.io//atom.xml" rel="self"/>
  <link href="http://ljupcho.github.io//"/>
- <updated>2016-04-28T22:20:56+02:00</updated>
+ <updated>2016-05-04T20:20:11+02:00</updated>
  <id>http://ljupcho.github.io/</id>
  <author>
    <name>Ljucpho Apostolov</name>
    <email>ljupcho.apostolov@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>On Functional Programming</title>
+   <link href="http://ljupcho.github.io//posts/On-Functional-Programming/"/>
+   <updated>2016-05-04T20:12:10+02:00</updated>
+   <id>http://ljupcho.github.io//posts/On-Functional-Programming</id>
+   <content type="html">&lt;p&gt;Where are we with functional programming and should that improve code quality. It sure is interesting. This is how I understand it. Functional programming is based on immutability and statelessness. The first means the function doesn’t change anything, it gets data and returns some other data (data in - data out) and statelessness which means it doesn’t depend on anything previous as if it is declared in separate file.&lt;/p&gt;
+
+&lt;p&gt;JQuery has been doing this for 20 years now, so most of the how-to I’ve read come from JavaScript but the logic is the same or maybe not quite the same.&lt;/p&gt;
+
+&lt;p&gt;In OOP the point is we have objects that communicate between each other, usually we inject one object into other object’s constructor (DI injection) and than use its methods in some way. So, we have objects commonly referred to like “nouns” and methods like “verbs”. If we need a method from some objects we have to create an instance of it and call that method even though that’s all we need, so we might want to declare and call that method static so we don’t have to create an object. Creating an object just for using something from it is not very good practice and it faces the problems known as “composition over inheritance” or better referred as the famous quote “you asked for the banana but you got the whole jungle”. It is a problem when we have huge chain of inheritance of many parent/child classes so the purpose of using something from some child class and create all in the background is not necessary and we don’t need it and we shouldn’t create it.&lt;/p&gt;
+
+&lt;p&gt;Moving these objects is some patterns is old news, moving the functions and not creating objects is also old news but somehow modern frameworks adopt it widely. They are known as closure, anonymous functions or functions that are injected into another functions as arguments. We have native functions like array map/filter/reduce that will do something for each of the elements of the passed data. So, instead of for/foreach loops we can use those. We move the “verbs” or the functions around and for that to be feasible we need to make them immutable and stateless. This doesn’t mean we go back to having functions in files and include those files and call functions.&lt;/p&gt;
+
+&lt;p&gt;If we have a objects that communicate in some way than for some function I might want to pass an array by reference and also return some other value and also calling that function recursively. Calling functions recursively is great way to make simple and re-usable code.&lt;/p&gt;
+
+&lt;p&gt;I might want to force using some other functions in one function, for example if I have an abstract class and declare an abstract private method, so children classes must have that function but with creating an object they can’t assess that method from outside, because I want my main function to be called first so I can ensure that that object will have some logic done before calling a public method.&lt;/p&gt;
+
+&lt;p&gt;It is just a common sense that we should break our functions into smaller pieces, each of them doing one thing (you have one job) because we will always need small piece of some functions someplace else.&lt;/p&gt;
+
+&lt;p&gt;How do we inject one function into another, is that a function that we create it on the run or use it from a file or from another object or all of these we just know what the output from that function should be.&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>Scaling developers’ work</title>
@@ -558,7 +582,7 @@ So, I would move the render function in this query and this time it will give th
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Before going into the code you need to install some pre-requirements on the cloud. Login with ssh that you’re provided with for your app on openshift and ssh to it. Go to tmp folder with: cd $OPENSHIFT_TMP_DIR and install first pip and then do these:&lt;br /&gt;
- &lt;code&gt;
+ &lt;code&gt;z
  # pip install https://bitbucket.org/wkornewald/django-nonrel/get/tip.tar.gz&lt;br /&gt;
  # pip install https://bitbucket.org/wkornewald/djangotoolbox/get/tip.tar.gz&lt;br /&gt;
  # pip install https://github.com/django-nonrel/mongodb-engine/tarball/master

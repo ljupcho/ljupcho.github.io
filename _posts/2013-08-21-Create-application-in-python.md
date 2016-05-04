@@ -14,7 +14,7 @@ comments: true
 3. Add cartridge mongodb to your app and save those credentials.
 
 4. Before going into the code you need to install some pre-requirements on the cloud. Login with ssh that you're provided with for your app on openshift and ssh to it. Go to tmp folder with: cd $OPENSHIFT_TMP_DIR and install first pip and then do these:<br/>
-	<code>
+	<code>z
 	# pip install https://bitbucket.org/wkornewald/django-nonrel/get/tip.tar.gz<br/>
 	# pip install https://bitbucket.org/wkornewald/djangotoolbox/get/tip.tar.gz<br/>
 	# pip install https://github.com/django-nonrel/mongodb-engine/tarball/master
