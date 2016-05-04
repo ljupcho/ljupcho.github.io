@@ -16,7 +16,7 @@ Moving these objects is some patterns is old news, moving the functions and not 
 
 If we have a objects that communicate in some way than for some function I might want to pass an array by reference and also return some other value and also calling that function recursively. Calling functions recursively is great way to make simple and re-usable code.
 
-I might want to force using some other functions in one function, for example if I have an abstract class and declare an abstract private method, so children classes must have that function but with creating an object they can't assess that method from outside, because I want my main function to be called first so I can ensure that that object will have some logic done before calling a public method.
+I might want to force using some other functions in one function, for example if I have an abstract class and declare an abstract private method, so children classes must have that function but with creating an object they can't assess that method from outside, because I want my main function to be called first so I can ensure that that object will have some logic done before calling a public method. This is not in favor of functional programming.
 
 It is just a common sense that we should break our functions into smaller pieces, each of them doing one thing (you have one job) because we will always need small piece of some functions someplace else.
 
