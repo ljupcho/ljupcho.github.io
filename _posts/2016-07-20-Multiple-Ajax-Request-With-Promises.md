@@ -6,19 +6,19 @@ tags: promises javascript
 comments: true
 --- 
 
-We have multiple ajax requests that need to be executed one by one. We can have 2 or more ajax requests that are run after the success of the previous ajax. This usually happens when we want to get something from API, display some information and do another action and so on in multi nested levels. 
+We have multiple ajax requests that need to be executed one by one. Each of the ajax requests is run after the success of the previous ajax. This usually happens when we want to get something from API, display some information and do another action and so on in multi nested levels. 
 
 Problem one:
 
-We can write the code with ajax calls in the success function of the previous ajax call and that would work just fine and as expected. We also want to put pop-ups between the calls that the use can choose an action, like a confirm dialog that would trigger that next ajax call or cancel the whole chain. This code might look very long and messy, that how I started, it sure works but I didn't like a bit.
+We can write the code with ajax calls in the success function of the previous ajax call and that would work just fine and as expected. We also want to put pop-ups between the calls that the user can choose an action, like a confirm dialog that would trigger the next ajax call or cancel the whole chain. This code might look very long and messy, that's how I started, it sure works but I didn't like it a bit.
 
 Problem two:
 
-Since I am using jQuery for ajax requests, jQuery itself offers promises solution, but in case of an error instead of jumping it to the catch part it goes to the next then in the chain. Probably you've come across blog posts regarding this, I've also tried it and I could manage the passed resolved data in the next then chain (where it should go in in case of reject) with another if, but that's not really the way to go. 
+Since I am using jQuery for ajax requests, jQuery itself offers promises solution, but in case of an reject(error from the ajax) instead of jumping to the catch part it goes to the next then in the chain. Probably you've come across blog posts regarding this, I've also tried it and I could manage the passed resolved data in the next then chain (where it shouldn't go in in case of reject) with another if, but that's not really the way to go. 
 
 Solution:
 
-Instead, what I wanted to do is have a promise for each ajax call, but without using the all() or race() that would fire the requests in parallel and or get the fasted one. It's more of a solution that would allow me to configure listeners and dispatch them at the end. I continue using jQuery for ajax calls but put each of the ajax into a promise with passed in object for configurations.
+Instead, what I wanted to do is have a promise for each ajax call, but without using the all() or race() that would fire the requests in parallel or get the fasted one. It's more of a solution that would allow me to configure listeners and dispatch them at the end. I continue using jQuery for ajax calls, but put each of the ajax into a promise with passed in object for configurations.
 
 I create an object from PromiseHandler, which will be explained after this configuration. 
 
@@ -48,7 +48,7 @@ promiseHanlder.addAjaxListener({
             return 'Error: '+ data.msg;
     },
     'has_next' : true, // this is important to trigger the next request
-    'button_label_next_request' : 'Label1',
+    'button_label_next_request' : 'Label for Action2',
 });
 
 {% endhighlight %}
@@ -81,19 +81,19 @@ promiseHanlder.addAjaxListener({
 });
 {% endhighlight %}
 
-The idea is that I can have as many AJAX request as I want, at the end I should just dispath them and have this whole ajax-popup-ajax-popup-ajax.... in motion. This means that the dispath function is called recursively execution the listeners with output data from the previous as input data in the next request.
+The idea is that I can have as many AJAX requests as I want, at the end I should just dispatch them and have this whole ajax-popup-ajax-popup-ajax.... in motion. This means that the dispatch function is called recursively executing the listeners with output data from the previous as input data in the next request.
 
 {% highlight js %}
 promiseHanlder.dispatch();
 {% endhighlight %}
 
 
-So, like this I could just copy/paste the above configuration skeleton, put as many ajax as I need, put the module/controller name, action name, input data with messages. I could do that, but I couldn't copy/paste the whole nested ajax calls otherwise.
+So, like this I could just copy/paste the above configuration skeleton, put as many ajax requests as I need, put the module/controller name, action name, input data with messages. I could do that, but I couldn't copy/paste the whole nested ajax calls otherwise.
 
 
 How it's made:
 
-My Handler that can be extended if needed. For example for popups I am using another widget I've made that is also based on jQuery and if I need something else for popups I can extend from this object and override regularPopUpWithMsg and popUpWithFunc methods.
+This is my Handler that can be extended if needed. For example for popups I am using another widget I've made that is also based on jQuery and if I need something else for popups I can extend from this object and override regularPopUpWithMsg and popUpWithFunc methods or any other method if needed.
 
 {% highlight js %}
 
@@ -160,8 +160,8 @@ PromiseHandler.prototype.popUpWithFunc = function(data, func)
 
 {% endhighlight %}
 
-The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener if it has has_next to call this method again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
-If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn't go into the then block and display a popup with the errorMsg in which function the rejected data from the promise is being passed.
+The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if it has the has_next this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
+If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn't go into the then block and displays a popup with the errorMsg in which function the rejected data from the promise is being passed.
 
 {% highlight js %}
 
