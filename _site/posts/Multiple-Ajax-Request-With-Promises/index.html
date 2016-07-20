@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Multiple Ajax/Requests with JavaScript Promises &middot; Ljupcho Apostolov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Something more</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tags/">Tags</a>
+        
+      
+    
+
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Ljupcho Apostolov</a>
+            <small>/data/devs/</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Multiple Ajax/Requests with JavaScript Promises</h1>
+  <span class="post-date">20 Jul 2016</span>
+  <p>We have multiple ajax requests that need to be executed one by one. We can have 2 or more ajax requests that are run after the success of the previous ajax. This usually happens when we want to get something from API, display some information and do another action and so on in multi nested levels.</p>
+
+<p>Problem one:</p>
+
+<p>We can write the code with ajax calls in the success function of the previous ajax call and that would work just fine and as expected. We also want to put pop-ups between the calls that the use can choose an action, like a confirm dialog that would trigger that next ajax call or cancel the whole chain. This code might look very long and messy, that how I started, it sure works but I didn’t like a bit.</p>
+
+<p>Problem two:</p>
+
+<p>Since I am using jQuery for ajax requests, jQuery itself offers promises solution, but in case of an error instead of jumping it to the catch part it goes to the next then in the chain. Probably you’ve come across blog posts regarding this, I’ve also tried it and I could manage the passed resolved data in the next then chain (where it should go in in case of reject) with another if, but that’s not really the way to go.</p>
+
+<p>Solution:</p>
+
+<p>Instead, what I wanted to do is have a promise for each ajax call, but without using the all() or race() that would fire the requests in parallel and or get the fasted one. It’s more of a solution that would allow me to configure listeners and dispatch them at the end. I continue using jQuery for ajax calls but put each of the ajax into a promise with passed in object for configurations.</p>
+
+<p>I create an object from PromiseHandler, which will be explained after this configuration.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">promiseHanlder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PromiseHandler</span><span class="p">();</span></code></pre></figure>
+
+<p>I register the first AJAX with an object that has the name of the module whose controller to be called and the action to be run for this request. jQuery ajax expects data to be passed and in this case I pass in a function with data_after_resolve as input argument. That would be the object that I get from resolving the previous ajax call, that data I would normally json_encode from server side. If this is the first ajax than no passed object is needed. In case of a resolve I would display the successMsg, in case of reject the errorMsg. I put the listeners in an array and fire them one by one and check if the current listener has an ‘has_next’ ajax call, if so then display a pop-up with two buttons, one for triggering the next ajax call and one cancel for dropping the whole thing.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// First AJAX</span>
+<span class="nx">promiseHanlder</span><span class="p">.</span><span class="nx">addAjaxListener</span><span class="p">({</span>
+    <span class="s1">'module_name'</span> <span class="p">:</span> <span class="s1">'Controller1'</span><span class="p">,</span>
+    <span class="s1">'action'</span> <span class="p">:</span> <span class="s1">'Action1'</span><span class="p">,</span>
+    <span class="s1">'data'</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="na">id</span><span class="p">:</span> <span class="nx">record</span>
+            <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">'successMsg'</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">'Success: '</span><span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span>
+    <span class="p">},</span>        
+    <span class="s1">'errorMsg'</span> <span class="err">:</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">'Error: '</span><span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="s1">'has_next'</span> <span class="err">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// this is important to trigger the next request</span>
+    <span class="s1">'button_label_next_request'</span> <span class="err">:</span> <span class="s1">'Label1'</span><span class="p">,</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>The input for the second AJAX is the output(data_after_resolve) from the first AJAX. In my case this is the final AJAX and I put onFinalSuccessFunction that returns a function that should reload the parent window (this can be anything) when click the button on the popup after the second and final AJAX.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Second AJAX</span>
+<span class="nx">promiseHanlder</span><span class="p">.</span><span class="nx">addAjaxListener</span><span class="p">({</span>
+    <span class="s1">'module_name'</span> <span class="p">:</span> <span class="s1">'Controller2'</span><span class="p">,</span>
+    <span class="s1">'action'</span> <span class="p">:</span> <span class="s1">'Action2'</span><span class="p">,</span>
+    <span class="s1">'data'</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data_after_resolve</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="na">id</span><span class="p">:</span> <span class="nx">record</span><span class="p">,</span>
+                <span class="na">amount</span><span class="p">:</span> <span class="nx">data_after_resolve</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
+                <span class="na">type</span><span class="p">:</span> <span class="nx">data_after_resolve</span><span class="p">.</span><span class="nx">type</span>
+            <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">'successMsg'</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">'Success: '</span><span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span>
+    <span class="p">},</span>
+    <span class="s1">'errorMsg'</span> <span class="err">:</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">'Error: '</span><span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">;</span>
+    <span class="p">},</span>             
+    <span class="s1">'onFinalSuccessFunction'</span> <span class="err">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+                <span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>The idea is that I can have as many AJAX request as I want, at the end I should just dispath them and have this whole ajax-popup-ajax-popup-ajax…. in motion. This means that the dispath function is called recursively execution the listeners with output data from the previous as input data in the next request.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">promiseHanlder</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">();</span></code></pre></figure>
+
+<p>So, like this I could just copy/paste the above configuration skeleton, put as many ajax as I need, put the module/controller name, action name, input data with messages. I could do that, but I couldn’t copy/paste the whole nested ajax calls otherwise.</p>
+
+<p>How it’s made:</p>
+
+<p>My Handler that can be extended if needed. For example for popups I am using another widget I’ve made that is also based on jQuery and if I need something else for popups I can extend from this object and override regularPopUpWithMsg and popUpWithFunc methods.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">PromiseHandler</span><span class="p">()</span> 
+<span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>addAjaxListener method accepts the passed objects and creates listeners with that configuration object and a function that returns a promise. The promise is being resolved or rejected based on data.status field. That is the field I am using as a success or failure from AJAX from server side which is part of my json_encode data.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">PromiseHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">addAjaxListener</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">'obj'</span> <span class="p">:</span> <span class="nx">obj</span><span class="p">,</span>
+            <span class="s1">'func'</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data_after_resolve</span><span class="p">){</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+
+                    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                        <span class="na">cache</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                        <span class="na">async</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                        <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+                        <span class="na">url</span><span class="p">:</span> <span class="s1">'index.php?module='</span><span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">module_name</span><span class="o">+</span><span class="s1">'&amp;action='</span><span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">action</span><span class="p">,</span>
+                        <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+                        <span class="na">data</span><span class="p">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">data_after_resolve</span><span class="p">),</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                                <span class="nx">reject</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+
+                <span class="p">})</span> 
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The popup methods:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">PromiseHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">regularPopUpWithMsg</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">popup</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PopUp</span><span class="p">();</span>
+    <span class="nx">popup</span><span class="p">.</span><span class="nx">error_msg</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">;</span>
+    <span class="nx">popup</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">PromiseHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">popUpWithFunc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">func</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">popup</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PopUp</span><span class="p">();</span>
+    <span class="nx">popup</span><span class="p">.</span><span class="nx">error_msg</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">;</span>
+    <span class="nx">popup</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="s1">'info'</span><span class="p">,</span> <span class="nx">func</span><span class="p">);</span> <span class="c1">// don't call the function just pass it</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener if it has has_next to call this method again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn’t than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
+If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn’t go into the then block and display a popup with the errorMsg in which function the rejected data from the promise is being passed.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">PromiseHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dispatch</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">listener</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">].</span><span class="nx">func</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">listener_obj</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">].</span><span class="nx">obj</span><span class="p">;</span>
+    <span class="c1">// get data from previous ajax</span>
+    <span class="kd">var</span> <span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"undefined"</span> <span class="p">?</span>
+                                <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span> <span class="p">:</span> <span class="p">{};</span>
+    <span class="p">}</span> 
+
+    <span class="nx">listener</span><span class="p">(</span><span class="nx">data_after_resolve</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            
+            <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">listener_obj</span><span class="p">.</span><span class="nx">successMsg</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="nx">listener_obj</span><span class="p">.</span><span class="nx">has_next</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">].</span><span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+                   
+                <span class="kd">var</span> <span class="nx">popup</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PopUp</span><span class="p">();</span>
+                <span class="nx">popup</span><span class="p">.</span><span class="nx">error_msg</span> <span class="o">=</span> <span class="nx">html</span><span class="p">;</span>
+                <span class="nx">popup</span><span class="p">.</span><span class="nx">popup_id</span> <span class="o">=</span> <span class="s1">'popup_dlg'</span><span class="p">;</span>
+                <span class="nx">popup</span><span class="p">.</span><span class="nx">showMultiple</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="na">text</span><span class="p">:</span> <span class="nx">listener_obj</span><span class="p">.</span><span class="nx">button_label_next_request</span><span class="p">,</span>
+                        <span class="na">click</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                            <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup_dlg'</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s2">"close"</span><span class="p">);</span>
+                            <span class="c1">// get next listener</span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">order</span> <span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
+                            <span class="c1">// call recursively </span>
+                            <span class="k">this</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">();</span>
+                        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="na">text</span><span class="p">:</span> <span class="s1">'Cancel'</span><span class="p">,</span>
+                        <span class="na">click</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                            <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup_dlg'</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s2">"close"</span><span class="p">);</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">]);</span>
+
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                 
+                <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span> <span class="o">=</span> <span class="nx">html</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">listener_obj</span><span class="p">.</span><span class="nx">onFinalSuccessFunction</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'function'</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">popUpWithFunc</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">listener_obj</span><span class="p">.</span><span class="nx">onFinalSuccessFunction</span><span class="p">());</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">regularPopUpWithMsg</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>    
+                <span class="p">}</span>                  
+
+            <span class="p">}</span>               
+
+        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span> <span class="o">=</span> <span class="nx">listener_obj</span><span class="p">.</span><span class="nx">errorMsg</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">regularPopUpWithMsg</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+<span class="p">}</span></code></pre></figure>
+
+
+</div>
+
+<span class="post-date">Share this blog: </span>
+<script type="text/javascript">
+  var addthis_config = {
+              pubid: "ra-571a96a3a515f05b",
+              data_use_cookies: false,
+              data_use_flash: false
+        }
+</script>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+<div class="addthis_sharing_toolbox"></div>
+
+
+
+<script type="text/javascript">
+  var addthis_share = addthis_share || {}
+  addthis_share = {
+    passthrough : {
+      twitter: {
+      via: "ljupcho3a"
+      }
+    }
+  }
+</script>
+
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/posts/On-Functional-Programming/">
+            On Functional Programming
+            <small>04 May 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/Scalling-devs-work/">
+            Scaling developers’ work
+            <small>11 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
+            JavaScript vs PHP on new 20,000 inputs
+            <small>08 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+  <!-- Add Disqus comments. -->
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'ljupchogithubio';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script id="dsq-count-scr" src="//ljupchogithubio.disqus.com/count.js" async></script>
+  </body>
+</html>
