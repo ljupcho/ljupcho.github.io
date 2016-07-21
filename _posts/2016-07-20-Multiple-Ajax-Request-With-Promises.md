@@ -159,7 +159,7 @@ PromiseHandler.prototype.popUpWithFunc = function(data, func)
 
 {% endhighlight %}
 
-The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if it has the if the length of the listeners array is larger than the current order this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
+The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if the length of the listeners array is larger than the current order this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
 If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn't go into the then block and displays a popup with the errorMsg in which function the rejected data from the promise is being passed.
 
 {% highlight js %}
