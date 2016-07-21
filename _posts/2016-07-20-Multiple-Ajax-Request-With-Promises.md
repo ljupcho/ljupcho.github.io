@@ -29,7 +29,7 @@ var promiseHanlder = new PromiseHandler();
 {% endhighlight %}
 
 
-I register the first AJAX with an object that has the name of the module whose controller to be called and the action to be run for this request. jQuery ajax expects data to be passed and in this case I pass in a function with data_after_resolve as input argument. That would be the object that I get from resolving the previous ajax call, that data I would normally json_encode from server side. If this is the first ajax than no passed object is needed. In case of a resolve I would display the successMsg, in case of reject the errorMsg. I put the listeners in an array and fire them one by one and check if the current listener has an 'has_next' ajax call, if so then display a pop-up with two buttons, one for triggering the next ajax call and one cancel for dropping the whole thing.
+I register the first AJAX with an object that has the name of the module whose controller to be called and the action to be run for this request. jQuery ajax expects data to be passed and in this case I pass in a function with data_after_resolve as input argument. That would be the object that I get from resolving the previous ajax call, that data I would normally json_encode from server side. If this is the first ajax than no passed object is needed. In case of a resolve I would display the successMsg, in case of reject the errorMsg. I put the listeners in an array and fire them one by one and check if i should fire the next ajax call using the lenght of the listeners array and the current count, if so then display a pop-up with two buttons, one for triggering the next ajax call and one cancel for dropping the whole thing.
 
 {% highlight js %}
 // First AJAX
@@ -47,7 +47,6 @@ promiseHanlder.addAjaxListener({
     'errorMsg' :  function(data){
             return 'Error: '+ data.msg;
     },
-    'has_next' : true, // this is important to trigger the next request
     'button_label_next_request' : 'Label for Action2',
 });
 
@@ -160,7 +159,7 @@ PromiseHandler.prototype.popUpWithFunc = function(data, func)
 
 {% endhighlight %}
 
-The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if it has the has_next this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
+The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if it has the if the length of the listeners array is larger than the current order this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn't than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
 If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn't go into the then block and displays a popup with the errorMsg in which function the rejected data from the promise is being passed.
 
 {% highlight js %}
@@ -181,7 +180,7 @@ PromiseHandler.prototype.dispatch = function()
             
             var html = listener_obj.successMsg(data);
             
-            if (listener_obj.has_next) {
+            if ((this.listeners.length - 1) > this.order) {
                 this.listeners[this.order].data_after_resolve = Object.create(data);
                    
                 var popup = new PopUp();
