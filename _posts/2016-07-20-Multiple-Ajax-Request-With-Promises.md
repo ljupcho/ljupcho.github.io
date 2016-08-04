@@ -171,8 +171,9 @@ PromiseHandler.prototype.dispatch = function()
     // get data from previous ajax
     var data_after_resolve = {};
     if (this.order > 0) {
-        data_after_resolve = typeof(this.listeners[(parseInt(this.order) - 1)].data_after_resolve) != "undefined" ?
-                                this.listeners[(parseInt(this.order) - 1)].data_after_resolve : {};
+        if (typeof(this.listeners[(parseInt(this.order) - 1)].data_after_resolve) != "undefined") {
+            data_after_resolve = this.listeners[(parseInt(this.order) - 1)].data_after_resolve;
+        }
     } 
 
     listener(data_after_resolve)
