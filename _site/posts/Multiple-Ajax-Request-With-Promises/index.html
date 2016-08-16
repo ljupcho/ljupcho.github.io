@@ -81,6 +81,10 @@
     
       
         
+      
+    
+      
+        
           <a class="sidebar-nav-item" href="/tags/">Tags</a>
         
       
@@ -113,25 +117,25 @@
         <div class="post">
   <h1 class="post-title">Multiple Ajax/Requests with JavaScript Promises</h1>
   <span class="post-date">20 Jul 2016</span>
-  <p>We have multiple ajax requests that need to be executed one by one. We can have 2 or more ajax requests that are run after the success of the previous ajax. This usually happens when we want to get something from API, display some information and do another action and so on in multi nested levels.</p>
+  <p>We have multiple ajax requests that need to be executed one by one. Each of the ajax requests is run after the success of the previous ajax. This usually happens when we want to get something from API, display some information and do another action and so on in multi nested levels.</p>
 
 <p>Problem one:</p>
 
-<p>We can write the code with ajax calls in the success function of the previous ajax call and that would work just fine and as expected. We also want to put pop-ups between the calls that the use can choose an action, like a confirm dialog that would trigger that next ajax call or cancel the whole chain. This code might look very long and messy, that how I started, it sure works but I didn’t like a bit.</p>
+<p>We can write the code with ajax calls in the success function of the previous ajax call and that would work just fine and as expected. We also want to put pop-ups between the calls that the user can choose an action, like a confirm dialog that would trigger the next ajax call or cancel the whole chain. This code might look very long and messy, that’s how I started, it sure works but I didn’t like it a bit.</p>
 
 <p>Problem two:</p>
 
-<p>Since I am using jQuery for ajax requests, jQuery itself offers promises solution, but in case of an error instead of jumping it to the catch part it goes to the next then in the chain. Probably you’ve come across blog posts regarding this, I’ve also tried it and I could manage the passed resolved data in the next then chain (where it should go in in case of reject) with another if, but that’s not really the way to go.</p>
+<p>Since I am using jQuery for ajax requests, jQuery itself offers promises solution, but in case of an reject(error from the ajax) instead of jumping to the catch part it goes to the next then in the chain. Probably you’ve come across blog posts regarding this, I’ve also tried it and I could manage the passed resolved data in the next then chain (where it shouldn’t go in in case of reject) with another if, but that’s not really the way to go.</p>
 
 <p>Solution:</p>
 
-<p>Instead, what I wanted to do is have a promise for each ajax call, but without using the all() or race() that would fire the requests in parallel and or get the fasted one. It’s more of a solution that would allow me to configure listeners and dispatch them at the end. I continue using jQuery for ajax calls but put each of the ajax into a promise with passed in object for configurations.</p>
+<p>Instead, what I wanted to do is have a promise for each ajax call, but without using the all() or race() that would fire the requests in parallel or get the fasted one. It’s more of a solution that would allow me to configure listeners and dispatch them at the end. I continue using jQuery for ajax calls, but put each of the ajax into a promise with passed in object for configurations.</p>
 
 <p>I create an object from PromiseHandler, which will be explained after this configuration.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">promiseHanlder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PromiseHandler</span><span class="p">();</span></code></pre></figure>
 
-<p>I register the first AJAX with an object that has the name of the module whose controller to be called and the action to be run for this request. jQuery ajax expects data to be passed and in this case I pass in a function with data_after_resolve as input argument. That would be the object that I get from resolving the previous ajax call, that data I would normally json_encode from server side. If this is the first ajax than no passed object is needed. In case of a resolve I would display the successMsg, in case of reject the errorMsg. I put the listeners in an array and fire them one by one and check if the current listener has an ‘has_next’ ajax call, if so then display a pop-up with two buttons, one for triggering the next ajax call and one cancel for dropping the whole thing.</p>
+<p>I register the first AJAX with an object that has the name of the module whose controller to be called and the action to be run for this request. jQuery ajax expects data to be passed and in this case I pass in a function with data_after_resolve as input argument. That would be the object that I get from resolving the previous ajax call, that data I would normally json_encode from server side. If this is the first ajax than no passed object is needed. In case of a resolve I would display the successMsg, in case of reject the errorMsg. I put the listeners in an array and fire them one by one and check if i should fire the next ajax call using the lenght of the listeners array and the current count, if so then display a pop-up with two buttons, one for triggering the next ajax call and one cancel for dropping the whole thing.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// First AJAX</span>
 <span class="nx">promiseHanlder</span><span class="p">.</span><span class="nx">addAjaxListener</span><span class="p">({</span>
@@ -148,8 +152,7 @@
     <span class="s1">'errorMsg'</span> <span class="err">:</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
             <span class="k">return</span> <span class="s1">'Error: '</span><span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="s1">'has_next'</span> <span class="err">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// this is important to trigger the next request</span>
-    <span class="s1">'button_label_next_request'</span> <span class="err">:</span> <span class="s1">'Label1'</span><span class="p">,</span>
+    <span class="s1">'button_label_next_request'</span> <span class="err">:</span> <span class="s1">'Label for Action2'</span><span class="p">,</span>
 <span class="p">});</span></code></pre></figure>
 
 <p>The input for the second AJAX is the output(data_after_resolve) from the first AJAX. In my case this is the final AJAX and I put onFinalSuccessFunction that returns a function that should reload the parent window (this can be anything) when click the button on the popup after the second and final AJAX.</p>
@@ -178,15 +181,15 @@
     <span class="p">}</span>
 <span class="p">});</span></code></pre></figure>
 
-<p>The idea is that I can have as many AJAX request as I want, at the end I should just dispath them and have this whole ajax-popup-ajax-popup-ajax…. in motion. This means that the dispath function is called recursively execution the listeners with output data from the previous as input data in the next request.</p>
+<p>The idea is that I can have as many AJAX requests as I want, at the end I should just dispatch them and have this whole ajax-popup-ajax-popup-ajax…. in motion. This means that the dispatch function is called recursively executing the listeners with output data from the previous as input data in the next request.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">promiseHanlder</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">();</span></code></pre></figure>
 
-<p>So, like this I could just copy/paste the above configuration skeleton, put as many ajax as I need, put the module/controller name, action name, input data with messages. I could do that, but I couldn’t copy/paste the whole nested ajax calls otherwise.</p>
+<p>So, like this I could just copy/paste the above configuration skeleton, put as many ajax requests as I need, put the module/controller name, action name, input data with messages. I could do that, but I couldn’t copy/paste the whole nested ajax calls otherwise.</p>
 
 <p>How it’s made:</p>
 
-<p>My Handler that can be extended if needed. For example for popups I am using another widget I’ve made that is also based on jQuery and if I need something else for popups I can extend from this object and override regularPopUpWithMsg and popUpWithFunc methods.</p>
+<p>This is my Handler that can be extended if needed. For example for popups I am using another widget I’ve made that is also based on jQuery and if I need something else for popups I can extend from this object and override regularPopUpWithMsg and popUpWithFunc methods or any other method if needed.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">PromiseHandler</span><span class="p">()</span> 
 <span class="p">{</span>
@@ -242,8 +245,8 @@
     <span class="nx">popup</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="s1">'info'</span><span class="p">,</span> <span class="nx">func</span><span class="p">);</span> <span class="c1">// don't call the function just pass it</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener if it has has_next to call this method again with previously showing a popup for the user to choose to fire the next request or cancel, but if it doesn’t than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
-If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn’t go into the then block and display a popup with the errorMsg in which function the rejected data from the promise is being passed.</p>
+<p>The dispatch method is called recursively for each of the listeners that has a promise. I see the configuration of the listener, if the length of the listeners array is larger than the current order this method calls itself again with previously showing a popup for the user to choose to fire the next request or cancel, but if it isn’t than a regular popup with just ok button or ok button with attached function that reloads the parent window. In case of success ajax, resolve data is passed and in the popup I show successMsg and set the data_after_resolve that will be input for the next ajax/promise.
+If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn’t go into the then block and displays a popup with the errorMsg in which function the rejected data from the promise is being passed.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">PromiseHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">dispatch</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
@@ -252,8 +255,9 @@ If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn
     <span class="c1">// get data from previous ajax</span>
     <span class="kd">var</span> <span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="p">{};</span>
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"undefined"</span> <span class="p">?</span>
-                                <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span> <span class="p">:</span> <span class="p">{};</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"undefined"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[(</span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)].</span><span class="nx">data_after_resolve</span><span class="p">;</span>
+        <span class="p">}</span>
     <span class="p">}</span> 
 
     <span class="nx">listener</span><span class="p">(</span><span class="nx">data_after_resolve</span><span class="p">)</span>
@@ -261,7 +265,7 @@ If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn
             
             <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">listener_obj</span><span class="p">.</span><span class="nx">successMsg</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
             
-            <span class="k">if</span> <span class="p">(</span><span class="nx">listener_obj</span><span class="p">.</span><span class="nx">has_next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">((</span><span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">order</span><span class="p">].</span><span class="nx">data_after_resolve</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
                    
                 <span class="kd">var</span> <span class="nx">popup</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PopUp</span><span class="p">();</span>
@@ -341,27 +345,27 @@ If the first AJAX fails, meaning it is rejected it goes to catch block, it doesn
     
       <li>
         <h3>
-          <a href="/posts/On-Functional-Programming/">
-            On Functional Programming
-            <small>04 May 2016</small>
+          <a href="/posts/Dependency-Injection/">
+            On Dependency Injection
+            <small>16 Aug 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/posts/Scalling-devs-work/">
-            Scaling developers’ work
-            <small>11 Apr 2016</small>
+          <a href="/posts/Designing-A-Module-ORM/">
+            On Designing a Module, ORM or not
+            <small>15 Aug 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
-            JavaScript vs PHP on new 20,000 inputs
-            <small>08 Jul 2015</small>
+          <a href="/posts/Unit-Testing/">
+            On Unit Testing
+            <small>15 Aug 2016</small>
           </a>
         </h3>
       </li>

@@ -81,6 +81,10 @@
     
       
         
+      
+    
+      
+        
           <a class="sidebar-nav-item" href="/tags/">Tags</a>
         
       
@@ -120,6 +124,9 @@
 <p>In OOP the point is we have objects that communicate between each other, usually we inject one object into other object’s constructor (DI injection) and than use its methods in some way. So, we have objects commonly referred to like “nouns” and methods like “verbs”. If we need a method from some objects we have to create an instance of it and call that method even though that’s all we need, so we might want to declare and call that method static so we don’t have to create an object. Creating an object just for using something from it is not very good practice and it faces the problems known as “composition over inheritance” or better referred as the famous quote “you asked for the banana but you got the whole jungle”. It is a problem when we have huge chain of inheritance of many parent/child classes so the purpose of using something from some child class and create all in the background is not necessary and we don’t need it and we shouldn’t create it.</p>
 
 <p>Moving these objects is some patterns is old news, moving the functions and not creating objects is also old news but somehow modern frameworks adopt it widely. They are known as closure, anonymous functions or functions that are injected into another functions as arguments. We have native functions like array map/filter/reduce that will do something for each of the elements of the passed data. So, instead of for/foreach loops we can use those. We move the “verbs” or the functions around and for that to be feasible we need to make them immutable and stateless. This doesn’t mean we go back to having functions in files and include those files and call functions.</p>
+
+<p>We’re playing with two functions. Let’s call the function that is being passed in as an argument into another function as a executable function and the main one as callable function. So, the executable function will be executed somewhere along in the called function. Here’s the fun part. 
+The executable function can receive an input argument (usually an object called an event) that is created in the called function but being handled in the executable function. We have made an abstraction a layer up and this is important because this way we won’t have duplication of code. Without this approach what we usually do is copy the same code in the two places and add the extra changes, instead of passing a function with the extra changes in one common function.</p>
 
 <p>If we have a objects that communicate in some way than for some function I might want to pass an array by reference and also return some other value and also calling that function recursively. Calling functions recursively is great way to make simple and re-usable code.</p>
 
@@ -165,27 +172,27 @@
     
       <li>
         <h3>
-          <a href="/posts/Multiple-Ajax-Request-With-Promises/">
-            Multiple Ajax/Requests with JavaScript Promises
-            <small>20 Jul 2016</small>
+          <a href="/posts/Dependency-Injection/">
+            On Dependency Injection
+            <small>16 Aug 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/posts/Scalling-devs-work/">
-            Scaling developers’ work
-            <small>11 Apr 2016</small>
+          <a href="/posts/Designing-A-Module-ORM/">
+            On Designing a Module, ORM or not
+            <small>15 Aug 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/posts/JavaScript-vs-PHP-20000-inputs/">
-            JavaScript vs PHP on new 20,000 inputs
-            <small>08 Jul 2015</small>
+          <a href="/posts/Unit-Testing/">
+            On Unit Testing
+            <small>15 Aug 2016</small>
           </a>
         </h3>
       </li>

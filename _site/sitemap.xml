@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://ljupcho.github.io//posts/Dependency-Injection/</loc>
+<lastmod>2016-08-16T20:12:10+02:00</lastmod>
+</url>
+<url>
+<loc>http://ljupcho.github.io//posts/Designing-A-Module-ORM/</loc>
+<lastmod>2016-08-15T19:12:10+02:00</lastmod>
+</url>
+<url>
+<loc>http://ljupcho.github.io//posts/Unit-Testing/</loc>
+<lastmod>2016-08-15T18:12:10+02:00</lastmod>
+</url>
+<url>
 <loc>http://ljupcho.github.io//posts/Multiple-Ajax-Request-With-Promises/</loc>
 <lastmod>2016-07-20T18:12:10+02:00</lastmod>
 </url>
