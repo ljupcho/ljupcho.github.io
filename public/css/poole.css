@@ -107,6 +107,7 @@ h4, h5, h6 {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+  overflow: auto;
 }
 
 strong {
@@ -153,11 +154,12 @@ pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 code {
-  padding: .25em .5em;
+  // padding: .25em .5em;
   font-size: 85%;
   color: #bf616a;
   background-color: #f9f9f9;
   border-radius: 3px;
+  white-space: pre;
 }
 pre {
   display: block;
@@ -183,9 +185,12 @@ pre code {
 .highlight {
   margin-bottom: 1rem;
   border-radius: 4px;
+  padding: 0px;
+  margin: 0px;
 }
 .highlight pre {
   margin-bottom: 0;
+  overflow: auto;
 }
 
 /* Gist via GitHub Pages */

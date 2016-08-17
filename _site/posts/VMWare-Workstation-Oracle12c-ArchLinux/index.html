@@ -11,7 +11,7 @@
 
   <title>
     
-      On Dependency Injection &middot; Ljupcho Apostolov
+      Install VMWare Workstation, create CentOS machine &amp; configure bridge network for wlan0 and install Oracle 12c on ArchLinux 64bit · Ljupcho Apostolov
     
   </title>
 
@@ -95,7 +95,7 @@
 
   <div class="sidebar-item">
     <p>
-      &copy; 2016. All rights reserved.
+      © 2016. All rights reserved.
     </p>
   </div>
 </div>
@@ -115,17 +115,87 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">On Dependency Injection</h1>
-  <span class="post-date">16 Aug 2016</span>
-  <p>Having the code decoupled seems like the way to go for re-usability outside the scope of a framework. That’s the main reason I prefer Symfony, I think it has the best approach since you can easily use some of its components someplace else in some other framework or as is.</p>
+  <h1 class="post-title">Install VMWare Workstation, create CentOS machine &amp; configure bridge network for wlan0 and install Oracle 12c on ArchLinux 64bit</h1>
+  <span class="post-date">27 Nov 2013</span>
+  <h2>Part I: Installation of VMWare Workstation</h2>
 
-<p>The concept of service provider and use everything as a service is done thanks to injecting one object into another with type hinting, even more type hint the interface that that object’s class should implement and not the exact class.</p>
+<p>Download from official site: VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
+from terminal:</p>
 
-<p>If I have a class that would accept let’s say 3 object DI into the constructor, so every-time I create an object of that class I have to create those 3 objects as well. This is a good solution because if I were to extend and override some methods of those objects, I can and that would work fine. This is also good for mocking, because I find myself usually null-ing the constructor of a mock, especially if it is a class that has DB connection in its constructor.</p>
+<p><code>chmod +x VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
+sudo ./VMware-Workstation-Full-9.0.2-1031769.x86_64.bundle
+</code></p>
 
-<p>So, if I extend some of those classes I won’t have to extend the main class those objects are injected into, which wouldn’t be the case otherwise. If the objects were created inside the main class than if some of than gets extended I will have to extend the main class and override the method where object of the first class is being created to accept the newly extended class.</p>
+<p>,then you install the patch from aur:</p>
 
-<p>What bothers me is that I will have to inject all of these 3 objects all the time when I create the main object. That’s just me being lazy and I would look for a workaround and examine how offer I create this object and what is the probability of any of these 3 objects getting extended. If they are not to be extended I would allow those objects to be created inside the class.</p>
+<p><code>yaourt vmware-patch</code></p>
+
+<p>,then you install the kernal_headers and run this if path is not correct when you try to install them with the vmware gui.</p>
+
+<p><code>ln -s /usr/src/linux-3.11.4-1-ARCH/include/generated/uapi/linux/version.h /usr/src/linux-3.11.4-1-ARCH/include/linux/version.h</code></p>
+
+<p>This is because the version of your kernal_headers should match with linux kernal version, so you might want to update the kernal as well.
+, then run the</p>
+
+<p><code>sudo vmware-modconfig --console --install-all</code></p>
+
+<p>and all modules should be up and running without failure.
+,then you need to add the license key with</p>
+
+<p><code>sudo /usr/lib/vmware/bin/vmware-enter-serial</code></p>
+
+<h2>Part II: Configure the bridge network for the centOS machine</h2>
+
+<p>For the bridge networking to be working you need to explicitly point out the wlan0 is the bridge internet adapter. you need to do this:</p>
+
+<p><code>sudo /usr/lib/vmware/bin/vmware-netcfg</code></p>
+
+<p>in this popup set the vmnet0 (which is not shown in the ifconfig of the host) and set it to wlan0. Otherwise it is set to automatic and picks the eth0 instead of wlan0.
+After you power on the virtual machine you need to set the networking in the centos. go to:</p>
+
+<p><code>cd /etc/sysconfig/network-scripts/</code></p>
+
+<p>i had eth3 instead of eth0 (centos’s ifconfig), so i copy the the ifcfg-eth0 to 3 and change the network to (00:50:56:34:7C:AE, which you get if you clicked bridged and change the networking mac address, which i did), then the file should look like this, if you copy it:</p>
+
+<p><code>scp ifcfg-eth3 192.168.1.100:/home/ljupcho/Downloads</code></p>
+
+<p>file:</p>
+
+<p><code>DEVICE=eth3 
+HWADDR=00:50:56:34:7C:AE 
+TYPE=Ethernet
+UUID=1f969148-80a4-4105-ab9e-dcff960fe8f8
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp
+GATEWAY=192.168.1.1
+</code></p>
+
+<p>restart networking</p>
+
+<p><code>/etc/init.d/network restart; yum update</code></p>
+
+<h2>Part III: Install Oracle 12c on CentOS 64bit</h2>
+
+<p>These are the key points for the oracle install. You should give at least 20GB space for you VM so you won’t have to add more latter. 
+for this error: bash: xhost: command not found 
+this helped me:</p>
+
+<p><code>yum install xorg-x11-server-utils</code></p>
+
+<p>for this error: xhost unable to open display
+First I had to install:</p>
+
+<p><code>yum groupinstall “X Window System”; init 6</code></p>
+
+<p>then this in terminal:</p>
+
+<p><code>[root@centos ~]# export DISPLAY="127.0.0.1:10.0"
+[root@centos ~]# xhost +
+access control disabled, clients can connect from any host xhost:  must be on local machine to enable or disable access control.
+</code></p>
+
+<p>, then you need to ssh to the centOS machine with the oracle user you’ve created, but you do it with: ssh -Y oracle@192.168.1.107 instead of ssh -X, then navigate to database folder of your oracle 12c archive and ./runInstaller. You would do a -Y because the input fields of the installer Oracle GUI won’t be editable, you won’t be able to type in. (this problem also might be because you have java 1.7 so if issue still exists downgrade to java 1.6) . Then follow the standard Oracle 12c installation tutorial with screen shots, you should be fine.</p>
 
 </div>
 
@@ -162,6 +232,15 @@
     
       <li>
         <h3>
+          <a href="/posts/Dependency-Injection/">
+            On Dependency Injection
+            <small>16 Aug 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/posts/Designing-A-Module-ORM/">
             On Designing a Module, ORM or not
             <small>15 Aug 2016</small>
@@ -174,15 +253,6 @@
           <a href="/posts/Unit-Testing/">
             On Unit Testing
             <small>15 Aug 2016</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/posts/Multiple-Ajax-Request-With-Promises/">
-            Multiple Ajax/Requests with JavaScript Promises
-            <small>20 Jul 2016</small>
           </a>
         </h3>
       </li>
@@ -204,7 +274,8 @@
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
   <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
