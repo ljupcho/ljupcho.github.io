@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Awareness Of Programming"
-date:   2018-01-18 19:18:10 +0200
+date:   2019-03-23 11:18:10 +0200
 tags: development
 comments: true
 ---	
