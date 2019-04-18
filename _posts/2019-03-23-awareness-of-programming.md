@@ -17,7 +17,7 @@ Never ever follow any leader they are lost too.
 
 Never be a junior, mid or senior you're just a developer and your only job is to make it work. 
 
-Never let your guard down and your confidence shrink, managers are laying to you.
+Never let your guard down and your confidence shrink, managers are lying to you.
 
 The mind is dis-functional it needs training, lots of training. 
 
