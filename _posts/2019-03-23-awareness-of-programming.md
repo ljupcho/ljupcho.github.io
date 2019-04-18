@@ -19,7 +19,7 @@ Never be a junior, mid or senior you're just a developer and your only job is to
 
 Never let your guard down and your confidence shrink, managers are lying to you.
 
-The mind is dis-functional it needs training, lots of training. 
+The mind is dysfunctional it needs training, lots of training. 
 
 No such thing as pair-programming or team work, the only way to upgrade your skills is by reading, alone.
 
