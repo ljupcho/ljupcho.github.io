@@ -6,10 +6,12 @@ tags: services
 comments: true
 ---	
 
+The task is to sync data both to application’s database and ElasticSearch Cache. 
+Both clients sets value to database first then to ES. 
+
 ![race-condition]({{ site.url }}/public/images/services-part-I.png)
 
-The task is to sync data both to application’s database and ElasticSearch Cache. 
-Both clients sets value to database first then to ES. The end result here is that database’s final value is 2 and ES final value is 1. The end result should be the same in both services and both storages.
+The end result here is that database’s final value is 2 and ES final value is 1. The end result should be the same in both services and both storages.
 
 First the set X = 1 from client 1 is processed by the database but setting the same value to ES is delayed due to versus reasons. Meanwhile setting the X = 2 from client 2 has gone through both database and ES. The reason why client 1’s setting x = 1 was delayed can be because that process took longer than the client 2’s process. Also setting the value to DB and to ES can be two different jobs to be run with message broker so the second job took some more time due to overloading the queue. 
 
