@@ -6,7 +6,7 @@ tags: software architecture, php, python, golang, performance
 comments: true
 ---	
 
-##The environment setup
+## The environment setup
 
 I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM.
 Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http request from the host machines.
@@ -32,23 +32,23 @@ docker: https://github.com/ljupcho/docker-nginx-golang
 application: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo
 	Gin-gonic v1.6.3
 
-Each of the framework support ORM that handles queries and migrations as wouldn’t really run queries on my own so good ORM was a requirement. it was important that i have all the database structure for all 3 database servers, same type of columns with same type of indexes and foreign keys. In case of laravel and django I am using redis to store the queue jobs whereas for golang I am using goroutines with channels to accomplish concurrency. 
+Each of the framework support ORM that handles queries and migrations as I wouldn’t really run queries on my own so good ORM was a requirement. It was important that i have all the database structure for all 3 database servers, same type of columns with same type of indexes and foreign keys. In case of laravel and django I am using redis to store the queue jobs whereas for golang I am using goroutines with channels to accomplish concurrency. 
 
-##Case 1 (Imports):
+## Case 1 (Imports):
 I want to see how the frameworks would perform in a task like bulk imports, a task I have had a few many times on real projects like import csv files. I would skip the part of the actual upload of the file and test the time it takes for each framework to import 20K rows of data.
 
 Insert is done by chunks of 500 for all cases. Changing the chunk did not have much difference but 500 seems to be optimal. Number of processes is 6, as i manage that with supervisor and verify it with `ps aux` on each of the consumers containers.
 
 The golang case is the most interesting. We have concept of goroutines that are threads that run in parallel, same thing as the workers we have in laravel/django queues, but in this case they can communicate via channels and in golang case they are not exactly processes, but there's a better memory management. The example is [here](https://github.com/ljupcho/docker-nginx-golang/blob/master/morningo/controllers/MainController.go#L194). The idea behind this is that we are creating a channel that we push data to and continuously read from in our concurant threads/goroutines. After all imported we can continue with the rest of the logic which in the laravel or django case is not possible without making a workaround as there we have abstraction layer with processes and normally we will need to additional check (either db/redis related) to figure out that all the processes have finished or use `async` packages. In golang case I have the flexibility to write concurrent code as I find fit not just running queries or other logic one by one.
 
-### Insert into single table only.
+### Insert into single table only
 The difference between inserting into single table or multiple tables that are in some kind of a relationship is that in the first case i don't need the objects back in order to make the relationship, but the frameworks still provide methods that i would insert into a table and it would return me only the id instead of whole object which implies one additional query and inserting 20K would actually double the number of queries and the time it takes for the whole operation. That's why it is crucial to make sure that only queries that are needed are run.
 
 | Laravel | Django | Gin
 | :--- | :--- | :---
 | 20s | 22s | 21s
 
-The basic idea behind this is that you want to push most of the heavy logic in your queues and process as background job as your code is in RAM and makes no difference if you're using a compiled or an interpreted language. In such case the results show that the database is the bottleneck here and in these 3 cases the database is same so makes little to no difference. The management of the processes is also adjustable to your needs and resource at your disposal, meaning if you want to run the workers on the same servers you're serving users on or totally separate worker environment. Load balancing over multiple servers with restricted number of processes in most cases is fine.
+The basic idea behind this is that you want to push most of the heavy logic in your queues and process as background job as your code is in RAM and makes no difference if you're using a compiled or an interpreted language. In such case the results show that the database is the bottleneck here and in these 3 cases the database is same so makes little to no difference. The management of the processes is also adjustable to your needs and resources at your disposal, meaning if you want to run the workers on the same servers you're serving users on or totally separate worker environment. Load balancing over multiple servers with restricted number of processes in most cases is fine.
 
 ### Insert into multiple tables
 Next, I have a nested case, more realistic scenario when a user can belong to a group and the user can have many posts. I seed the database first with 300 groups and pick one to set the FK in users for a group and for each user i create 2 posts. So, in total here it happens to have 60K inserts and 40 selects for finding the group, as for job i am running 1 select and 1500 inserts (chunks size by 500 - 1 for the user and 2 for posts for that user).
@@ -60,7 +60,7 @@ Next, I have a nested case, more realistic scenario when a user can belong to a 
 Well golang is outperforming both of them even though queries are the same.
 
 
-##Case 2 (API endpoint);
+## Case 2 (API endpoint);
 
 The point here is to run concurrent requests increased over time on an endpoint that returns a json. The database structure with indexes and FKs is the same for all three and the response looks like this for all three as well:
 
@@ -79,6 +79,7 @@ select * from `users` where `users`.`deleted_at` is null order by `users`.`id` d
 select * from `groups` where `groups`.`id` in ({group_ids}) and `groups`.`deleted_at` is null;
 select * from `posts` where `posts`.`user_id` in ({post_ids}) and `posts`.`deleted_at` is null;
 ```
+<br/>
 I am using already imported users with groups and posts from the previous test case. I am pre-loading the group and posts relationships with the user what makes them `whereIn` queries with passed ids. With using a join for the group i am down to 2 queries per request instead of 3 but not much is changing in terms of the response times. But, it does matter if I would loop through the users and run a query for the group and since I am fetching 50 users that many queries for the group multiple by the concurrent request would make a big difference even doubling the times.
 
 Here i would stick to the 3 queries per request with pre-loading the group and the posts in all three frameworks.
