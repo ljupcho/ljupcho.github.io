@@ -11,24 +11,24 @@ comments: true
 I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM. Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http request from the host machines.
 
 *the php case:* <br/>
-docker: https://github.com/ljupcho/docker-nginx-php<br/>
-	php 8, php-fpm, opcache enabled, mysql v5.7.25, redis, consumers container for running queue jobs managed by supervisor
-	./startup.sh creates the containers and prepares the environment like composer update, migrations, clears cache etc..
-application: https://github.com/ljupcho/test-laravel<br/>
+**docker**: https://github.com/ljupcho/docker-nginx-php<br/>
+	php 8, php-fpm, opcache enabled, mysql v5.7.25, redis, consumers container for running queue jobs managed by supervisor<br/>
+	`./startup.sh` creates the containers and prepares the environment like composer update, migrations, clears cache etc..<br/>
+**application**: https://github.com/ljupcho/test-laravel<br/>
 	Laravel v8.12<br/>
 
 *the python case:* <br/>
-docker: https://github.com/ljupcho/docker-nginx-python<br/>
-	python 3.6, uwsgi, mysql v5.7.25, redis, consumers container for running celery/queue tasks managed by supervisor
-	./startup.sh creates the containers and prepares the environment like install requirements, migrations etc..
-application: https://github.com/ljupcho/test-django<br/>
+**docker**: https://github.com/ljupcho/docker-nginx-python<br/>
+	python 3.6, uwsgi, mysql v5.7.25, redis, consumers container for running celery/queue tasks managed by supervisor<br/>
+	`./startup.sh` creates the containers and prepares the environment like install requirements, migrations etc..<br/>
+**application**: https://github.com/ljupcho/test-django<br/>
 	Django v2.2.3<br/>
 
 *the golang case:* <br/>
 docker: https://github.com/ljupcho/docker-nginx-golang <br/>
 	golang 1.14.13, mysql v5.7.25 <br/>	
 application: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo <br/>
-	Gin-gonic v1.6.3
+	Gin-gonic v1.6.3<br/>
 
 Each of the framework support ORM that handles queries and migrations as I wouldn’t really run queries on my own so good ORM was a requirement. It was important that i have all the database structure for all 3 database servers, same type of columns with same type of indexes and foreign keys. In case of laravel and django I am using redis to store the queue jobs whereas for golang I am using goroutines with channels to accomplish concurrency. 
 
