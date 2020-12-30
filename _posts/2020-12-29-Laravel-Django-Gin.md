@@ -8,33 +8,31 @@ comments: true
 
 ## The environment setup
 
-I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM.
-Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http request from the host machines.
+I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM. Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http request from the host machines.
 
-the php case:
-docker: https://github.com/ljupcho/docker-nginx-php
+*the php case:* <br/>
+docker: https://github.com/ljupcho/docker-nginx-php<br/>
 	php 8, php-fpm, opcache enabled, mysql v5.7.25, redis, consumers container for running queue jobs managed by supervisor
 	./startup.sh creates the containers and prepares the environment like composer update, migrations, clears cache etc..
-application: https://github.com/ljupcho/test-laravel
-	Laravel v8.12
+application: https://github.com/ljupcho/test-laravel<br/>
+	Laravel v8.12<br/>
 
-the python case:
-docker: https://github.com/ljupcho/docker-nginx-python
+*the python case:* <br/>
+docker: https://github.com/ljupcho/docker-nginx-python<br/>
 	python 3.6, uwsgi, mysql v5.7.25, redis, consumers container for running celery/queue tasks managed by supervisor
 	./startup.sh creates the containers and prepares the environment like install requirements, migrations etc..
-application: https://github.com/ljupcho/test-django
-	Django v2.2.3
+application: https://github.com/ljupcho/test-django<br/>
+	Django v2.2.3<br/>
 
-the golang case:
-docker: https://github.com/ljupcho/docker-nginx-golang
-	golang 1.14.13, mysql v5.7.25
-	
-application: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo
+*the golang case:* <br/>
+docker: https://github.com/ljupcho/docker-nginx-golang <br/>
+	golang 1.14.13, mysql v5.7.25 <br/>	
+application: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo <br/>
 	Gin-gonic v1.6.3
 
 Each of the framework support ORM that handles queries and migrations as I wouldn’t really run queries on my own so good ORM was a requirement. It was important that i have all the database structure for all 3 database servers, same type of columns with same type of indexes and foreign keys. In case of laravel and django I am using redis to store the queue jobs whereas for golang I am using goroutines with channels to accomplish concurrency. 
 
-## Case 1 (Imports):
+## Case 1 (Imports)
 I want to see how the frameworks would perform in a task like bulk imports, a task I have had a few many times on real projects like import csv files. I would skip the part of the actual upload of the file and test the time it takes for each framework to import 20K rows of data.
 
 Insert is done by chunks of 500 for all cases. Changing the chunk did not have much difference but 500 seems to be optimal. Number of processes is 6, as i manage that with supervisor and verify it with `ps aux` on each of the consumers containers.
@@ -60,7 +58,7 @@ Next, I have a nested case, more realistic scenario when a user can belong to a 
 Well golang is outperforming both of them even though queries are the same.
 
 
-## Case 2 (API endpoint);
+## Case 2 (API endpoint)
 
 The point here is to run concurrent requests increased over time on an endpoint that returns a json. The database structure with indexes and FKs is the same for all three and the response looks like this for all three as well:
 
