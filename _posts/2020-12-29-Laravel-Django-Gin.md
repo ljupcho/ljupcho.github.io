@@ -25,9 +25,9 @@ I am using dockers to set up each of the framework specific environment with sam
 	Django v2.2.3<br/>
 
 *the golang case:* <br/>
-docker: https://github.com/ljupcho/docker-nginx-golang <br/>
+**docker**: https://github.com/ljupcho/docker-nginx-golang <br/>
 	golang 1.14.13, mysql v5.7.25 <br/>	
-application: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo <br/>
+**application**: https://github.com/ljupcho/docker-nginx-golang/tree/master/morningo <br/>
 	Gin-gonic v1.6.3<br/>
 
 Each of the framework support ORM that handles queries and migrations as I wouldn’t really run queries on my own so good ORM was a requirement. It was important that i have all the database structure for all 3 database servers, same type of columns with same type of indexes and foreign keys. In case of laravel and django I am using redis to store the queue jobs whereas for golang I am using goroutines with channels to accomplish concurrency. 
