@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Laravel(php) vs Django(python) vs Gin(golang)"
-date:   2019-12-19 16:08:10 +0200
+date:   2020-12-29 16:08:10 +0200
 tags: software architecture, php, python, golang, performance
 comments: true
 ---	
