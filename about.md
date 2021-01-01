@@ -11,4 +11,4 @@ The idea of the blog is to publish research work from measuring performances of 
 
 You can follow me on twitter [@ljupcho3a](https://twitter.com/ljupcho3a) or [e-mail](mailto:ljupcho.apostolov@gmail.com)
 
-Thanks for reading!
+Thank You for reading!
