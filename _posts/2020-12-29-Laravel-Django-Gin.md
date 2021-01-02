@@ -80,7 +80,7 @@ select * from `posts` where `posts`.`user_id` in ({post_ids}) and `posts`.`delet
 <br/>
 I am using already imported users with groups and posts from the previous test case. I am pre-loading the group and posts relationships with the user what makes them `whereIn` queries with passed ids. With using a join for the group i am down to 2 queries per request instead of 3 but not much is changing in terms of the response times. But, it does matter if I would loop through the users and run a query for the group and since I am fetching 50 users that many queries for the group multiple by the concurrent request would make a big difference even doubling the times.
 
-Here i would stick to the 3 queries per request with pre-loading the group and the posts in all three frameworks.
+Here i would stick to the 3 queries per request with pre-loading the group and the posts in all three frameworks. The laravel example is [here](https://github.com/ljupcho/test-laravel/blob/main/app/Http/Controllers/Controller.php#L55), the django example is [here](https://github.com/ljupcho/test-django/blob/main/todolist/views.py#L53) and the gin example is [here](https://github.com/ljupcho/docker-nginx-golang/blob/master/morningo/controllers/MainController.go#L336)
 
 |num of req/con req.  | Laravel | Django | Gin
 |:---:		      | :--- | :--- | :---
