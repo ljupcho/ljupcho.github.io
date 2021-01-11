@@ -84,10 +84,10 @@ Here i would stick to the 3 queries per request with pre-loading the group and t
 
 |num of req/con req.  | Laravel | Django | Gin
 |:---:		      | :--- | :--- | :---
-|1000/100	      | 2.9s | 7.7s | 1.4s
-|1000/50	      | 3.1s | 8.2s | 1.4s
-|2000/100	      | 5.6s | 13.4s | 2.6s
-|3000/100	      | 7.8s | 16.6s | 4.1s
+|1000/100	      | 2.6s | 7.7s | 1.4s
+|1000/50	      | 2.7s | 8.2s | 1.4s
+|2000/100	      | 5.1s | 13.4s | 2.6s
+|3000/100	      | 7.3s | 16.6s | 4.1s
 
 Again golang is a clear winner, even when i refresh the page in the browser for this response I get times in the range 10-20ms, for laravel in the range 30-40ms, and django in the range 40-50ms.
 Moreover that was expected and coincides with other results on net, but i have to admit was pleasantly surprised by laravel performance slightly better than i had expected and django is just not performing well even though i have the .pyc files, debug false etc..
