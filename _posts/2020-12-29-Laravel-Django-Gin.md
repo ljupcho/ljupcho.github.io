@@ -8,7 +8,7 @@ comments: true
 
 ## The environment setup
 
-I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM. Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http request from the host machines.
+I am using dockers to set up each of the framework specific environment with same services. Tests are run on ubuntu desktop i5 6 cores 32GB RAM. Each of the environments is done the same way, with mysql database, web app that listens on port 9000, same nginx configuration as proxy to the web app. Each of the nginx containers is exposed to the host to specific port so I can run http requests from the host machine.
 
 *the php case:* <br/>
 **docker**: https://github.com/ljupcho/docker-nginx-php<br/>
