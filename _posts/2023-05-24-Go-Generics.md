@@ -25,7 +25,7 @@ type (
 
 )
 
-// Build service to handle images for model.
+// Build service to handle images for a model.
 func NewMedia(gmodel models.MediaFiles) Media {
 	return &media{
 		model:    gmodel,
@@ -34,7 +34,7 @@ func NewMedia(gmodel models.MediaFiles) Media {
 }
 
 // GetAllImages fetches all images for a model and encodes the images.
-func (m _media) GetAllImages() (_[]ResponseImage, error) {
+func (m *media) GetAllImages() (*[]ResponseImage, error) {
 	// Skip, not relevent to this blog post.
 }
 
@@ -47,7 +47,7 @@ output, err = svc.GetAllImages()
 ```
 
 <br/>
-The same logic written with generic, I have:
+The same logic written with generics, I have:
 
 ```go
 type (
@@ -63,7 +63,7 @@ type (
 
 )
 
-// Build service to handle images for model.
+// Build service to handle images for a model.
 func NewMedia[T MediaModels](model T) Media {
 	return &media[T]{
 		model:    model,
@@ -72,7 +72,7 @@ func NewMedia[T MediaModels](model T) Media {
 }
 
 // GetAllImages fetches all images for a model and encodes the images.
-func (m _media[T]) GetAllImages() (_[]ResponseImage, error) {
+func (m *media[T]) GetAllImages() (*[]ResponseImage, error) {
 	// Skip, not relevent to this blog post.
 }
 
@@ -125,8 +125,8 @@ ok  	app/tests	1.521s
 ```
 
 <br/>
-I run the tests a couple of times, sometimes the generics are slightly better, sometimes the interface, so these times are averages of my test runs.
-Conclusion from the tests:
+I run the tests a couple of times, sometimes the generics are slightly better, sometimes the interface, so these times are averages of my test runs.<br/>
+Conclusion from the tests:<br/>
 Not a clear winner in terms of performance. Generics were introduced in go1.18 and were worse than using an interface, but at least now in go 1.20 that is fixed and hopefully can run even faster in newer versions.
 
 Some thoughts about how I feel writing the code either with interfaces or generics.
