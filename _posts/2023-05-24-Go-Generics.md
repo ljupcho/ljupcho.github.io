@@ -10,7 +10,7 @@ The main idea about the generics is type safety so you won't be getting runtime 
 
 I wanted to check what is the performance using generics in scenarios where I have two models, product and shop and I have a service that should upload an image for both. The functionality is the same and the methods would insert and fetch images for the model. I would usually create a New function that will return me a service that will have the model and possible other objects as well.
 
-<code>
+```go
 type (
     MediaFiles interface {
 		GetID() uint
@@ -42,11 +42,11 @@ svc := media.NewMedia(product)
 svc := media.NewMedia(shop)
 // Call the method to fetch images.
 output, err = svc.GetAllImages()
-</code>
+```
 
 The same logic written with generic, I have:
 
-<code>
+```go
 type (
     MediaModels interface {
         models.Product | models.Shop
@@ -79,18 +79,18 @@ svc := media.NewMedia[models.Product](product)
 svc := media.NewMedia[models.Shop](shop)
 // Call the method to fetch images.
 output, err = svc.GetAllImages()
-</code>
+```
 
 The results. I run this command first for both cases:
 
 ```
 ab -n 1000 -c 100 /api/images/product/46a5dff0-d639-4c9d-b621-03e1af666537
 
-**with generics:
+with generics:
 Time taken for tests:   4.871 seconds
 Requests per second:    205.29 [#/sec] (mean)
 
-**with interface:
+with interface:
 Time taken for tests:   4.722 seconds
 Requests per second:    211.79 [#/sec] (mean)
 ```
@@ -98,7 +98,7 @@ Requests per second:    211.79 [#/sec] (mean)
 I run the benchmark from go:
 
 ```
-**with generics:
+with generics:
 root@c64d1b2c6088:/go/src/app/tests# go test -bench=.
 goos: linux
 goarch: amd64
@@ -108,7 +108,7 @@ BenchmarkInterface-4   	     240	   5097498 ns/op
 PASS
 ok  	app/tests	1.515s
 
-**with interface:
+with interface:
 root@c64d1b2c6088:/go/src/app/tests# go test -bench=.
 goos: linux
 goarch: amd64
