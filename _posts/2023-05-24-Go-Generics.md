@@ -10,6 +10,8 @@ The main idea about the generics is type safety so you won't be getting runtime 
 
 I wanted to check what is the performance using generics in scenarios where I have two models, product and shop and I have a service that should upload an image for both. The functionality is the same and the methods would insert and fetch images for the model. I would usually create a New function that will return me a service that will have the model and possible other objects as well.
 
+The logic using interface.
+
 ```go
 type (
     MediaFiles interface {
@@ -25,15 +27,15 @@ type (
 
 // Build service to handle images for model.
 func NewMedia(gmodel models.MediaFiles) Media {
-return &media{
-model: gmodel,
-repo: repositories.GetMediaRepo(),
-}
+	return &media{
+		model:    gmodel,
+		repo:     repositories.GetMediaRepo(),
+	}
 }
 
 // GetAllImages fetches all images for a model and encodes the images.
 func (m _media) GetAllImages() (_[]ResponseImage, error) {
-// Skip, not relevent to this blog post.
+	// Skip, not relevent to this blog post.
 }
 
 // Get service for media.
@@ -44,6 +46,7 @@ svc := media.NewMedia(shop)
 output, err = svc.GetAllImages()
 ```
 
+<br/>
 The same logic written with generic, I have:
 
 ```go
@@ -62,15 +65,15 @@ type (
 
 // Build service to handle images for model.
 func NewMedia[T MediaModels](model T) Media {
-return &media[T]{
-model: model,
-repo: repositories.GetMediaRepo(model),
-}
+	return &media[T]{
+		model:    model,
+		repo:     repositories.GetMediaRepo(model),
+	}
 }
 
 // GetAllImages fetches all images for a model and encodes the images.
 func (m _media[T]) GetAllImages() (_[]ResponseImage, error) {
-// Skip, not relevent to this blog post.
+	// Skip, not relevent to this blog post.
 }
 
 // Get service for media.
@@ -81,6 +84,7 @@ svc := media.NewMedia[models.Shop](shop)
 output, err = svc.GetAllImages()
 ```
 
+<br/>
 The results. I run this command first for both cases:
 
 ```
@@ -95,6 +99,7 @@ Time taken for tests:   4.722 seconds
 Requests per second:    211.79 [#/sec] (mean)
 ```
 
+<br/>
 I run the benchmark from go:
 
 ```
@@ -119,6 +124,7 @@ PASS
 ok  	app/tests	1.521s
 ```
 
+<br/>
 I run the tests a couple of times, sometimes the generics are slightly better, sometimes the interface, so these times are averages of my test runs.
 Conclusion from the tests:
 Not a clear winner in terms of performance. Generics were introduced in go1.18 and were worse than using an interface, but at least now in go 1.20 that is fixed and hopefully can run even faster in newer versions.
