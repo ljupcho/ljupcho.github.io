@@ -103,7 +103,7 @@ Requests/sec:   1921.74
 Transfer/sec:      1.52MB
 ```
 
-So, it looks like the k8s even shows some better performance which might be because I have 2 api pods, which is what i wanted. Now, all i have to do is buy a k8s cluster on some cloud provider and buy 2 bigger servers and run the cluster deploy.
+So, it looks like the k8s even shows some better performance which might be because I have 2 api pods, which is what i wanted or it just might be because of nginx configurations. Now, all I have to do is buy a k8s cluster on some cloud provider and buy 2 bigger servers and run the cluster deploy.
 
 Some of the errors I was getting along the way:
 
