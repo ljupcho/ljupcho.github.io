@@ -46,7 +46,7 @@ Transfer rate:          381.59 [Kbytes/sec] received
 
 ```
 
-This means it will query and pulibhs 3K requests in 6 seconds.
+This means it will query and pulish 3K requests in 6 seconds.
 
 ```
 Before:
