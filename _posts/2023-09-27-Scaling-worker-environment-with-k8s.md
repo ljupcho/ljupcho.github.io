@@ -20,8 +20,6 @@ To check the active open connection to postgres:
 SELECT count(*) FROM pg_stat_activity;
 ```
 
-<br/>
-
 The way to monitor the k8s cluster adding and removing pods:
 
 ```
@@ -50,35 +48,30 @@ Transfer rate:          381.59 [Kbytes/sec] received
 
 This means it will query and pulibhs 3K requests in 6 seconds.
 
-<br/>
-
 ```
 Before:
-api-shop-deployment-dcbfc5877-b5jn7     13m          36Mi
-api-shop-deployment-dcbfc5877-vrvk8     13m          35Mi
-consumers-deployment-757d987d9d-dkd2j   15m          40Mi
-consumers-deployment-757d987d9d-dq7tl   14m          39Mi
+kubectl top pods
+NAME                                    CPU(cores)   MEMORY(bytes)
+api-shop-deployment-dcbfc5877-t5kfn     1m           34Mi
+api-shop-deployment-dcbfc5877-xpfdx     5m           42Mi
+consumers-deployment-757d987d9d-kgdmb   2m           39Mi
+consumers-deployment-757d987d9d-pkngn   3m           42Mi
 ```
 
 I am running the `ab` command now for publishing 3K requests to check the scaling of the pods:
 
-<br/>
-
 ```
 During, it got scaled:
-api-shop-deployment-dcbfc5877-5dwvg     1m           52Mi
-api-shop-deployment-dcbfc5877-b5jn7     1m           72Mi
-api-shop-deployment-dcbfc5877-c4zv7     1m           73Mi
-api-shop-deployment-dcbfc5877-vrvk8     2m           68Mi
-api-shop-deployment-dcbfc5877-wphs9     2m           59Mi
-consumers-deployment-757d987d9d-clm88   12m          40Mi
-consumers-deployment-757d987d9d-dkd2j   1m           57Mi
-consumers-deployment-757d987d9d-dq7tl   2m           55Mi
-consumers-deployment-757d987d9d-dsv2h   2m           56Mi
-consumers-deployment-757d987d9d-n6l56   2m           56Mi
-consumers-deployment-757d987d9d-vdhfh   11m          39Mi
+kubectl top pods
+NAME                                    CPU(cores)   MEMORY(bytes)
+api-shop-deployment-dcbfc5877-pxd7f     56m          65Mi
+api-shop-deployment-dcbfc5877-t5kfn     61m          63Mi
+api-shop-deployment-dcbfc5877-tcv6x     63m          57Mi
+api-shop-deployment-dcbfc5877-xpfdx     59m          64Mi
+consumers-deployment-757d987d9d-jqh6j   141m         59Mi
+consumers-deployment-757d987d9d-kgdmb   140m         60Mi
+consumers-deployment-757d987d9d-pkngn   131m         59Mi
+consumers-deployment-757d987d9d-qwlhm   138m         58Mi
 ```
-
-<br/>
 
 After the traffic is processed by the consumers and api does not have anything more to publish, the pods go back to 2 for api and 2 for consumers. In the rabbitmq admin panel I can monitor the number of queues/goroutines going up and down based on the traffic need.
