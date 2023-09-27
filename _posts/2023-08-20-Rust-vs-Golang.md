@@ -33,6 +33,7 @@ export APP_DEBUG=false
 export APP_PORT=9000
 ```
 
+<br/>
 for rust running did this:
 
 ```
@@ -42,6 +43,8 @@ sea-orm-cli migrate up
 cargo build --release
 cargo run --release
 ```
+
+<br/>
 
 ```
 Golang:
@@ -58,19 +61,21 @@ Time per request:       0.666 [ms] (mean, across all concurrent requests)
 Transfer rate:          359.12 [Kbytes/sec] received
 ```
 
+<br/>
+
 ```
 Rust:
-ab -n 500 -c 50 http://127.0.0.1:9900/api/posts/1
+ab -n 1000 -c 50 http://127.0.0.1:9900/api/postsnew/1
 Concurrency Level:      50
-Time taken for tests:   0.096 seconds
-Complete requests:      500
+Time taken for tests:   8.171 seconds
+Complete requests:      1000
 Failed requests:        0
-Total transferred:      69500 bytes
-HTML transferred:       15500 bytes
-Requests per second:    5217.03 [#/sec] (mean)
-Time per request:       9.584 [ms] (mean)
-Time per request:       0.192 [ms] (mean, across all concurrent requests)
-Transfer rate:          708.17 [Kbytes/sec] received
+Total transferred:      139000 bytes
+HTML transferred:       31000 bytes
+Requests per second:    122.38 [#/sec] (mean)
+Time per request:       408.556 [ms] (mean)
+Time per request:       8.171 [ms] (mean, across all concurrent requests)
+Transfer rate:          16.61 [Kbytes/sec] received
 ```
 
 Golang time per request is 33ms, rust's is 9ms.
@@ -108,7 +113,10 @@ Time per request:       0.151 [ms] (mean, across all concurrent requests)
 Transfer rate:          938.08 [Kbytes/sec] received
 ```
 
+<br/>
 This yeilds same or better results than rust.
+
+Now, let's move on to testing with `wrk` for both of the apps.
 
 ```
 Golang:
@@ -123,16 +131,19 @@ Requests/sec:   3394.68
 Transfer/sec:    812.20KB
 ```
 
+<br/>
+
 ```
 Rust:
-Running 10s test @ http://127.0.0.1:9900/api/posts/1
+wrk http://127.0.0.1:9900/api/postsnew/1
+Running 10s test @ http://127.0.0.1:9900/api/postsnew/1
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     1.68ms    1.72ms  46.43ms   98.85%
-    Req/Sec     3.20k   246.26     4.32k    94.53%
-  64052 requests in 10.10s, 8.49MB read
-Requests/sec:   6341.73
-Transfer/sec:    860.84KB
+    Latency     1.69ms    1.79ms  50.48ms   98.88%
+    Req/Sec     3.19k   271.75     3.42k    94.55%
+  64195 requests in 10.10s, 8.51MB read
+Requests/sec:   6354.57
+Transfer/sec:    862.58KB
 ```
 
 Golang serves 34K requests in 10s, Rust serves 64K in 10s. well it does make a big difference.
@@ -143,6 +154,7 @@ Edit:
 However after changing the database connection pools for golang app, I get this:
 
 ```
+Golang:
 wrk http://127.0.0.1:9000/api/test/1
 Running 10s test @ http://127.0.0.1:9000/api/test/1
   2 threads and 10 connections
