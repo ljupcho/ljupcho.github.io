@@ -78,6 +78,8 @@ Time per request:       8.171 [ms] (mean, across all concurrent requests)
 Transfer rate:          16.61 [Kbytes/sec] received
 ```
 
+<br/>
+
 Golang time per request is 33ms, rust's is 9ms.
 However there is a big twist in this, I have tweak the database connection pool settings for golang app:
 
@@ -114,7 +116,7 @@ Transfer rate:          938.08 [Kbytes/sec] received
 ```
 
 <br/>
-This yeilds same or better results than rust.
+This yields same or better results than rust.
 
 Now, let's move on to testing with `wrk` for both of the apps.
 
@@ -146,6 +148,8 @@ Requests/sec:   6354.57
 Transfer/sec:    862.58KB
 ```
 
+<br/>
+
 Golang serves 34K requests in 10s, Rust serves 64K in 10s. well it does make a big difference.
 
 So there's this point that you would use Rust in case you have high memory cases or cpu for that matter, but isn't everything now highly consuming. Golang hasn't yet still picked up to the point I was hoping it would, rather than talking about rust ever becoming popular, but if people continue adopting it for these edge cases I am sure they will start using it for any other tasks as they get used to the concepts.
@@ -166,6 +170,7 @@ Requests/sec:  12025.29
 Transfer/sec:      1.77MB
 ```
 
+<br/>
 So, this serves 121K requests in 10s, which is twice than my rust app. I don't know what's going on here, how do I get this results, is it something not configured right in my rust app?
 The reason I have increased the pool in golang app and set the min and max connections parameters was that I was getting a lot of warnings for slow queiries, but after setting these up I am not longer getting them.
 Now, I am looking at how to imporove the rust api to match the golang api, both api return the same result both query the postgres database by primery key and have set max connections the same. The research goes on...
