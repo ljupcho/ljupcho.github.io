@@ -174,3 +174,54 @@ Transfer/sec:      1.77MB
 So, this serves 121K requests in 10s, which is twice than my rust app. I don't know what's going on here, how do I get this results, is it something not configured right in my rust app?
 The reason I have increased the pool in golang app and set the min and max connections parameters was that I was getting a lot of warnings for slow queiries, but after setting these up I am not longer getting them.
 Now, I am looking at how to imporove the rust api to match the golang api, both api return the same result both query the postgres database by primery key and have set max connections the same. The research goes on...
+
+Edit2:
+Considing that the golang is fast running from terminal only, I have done metrics for using nginx or k8s on top.
+
+```
+Using nginx:
+wrk http://localhost/api/test/1
+Running 10s test @ http://localhost/api/test/1
+  2 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.02ms    4.53ms  91.66ms   95.24%
+    Req/Sec     1.08k   146.91     1.28k    86.00%
+  21572 requests in 10.01s, 3.97MB read
+Requests/sec:   2155.56
+Transfer/sec:    406.27KB
+
+Concurrency Level:      100
+Time taken for tests:   0.715 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      188000 bytes
+HTML transferred:       31000 bytes
+Requests per second:    1398.44 [#/sec] (mean)
+Time per request:       71.508 [ms] (mean)
+Time per request:       0.715 [ms] (mean, across all concurrent requests)
+Transfer rate:          256.74 [Kbytes/sec] received
+
+Using k8s:
+wrk http://127.0.0.1:60074/api/test/1
+Running 10s test @ http://127.0.0.1:60074/api/test/1
+  2 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     7.90ms   17.32ms 243.56ms   90.88%
+    Req/Sec     1.65k   298.51     2.03k    90.10%
+  33093 requests in 10.10s, 4.86MB read
+Requests/sec:   3275.82
+Transfer/sec:    492.65KB
+
+Concurrency Level:      100
+Time taken for tests:   0.670 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      154000 bytes
+HTML transferred:       31000 bytes
+Requests per second:    1492.24 [#/sec] (mean)
+Time per request:       67.013 [ms] (mean)
+Time per request:       0.670 [ms] (mean, across all concurrent requests)
+Transfer rate:          224.42 [Kbytes/sec] received
+```
+
+Using nginx or k8 show similar results, but far behind from running the app from terminal. Might be some settings.
