@@ -72,31 +72,33 @@ Requests/sec:  12025.29
 Transfer/sec:      1.77MB
 ```
 
+<br/>
+
 ```
 Rust
 ab -n 1000 -c 100 http://127.0.0.1:9900/api/posts/1
 
-Concurrency Level:      100
-Time taken for tests:   0.269 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      139000 bytes
-HTML transferred:       31000 bytes
-Requests per second:    3723.31 [#/sec] (mean)
-Time per request:       26.858 [ms] (mean)
-Time per request:       0.269 [ms] (mean, across all concurrent requests)
-Transfer rate:          505.41 [Kbytes/sec] received
+Concurrency Level: 100
+Time taken for tests: 0.269 seconds
+Complete requests: 1000
+Failed requests: 0
+Total transferred: 139000 bytes
+HTML transferred: 31000 bytes
+Requests per second: 3723.31 [#/sec] (mean)
+Time per request: 26.858 [ms] (mean)
+Time per request: 0.269 [ms] (mean, across all concurrent requests)
+Transfer rate: 505.41 [Kbytes/sec] received
 
 wrk http://127.0.0.1:9900/api/posts/1
 
 Running 10s test @ http://127.0.0.1:9900/api/posts/1
-  2 threads and 10 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     2.26ms    5.51ms 117.30ms   97.91%
-    Req/Sec     3.12k   446.91     3.45k    96.04%
-  62798 requests in 10.10s, 8.32MB read
-Requests/sec:   6217.17
-Transfer/sec:    843.93KB
+2 threads and 10 connections
+Thread Stats Avg Stdev Max +/- Stdev
+Latency 2.26ms 5.51ms 117.30ms 97.91%
+Req/Sec 3.12k 446.91 3.45k 96.04%
+62798 requests in 10.10s, 8.32MB read
+Requests/sec: 6217.17
+Transfer/sec: 843.93KB
 
 ```
 
@@ -105,59 +107,67 @@ What we’re seeing here is that Golang is twice faster than Rust when running f
 Let’s try a slightly different test. I have created a kubernetes cluster using minikube locally. So I am using the same setup for both Golang and Rust. I have built images for the apis, pushed them to the registry and k8s will pull them. For both setups I have the exact same metrics in terms of memory and cpu limits for horizontal scaling and have 2 pods for each to begin with. I have also tried to test them using nginx on top, but that gives very similar results as with k8s. With the k8s setup I am using ingress-nginx, but these results are based after I run `minikube service rust-api` to run the service on the api pods.
 
 ```
+
 Golang:
 wrk http://127.0.0.1:60074/api/test/1
 
 Running 10s test @ http://127.0.0.1:60074/api/test/1
-  2 threads and 10 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     7.90ms   17.32ms 243.56ms   90.88%
-    Req/Sec     1.65k   298.51     2.03k    90.10%
-  33093 requests in 10.10s, 4.86MB read
-Requests/sec:   3275.82
-Transfer/sec:    492.65KB
+2 threads and 10 connections
+Thread Stats Avg Stdev Max +/- Stdev
+Latency 7.90ms 17.32ms 243.56ms 90.88%
+Req/Sec 1.65k 298.51 2.03k 90.10%
+33093 requests in 10.10s, 4.86MB read
+Requests/sec: 3275.82
+Transfer/sec: 492.65KB
 
 ab -n 1000 -c 100 http://127.0.0.1:60074/api/test/1
 
-Concurrency Level:      100
-Time taken for tests:   0.670 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      154000 bytes
-HTML transferred:       31000 bytes
-Requests per second:    1492.24 [#/sec] (mean)
-Time per request:       67.013 [ms] (mean)
-Time per request:       0.670 [ms] (mean, across all concurrent requests)
-Transfer rate:          224.42 [Kbytes/sec] received
+Concurrency Level: 100
+Time taken for tests: 0.670 seconds
+Complete requests: 1000
+Failed requests: 0
+Total transferred: 154000 bytes
+HTML transferred: 31000 bytes
+Requests per second: 1492.24 [#/sec] (mean)
+Time per request: 67.013 [ms] (mean)
+Time per request: 0.670 [ms] (mean, across all concurrent requests)
+Transfer rate: 224.42 [Kbytes/sec] received
+
 ```
+
+<br/>
 
 ```
 Rust
 wrk http://127.0.0.1:65432/api/posts/1
 
 Running 10s test @ http://127.0.0.1:65432/api/posts/1
-  2 threads and 10 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     3.92ms   10.39ms 162.96ms   94.03%
-    Req/Sec     3.20k   768.90     3.94k    87.44%
-  63523 requests in 10.02s, 8.42MB read
-Requests/sec:   6339.12
-Transfer/sec:    860.49KB
+2 threads and 10 connections
+Thread Stats Avg Stdev Max +/- Stdev
+Latency 3.92ms 10.39ms 162.96ms 94.03%
+Req/Sec 3.20k 768.90 3.94k 87.44%
+63523 requests in 10.02s, 8.42MB read
+Requests/sec: 6339.12
+Transfer/sec: 860.49KB
 
 ab -n 1000 -c 100 http://127.0.0.1:65432/api/posts/1
 
-Time taken for tests:   0.549 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      139000 bytes
-HTML transferred:       31000 bytes
-Requests per second:    1821.79 [#/sec] (mean)
-Time per request:       54.891 [ms] (mean)
-Time per request:       0.549 [ms] (mean, across all concurrent requests)
-Transfer rate:          247.29 [Kbytes/sec] received
+Time taken for tests: 0.549 seconds
+Complete requests: 1000
+Failed requests: 0
+Total transferred: 139000 bytes
+HTML transferred: 31000 bytes
+Requests per second: 1821.79 [#/sec] (mean)
+Time per request: 54.891 [ms] (mean)
+Time per request: 0.549 [ms] (mean, across all concurrent requests)
+Transfer rate: 247.29 [Kbytes/sec] received
 
 ```
 
 This would be the setup we would normally use in production using a kubernetes cluster. In this setup Rust is twice better with serving 63K requests in 10s (we don’t see a difference here with the test when Rust was run from the terminal) with 3.2K requests per second and 54ms for a request. Golang serves 33K requests in 10s (huge drop from the test when run from terminal) with 1.6K requests per second and 67ms for a request. I am kind of perplexed with these results, the k8s setup is probably the one I can trust more, but still don’t know the Golang case when run from the terminal as I was not able to find any errors.
 
 There's this point that you would use Rust in case you have high memory cases or cpu for that matter, but isn't everything now highly consuming. Golang hasn't yet still picked up to the point I was hoping it would, rather than talking about rust ever becoming popular, but if people continue adopting it for these edge cases I am sure they will start using it for any other tasks as they get used to the concepts.
+
+```
+
+```
