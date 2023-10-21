@@ -36,7 +36,7 @@ export APP_PORT=9000
 for Rust running did this:
 
 ```
-login to db server and create testrun database.
+login to the db server and create a testrun database.
 insert into post (id, name, title, text, created_at) values (1, 'test', 'test', 'test', '2023-10-01');
 sea-orm-cli migrate up
 cargo build --release
@@ -48,7 +48,6 @@ Configuring the DB connection pool is done for both Go and Rust apps with `max_o
 ```
 Golang:
 ab -n 1000 -c 100 http://127.0.0.1:9000/api/test/1
-
 Concurrency Level:      100
 Time taken for tests:   0.088 seconds
 Complete requests:      1000
@@ -61,7 +60,6 @@ Time per request:       0.088 [ms] (mean, across all concurrent requests)
 Transfer rate:          1709.90 [Kbytes/sec] received
 
 wrk http://127.0.0.1:9000/api/test/1
-
 Running 10s test @ http://127.0.0.1:9000/api/test/1
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -70,12 +68,36 @@ Running 10s test @ http://127.0.0.1:9000/api/test/1
   121453 requests in 10.10s, 17.84MB read
 Requests/sec:  12025.29
 Transfer/sec:      1.77MB
+
+(db query route - 25 db connections)
+ wrk -c 30 -d 60s -t 30 http://localhost:9000/api/test/1
+Running 1m test @ http://localhost:9000/api/test/1
+  30 threads and 30 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.55ms    6.64ms 230.84ms   97.46%
+    Req/Sec   589.51    107.25   828.00     73.78%
+  1056584 requests in 1.00m, 155.18MB read
+Requests/sec:  17582.24
+Transfer/sec:      2.58MB
+
+(db query route - only set max connections)
+ wrk -c 30 -d 60s -t 30 http://localhost:9000/api/test/1
+Running 1m test @ http://localhost:9000/api/test/1
+  30 threads and 30 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    22.75ms   39.02ms 403.55ms   85.30%
+    Req/Sec   255.63    172.72   740.00     59.23%
+  436041 requests in 1.00m, 64.04MB read
+Requests/sec:   7256.08
+Transfer/sec:      1.07MB
+
 ```
+
+<br/>
 
 ```
 Rust
 ab -n 1000 -c 100 http://127.0.0.1:9900/api/posts/1
-
 Concurrency Level:      100
 Time taken for tests:   0.269 seconds
 Complete requests:      1000
@@ -88,7 +110,6 @@ Time per request:       0.269 [ms] (mean, across all concurrent requests)
 Transfer rate:          505.41 [Kbytes/sec] received
 
 wrk http://127.0.0.1:9900/api/posts/1
-
 Running 10s test @ http://127.0.0.1:9900/api/posts/1
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -97,6 +118,28 @@ Running 10s test @ http://127.0.0.1:9900/api/posts/1
   62798 requests in 10.10s, 8.32MB read
 Requests/sec:   6217.17
 Transfer/sec:    843.93KB
+
+(db query route - 25 db connections)
+wrk -c 30 -d 60s -t 30 http://localhost:9900/api/posts/1
+Running 1m test @ http://localhost:9900/api/posts/1
+  30 threads and 30 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     6.14ms   18.68ms 476.29ms   97.22%
+    Req/Sec   295.30     60.27   434.00     78.28%
+  524511 requests in 1.00m, 69.53MB read
+Requests/sec:   8727.88
+Transfer/sec:      1.16MB
+
+(db query route - only set max connections)
+wrk -c 30 -d 60s -t 30 http://localhost:9900/api/posts/1
+Running 1m test @ http://localhost:9900/api/posts/1
+  30 threads and 30 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.27ms    5.87ms 185.94ms   98.52%
+    Req/Sec   263.11     36.23   333.00     77.29%
+  471642 requests in 1.00m, 62.52MB read
+Requests/sec:   7847.68
+Transfer/sec:      1.04MB
 
 ```
 
@@ -107,7 +150,6 @@ Let’s try a slightly different test. I have created a kubernetes cluster using
 ```
 Golang:
 wrk http://127.0.0.1:60074/api/test/1
-
 Running 10s test @ http://127.0.0.1:60074/api/test/1
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -118,7 +160,6 @@ Requests/sec:   3275.82
 Transfer/sec:    492.65KB
 
 ab -n 1000 -c 100 http://127.0.0.1:60074/api/test/1
-
 Concurrency Level:      100
 Time taken for tests:   0.670 seconds
 Complete requests:      1000
@@ -131,10 +172,11 @@ Time per request:       0.670 [ms] (mean, across all concurrent requests)
 Transfer rate:          224.42 [Kbytes/sec] received
 ```
 
+<br/>
+
 ```
 Rust
 wrk http://127.0.0.1:65432/api/posts/1
-
 Running 10s test @ http://127.0.0.1:65432/api/posts/1
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -145,7 +187,6 @@ Requests/sec:   6339.12
 Transfer/sec:    860.49KB
 
 ab -n 1000 -c 100 http://127.0.0.1:65432/api/posts/1
-
 Time taken for tests:   0.549 seconds
 Complete requests:      1000
 Failed requests:        0
@@ -159,5 +200,9 @@ Transfer rate:          247.29 [Kbytes/sec] received
 ```
 
 This would be the setup we would normally use in production using a kubernetes cluster. In this setup Rust is twice better with serving 63K requests in 10s (we don’t see a difference here with the test when Rust was run from the terminal) with 6.4K requests per second and 54ms for a request. Golang serves 33K requests in 10s (huge drop from the test when run from terminal) with 3.2K requests per second and 67ms for a request. I am kind of perplexed with these results, the k8s setup is probably the one I can trust more, but still don’t know the Golang case when run from the terminal as I was not able to find any errors.
+
+Conclusion:
+When `maxIdleConnection` is not set and only set the max connections golang is just slightly worse than rust, with rust 7.8K req/s and golang with 7.2K req/s for the 60s test with 30 connections and 30 threads. These results are even more favorable for rust when I have low concurrency with 2 threads and 10 connections, rust has 5.8K req/s and golang has 2.8K req/s.
+However, when I have `maxIdleConnections` set to 25 for golang and min_connection set to 25 for rust, I get golang 17.5K req/s and rust 8.7K req/sec for the 60s test with 30 connections and 30 threads. I tried setting the min_connection in rust but no dice (for both sea-orm and sqlx drivers). On low concurrency golang still beats rust with 11.8K req/s to 5.8K req/s for rust with 2 threads and 10 connections just because it scales better with more idle database connections. Basically increasing the min_connection for the rust db driver did nothing in terms of performance whereas for golang made a huge impact. Both golang and rust use the same database which is a docker image and pull data from the same table and have the same response json output. This might mean that it is better to have one big application with more idle db connections instead of microservices each with small or 1 idle db connections, in such cases rust is better.
 
 There's this point that you would use Rust in case you have high memory cases or cpu for that matter, but isn't everything now highly consuming. Golang hasn't yet still picked up to the point I was hoping it would, rather than talking about rust ever becoming popular, but if people continue adopting it for these edge cases I am sure they will start using it for any other tasks as they get used to the concepts.
