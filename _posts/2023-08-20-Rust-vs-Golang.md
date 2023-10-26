@@ -69,7 +69,7 @@ Running 10s test @ http://127.0.0.1:9000/api/test/1
 Requests/sec:  12025.29
 Transfer/sec:      1.77MB
 
-(db query route - 25 db connections)
+(db query route - 25 idle db connections)
  wrk -c 30 -d 60s -t 30 http://localhost:9000/api/test/1
 Running 1m test @ http://localhost:9000/api/test/1
   30 threads and 30 connections
@@ -119,7 +119,7 @@ Running 10s test @ http://127.0.0.1:9900/api/posts/1
 Requests/sec:   6217.17
 Transfer/sec:    843.93KB
 
-(db query route - 25 db connections)
+(db query route - 25 idle db connections)
 wrk -c 30 -d 60s -t 30 http://localhost:9900/api/posts/1
 Running 1m test @ http://localhost:9900/api/posts/1
   30 threads and 30 connections
@@ -145,7 +145,7 @@ Transfer/sec:      1.04MB
 
 What we’re seeing here is that Golang is twice faster than Rust when running from the terminal. Go serves around 121K requests in 10s with 12K requests per second and 8ms for a request. Rust serves around 63K requests in 10s with 6K requests per second and 26ms for requests. How is this so? Wasn't Rust supposed to be a lot faster?
 
-Let’s try a slightly different test. I have created a kubernetes cluster using minikube locally. So I am using the same setup for both Golang and Rust. I have built images for the apis, pushed them to the registry and k8s will pull them. For both setups I have the exact same metrics in terms of memory and cpu limits for horizontal scaling and have 2 pods for each to begin with. I have also tried to test them using nginx on top, but that gives very similar results as with k8s. With the k8s setup I am using ingress-nginx, but these results are based after I run `minikube service rust-api` to run the service on the api pods.
+Let’s try a slightly different test. I have created a kubernetes cluster using `minikube` locally. So I am using the same setup for both Golang and Rust. I have built images for the apis, pushed them to the registry and k8s will pull them. For both setups I have the exact same metrics in terms of memory and cpu limits for horizontal scaling and have 2 pods for each to begin with. I have also tried to test them using nginx on top, but that gives very similar results as with k8s. With the k8s setup I am using ingress-nginx, but these results are based after I run `minikube service rust-api` to run the service on the api pods.
 
 ```
 Golang:
@@ -202,7 +202,38 @@ Transfer rate:          247.29 [Kbytes/sec] received
 This would be the setup we would normally use in production using a kubernetes cluster. In this setup Rust is twice better with serving 63K requests in 10s (we don’t see a difference here with the test when Rust was run from the terminal) with 6.4K requests per second and 54ms for a request. Golang serves 33K requests in 10s (huge drop from the test when run from terminal) with 3.2K requests per second and 67ms for a request. I am kind of perplexed with these results, the k8s setup is probably the one I can trust more, but still don’t know the Golang case when run from the terminal as I was not able to find any errors.
 
 Conclusion:
-When `maxIdleConnection` is not set and only set the max connections golang is just slightly worse than rust, with rust 7.8K req/s and golang with 7.2K req/s for the 60s test with 30 connections and 30 threads. These results are even more favorable for rust when I have low concurrency with 2 threads and 10 connections, rust has 5.8K req/s and golang has 2.8K req/s.
+
+For the scenario when I run the apps from terminal golang wins, when I run them in k8s rust wins. When `maxIdleConnection` is not set and only set the max connections golang is just slightly worse than rust, with rust 7.8K req/s and golang with 7.2K req/s for the 60s test with 30 connections and 30 threads. These results are even more favorable for rust when I have low concurrency with 2 threads and 10 connections, rust has 5.8K req/s and golang has 2.8K req/s.
 However, when I have `maxIdleConnections` set to 25 for golang and min_connection set to 25 for rust, I get golang 17.5K req/s and rust 8.7K req/sec for the 60s test with 30 connections and 30 threads. I tried setting the min_connection in rust but no dice (for both sea-orm and sqlx drivers). On low concurrency golang still beats rust with 11.8K req/s to 5.8K req/s for rust with 2 threads and 10 connections just because it scales better with more idle database connections. Basically increasing the min_connection for the rust db driver did nothing in terms of performance whereas for golang made a huge impact. Both golang and rust use the same database which is a docker image and pull data from the same table and have the same response json output. This might mean that it is better to have one big application with more idle db connections instead of microservices each with small or 1 idle db connections, in such cases rust is better.
 
 There's this point that you would use Rust in case you have high memory cases or cpu for that matter, but isn't everything now highly consuming. Golang hasn't yet still picked up to the point I was hoping it would, rather than talking about rust ever becoming popular, but if people continue adopting it for these edge cases I am sure they will start using it for any other tasks as they get used to the concepts.
+
+I have one more test scenario to cover. Having pods under kubernetes seems like a production ready solution, but not with databases as pods. In most cases we would acquire managed service. For that reason I have created an external service with type: ExternalName for my k8s cluster. This service will point to the same docker image that for my database, so both apps will connect to the same external database.
+
+```
+Golang:
+Running 10s test @ http://127.0.0.1:49841/api/test/1
+  2 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.40ms    3.62ms  45.78ms   95.24%
+    Req/Sec     1.73k   289.16     2.11k    77.00%
+  34525 requests in 10.01s, 5.07MB read
+Requests/sec:   3450.00
+Transfer/sec:    518.85KB
+```
+
+<br/>
+
+```
+Rust:
+Running 10s test @ http://127.0.0.1:49940/api/posts/1
+  2 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     6.85ms   13.68ms 186.50ms   94.57%
+    Req/Sec     1.22k   325.61     1.52k    89.90%
+  24164 requests in 10.02s, 3.20MB read
+Requests/sec:   2411.11
+Transfer/sec:    327.29KB
+```
+
+So, there you have it. Golang is faster than Rust when using more db connections. At least so far in my research. This is a setup with k8s cluster but both apps use the same external database.
