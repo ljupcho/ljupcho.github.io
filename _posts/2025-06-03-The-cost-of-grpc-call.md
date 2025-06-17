@@ -9,9 +9,9 @@ comments: true
 In this blog post I am looking more into inner-server communication between golang microservices. Obviously there is a cost to having multiple services that need to exchange data rather than having one bigger service.
 But, not going too much into the micro-services discussion here, I would prefer having smaller services for lots of reasons. Structuring them is an art on its own and deciding what should be service and what kind. I would say there are three main types of services: api, worker and consumer. Having a MQ to load balance between the same service that gets autos-laced and fan-out on the same topic for different services. That's all there is to it.
 
-First, I am having an api that holds the data and running requests directly to it normally would give us the best performance results.
-Second, I have another api that will send grpc calls to the first api, which will have a grcp server running. A 2.1 test case would be native grcp server versus http multiplexing.
-Third, I want to have yet another type of calls, through NATs that are quite flexible and have a request-reply pattern.
+- First, I am having an api that holds the data and running requests directly to it normally would give us the best performance results.
+- Second, I have another api that will send grpc calls to the first api, which will have a grcp server running. A 2.1 test case would be native grcp server versus http multiplexing.
+- Third, I want to have yet another type of calls, through NATs that are quite flexible and have a request-reply pattern.
 
 The results are as expected. Running benchmarks on mac laptop.
 
@@ -60,6 +60,7 @@ Running 10s test @ http://localhost:9101/api/v1/products
 Requests/sec:  10073.47
 Transfer/sec:      3.52MB
 ```
+<br/>
 
 | Method              | Avg Latency | Max Latency | Req/Sec   | Total Requests | Transfer/Sec |
 |---------------------|-------------|-------------|-----------|----------------|--------------|
