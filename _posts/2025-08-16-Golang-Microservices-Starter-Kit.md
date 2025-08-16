@@ -13,6 +13,7 @@ In this starter kit as an example I have the business logic to sync data from st
 - github.com/ljupcho/stravasync-worker
 - github.com/ljupcho/stravasync-consumer
 - github.com/ljupcho/stravasync-deployment
+- github.com/ljupcho/stravasync-infra
 - github.com/ljupcho/go-common-lib
 - github.com/ljupcho/go-contracts-v2
 
