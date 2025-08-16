@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Golang Microservices Starter Kit"
-date: 2025-16-08 15:02:10 +0200
+date: 2025-08-16 19:02:10 +0200
 tags: golang, microservices, kubernetes
 comments: true
 ---
