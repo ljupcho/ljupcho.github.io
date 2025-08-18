@@ -180,7 +180,7 @@ The worker has just the metrics port exposed, but access it the temporal via the
 helm install stravasync-consumer-dev platform/helm-charts/apps -f backend/npd/apps/stravasync-consumer/values.yaml -f backend/npd/apps/stravasync-consumer/environments/dev.yaml --namespace stravasync --create-namespace
 ```
 The consumer by default will have 2 pods and the NATs message broker is configured to load-balance for the same consumer. By same consumer means the consumers that are coming from the same service and listen on the same subject. By testing it I can verify that only one of the consumers will pick up the job for processing.
-As the worker and the consumer access the data via the api using grpc calls, the grcp url is `stravasync-api-dev.stravasync.svc.cluster.local:9233`.
+As the worker and the consumer access the data via the api using grpc calls, the grcp url is `stravasync-api-dev.stravasync.svc.cluster.local:8080`.
 
 ## Workflows
 I am using github actions for the microservices. They are triggered when a new tag is created, and the flow will run the tests, compile the binary and push it to dockerhub. The deployment files for the services include the section for the image and its tag with dockerhub credentials which are stored as k8s secrets.
